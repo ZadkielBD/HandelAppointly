@@ -2,6 +2,7 @@ package com.handel.HandelAppointly.entidades;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor @NoArgsConstructor
 @EqualsAndHashCode(callSuper=true)
 @Table(name = "pacientes")
+@PrimaryKeyJoinColumn(name = "usuario_id")
 public class Paciente extends Usuario {
 
     @Column(unique = true ,nullable = false, name = "nacional_id")

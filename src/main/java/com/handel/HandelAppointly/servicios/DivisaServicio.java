@@ -7,13 +7,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface DivisaServicio {
 
-    DivisaRespuestaDto add(DivisaSolicitudDto requestDto);
+    DivisaRespuestaDto add(DivisaSolicitudDto solicitudDto);
 
-    DivisaRespuestaDto findByCode(String code);
+    DivisaRespuestaDto findByCodigo(String codigo);
 
-    Page<DivisaRespuestaDto> findAll(Pageable pageable);
+    Page<DivisaRespuestaDto> findAll(Pageable paginable);
 
-    void updateExchangeRates();
+    void updateTipoCambio();
 
     void delete(String code);
 }

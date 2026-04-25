@@ -6,6 +6,7 @@ import com.handel.HandelAppointly.entidades.Doctor;
 import com.handel.HandelAppointly.enums.Rol;
 import com.handel.HandelAppointly.excepciones.MethodNotAllowedException;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
+import com.handel.HandelAppointly.mappers.DoctorMapper;
 import com.handel.HandelAppointly.repositorios.DivisaRepositorio;
 import com.handel.HandelAppointly.repositorios.DoctorRepositorio;
 import com.handel.HandelAppointly.repositorios.EspecialidadRepositorio;
@@ -27,25 +28,25 @@ public class DoctorServicioImpl implements DoctorServicio {
     private final DoctorRepositorio doctorRepositorio;
     private final EspecialidadRepositorio especialidadRepositorio;
     private final DivisaRepositorio divisaRepositorio;
-    private final ModelMapper modelMapper;
+    private final DoctorMapper doctorMapper;
 
     @Override
     @Transactional
-    public DoctorRespuestaDto create(DoctorSolicitudDto requestDto) {
-        var especialidad = especialidadRepositorio.findByName(requestDto.especialidad())
+    public DoctorRespuestaDto create(DoctorSolicitudDto solicitudDto) {
+        var especialidad = especialidadRepositorio.findByNombre(solicitudDto.especialidad())
                 .orElseThrow(() -> new ResourcesNotFoundException("Especialidad no encontrada"));
 
-        var divisa = divisaRepositorio.findById(requestDto.codigoDivisa())
+        var divisa = divisaRepositorio.findById(solicitudDto.codigoDivisa())
                 .orElseThrow(() -> new ResourcesNotFoundException("Divisa no encontrada"));
 
-        Doctor doctor = modelMapper.map(requestDto, Doctor.class);
+        Doctor doctor =  doctorMapper.aEntidad(solicitudDto);
 
         doctor.setEspecialidad(especialidad);
         doctor.setDivisa(divisa);
         doctor.setRol(Rol.DOCTOR);
 
         Doctor createdDoctor = doctorRepositorio.save(doctor);
-        return mapToResponse(createdDoctor);
+        return doctorMapper.aRespuestaDto(createdDoctor);
     }
 
     @Override
@@ -53,31 +54,31 @@ public class DoctorServicioImpl implements DoctorServicio {
     public DoctorRespuestaDto findById(Long id) {
         Doctor doctor = findDoctorById(id);
 
-        return mapToResponse(doctor);
+        return doctorMapper.aRespuestaDto(doctor);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<DoctorRespuestaDto> findAll(Pageable pageable) {
-        return doctorRepositorio.findAll(pageable)
-                .map(this::mapToResponse);
+    public Page<DoctorRespuestaDto> findAll(Pageable paginable) {
+        return doctorRepositorio.findAll(paginable)
+                .map(doctorMapper::aRespuestaDto);
     }
 
     @Override
     @Transactional
-    public DoctorRespuestaDto update(Long id, DoctorSolicitudDto requestDto) {
+    public DoctorRespuestaDto update(Long id, DoctorSolicitudDto solicitudDto) {
         Doctor doctor = findDoctorById(id);
 
-        modelMapper.map(requestDto, doctor);
+        doctorMapper.aEntidad(solicitudDto);
 
         Doctor updatedDoctor = doctorRepositorio.save(doctor);
 
-        return mapToResponse(updatedDoctor);
+        return doctorMapper.aRespuestaDto(updatedDoctor);
     }
 
     @Override
     @Transactional
-    public DoctorRespuestaDto patch(Long id, DoctorSolicitudDto requestDto) {
+    public DoctorRespuestaDto patch(Long id, DoctorSolicitudDto solicitudDto) {
         Doctor doctor = findDoctorById(id);
 
         ModelMapper patchMapper = new ModelMapper();
@@ -86,23 +87,23 @@ public class DoctorServicioImpl implements DoctorServicio {
                 .setFieldMatchingEnabled(true)
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
 
-        patchMapper.map(requestDto, doctor);
+        patchMapper.map(solicitudDto, doctor);
 
-        if (requestDto.especialidad() != null) {
-            var speciality = especialidadRepositorio.findByName(requestDto.especialidad())
-                    .orElseThrow(() -> new ResourcesNotFoundException("Speciality not found"));
+        if (solicitudDto.especialidad() != null) {
+            var speciality = especialidadRepositorio.findByNombre(solicitudDto.especialidad())
+                    .orElseThrow(() -> new ResourcesNotFoundException("Especialidad no encontrada"));
             doctor.setEspecialidad(speciality);
         }
 
-        if (requestDto.codigoDivisa() != null) {
-            var currency = divisaRepositorio.findById(requestDto.codigoDivisa())
-                    .orElseThrow(() -> new ResourcesNotFoundException("Currency not found"));
+        if (solicitudDto.codigoDivisa() != null) {
+            var currency = divisaRepositorio.findById(solicitudDto.codigoDivisa())
+                    .orElseThrow(() -> new ResourcesNotFoundException("Divisa no encontrada"));
             doctor.setDivisa(currency);
         }
 
         Doctor patchedDoctor = doctorRepositorio.save(doctor);
 
-        return mapToResponse(patchedDoctor);
+        return doctorMapper.aRespuestaDto(patchedDoctor);
     }
 
     @Override
@@ -111,40 +112,14 @@ public class DoctorServicioImpl implements DoctorServicio {
         Doctor doctor = findDoctorById(id);
 
         if (!doctor.getCitas().isEmpty()) {
-            throw new MethodNotAllowedException("You cannot remove a doctor who has scheduled appointments");
+            throw new MethodNotAllowedException("No se puede eliminar a un médico que tenga citas programadas");
         }
 
         doctorRepositorio.delete(doctor);
     }
 
-    private DoctorRespuestaDto mapToResponse(Doctor doctor) {
-        DoctorRespuestaDto responseDto = modelMapper.map(doctor, DoctorRespuestaDto.class);
-
-        BigDecimal usdPrice = BigDecimal.ZERO;
-        if (doctor.getDivisa() != null && doctor.getDivisa().getTipoCambio() != null) {
-            if (doctor.getDivisa().getCodigo().equals("USD")) {
-                usdPrice = doctor.getPrecioLocal();
-            } else {
-                usdPrice = doctor.getPrecioLocal().divide(
-                        doctor.getDivisa().getTipoCambio(), 2, RoundingMode.HALF_UP);
-            }
-        }
-        return new DoctorRespuestaDto(
-                responseDto.id(),
-                responseDto.profesionalId(),
-                responseDto.nombre(),
-                responseDto.apellido(),
-                responseDto.email(),
-                responseDto.numeroTelefono(),
-                doctor.getEspecialidad().getNombre(),
-                responseDto.precioLocal(),
-                doctor.getDivisa().getCodigo(),
-                usdPrice
-        );
-    }
-
     private Doctor findDoctorById(Long id) {
         return doctorRepositorio.findById(id)
-                .orElseThrow(() -> new ResourcesNotFoundException("Doctor with id " + id + " not found"));
+                .orElseThrow(() -> new ResourcesNotFoundException("Doctor con id " + id + " no encontrado"));
     }
 }

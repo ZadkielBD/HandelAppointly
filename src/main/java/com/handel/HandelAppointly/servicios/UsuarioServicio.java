@@ -9,9 +9,9 @@ public interface UsuarioServicio {
 
     UsuarioRespuestaDto getById(Long id);
 
-    Page<UsuarioRespuestaDto> getAll(Rol rol, Pageable pageable);
+    Page<UsuarioRespuestaDto> getAll(Rol rol, Pageable paginable);
 
-//    Page<UserResponseDto> getAllByRole(Role role, Pageable pageable);
+//    Page<UserResponseDto> getAllByRol(Rol rol, Pageable paginable);
 
     void delete(Long id);
 }

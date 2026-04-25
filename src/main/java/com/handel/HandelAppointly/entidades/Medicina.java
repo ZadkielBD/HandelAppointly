@@ -17,7 +17,7 @@ public class Medicina {
     private Long id;
 
     @Column(unique = true ,nullable = false)
-    private String name;
+    private String nombre;
 
     @Column(nullable = false)
     private String fabricante;
@@ -29,7 +29,7 @@ public class Medicina {
     private Integer existencias;
 
     @Column(nullable = false, name = "alerta_existencia_minima")
-    private Integer minStockAlert;
+    private Integer alertaExistenciaMinima;
 
     @Column(nullable = false)
     private String unidad;

@@ -30,8 +30,8 @@ public class DivisaServicioImpl implements DivisaServicio {
     private final ModelMapper modelMapper;
 
     @Override
-    public DivisaRespuestaDto add(DivisaSolicitudDto requestDto) {
-        Divisa divisa = modelMapper.map(requestDto, Divisa.class);
+    public DivisaRespuestaDto add(DivisaSolicitudDto solicitudDto) {
+        Divisa divisa = modelMapper.map(solicitudDto, Divisa.class);
 
         Divisa createdDivisa = divisaRepositorio.save(divisa);
 
@@ -39,14 +39,14 @@ public class DivisaServicioImpl implements DivisaServicio {
     }
 
     @Override
-    public DivisaRespuestaDto findByCode(String code) {
-        Divisa divisa = findCurrencyById(code);
+    public DivisaRespuestaDto findByCodigo(String codigo) {
+        Divisa divisa = findCurrencyById(codigo);
         return modelMapper.map(divisa, DivisaRespuestaDto.class);
     }
 
     @Override
-    public Page<DivisaRespuestaDto> findAll(Pageable pageable) {
-        return divisaRepositorio.findAll(pageable)
+    public Page<DivisaRespuestaDto> findAll(Pageable paginable) {
+        return divisaRepositorio.findAll(paginable)
                 .map(p -> modelMapper.map(p, DivisaRespuestaDto.class));
     }
 
@@ -54,12 +54,12 @@ public class DivisaServicioImpl implements DivisaServicio {
     @Override
     @Transactional
     @Scheduled(cron = "0 0 0 * * *")
-    public void updateExchangeRates() {
+    public void updateTipoCambio() {
         try {
             FrankfurterRespuestaDto response = currencyApiClient.getExchangeRates("USD");
 
             if (response == null || response.rates() == null) {
-                log.error("The response is empty");
+                log.error("La respuesta esta vacía");
                 return;
             }
 
@@ -75,10 +75,10 @@ public class DivisaServicioImpl implements DivisaServicio {
 
             divisaRepositorio.saveAll(updatedCurrencies);
 
-            log.info("Currencies updated successfully at {}", LocalDateTime.now());
+            log.info("Las divisas se han actualizado correctamente a las {}", LocalDateTime.now());
 
         } catch (Exception e) {
-            log.error("Error updating currency rates ", e);
+            log.error("Error al actualizar los tipos de cambio ", e);
         }
     }
 
@@ -90,6 +90,6 @@ public class DivisaServicioImpl implements DivisaServicio {
 
     private Divisa findCurrencyById(String code) {
         return divisaRepositorio.findById(code)
-                .orElseThrow(() -> new ResourcesNotFoundException("User with code " + code + " not found"));
+                .orElseThrow(() -> new ResourcesNotFoundException("Divisa con codigo " + code + " no encontrado"));
     }
 }

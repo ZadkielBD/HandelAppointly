@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
-    Page<Usuario> findAllByRole(Rol rol, Pageable pageable);
+    Page<Usuario> findAllByRol(Rol rol, Pageable paginable);
 
 }

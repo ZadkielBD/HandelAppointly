@@ -21,8 +21,8 @@ public class PacienteServicioImpl implements PacienteServicio {
 
     @Override
     @Transactional
-    public PacienteRespuestaDto create(PacienteSolicitudDto requestDto) {
-        Paciente paciente = modelMapper.map(requestDto, Paciente.class);
+    public PacienteRespuestaDto create(PacienteSolicitudDto solicitudDto) {
+        Paciente paciente = modelMapper.map(solicitudDto, Paciente.class);
 
         Paciente createdPaciente = pacienteRepositorio.save(paciente);
 
@@ -37,16 +37,16 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public Page<PacienteRespuestaDto> findAll(Pageable pageable) {
-        return pacienteRepositorio.findAll(pageable)
+    public Page<PacienteRespuestaDto> findAll(Pageable paginable) {
+        return pacienteRepositorio.findAll(paginable)
                 .map(p -> modelMapper.map(p, PacienteRespuestaDto.class));
     }
 
     @Override
-    public PacienteRespuestaDto update(Long id, PacienteSolicitudDto requestDto) {
+    public PacienteRespuestaDto update(Long id, PacienteSolicitudDto solicitudDto) {
         Paciente paciente = findPatientById(id);
 
-        modelMapper.map(requestDto, paciente);
+        modelMapper.map(solicitudDto, paciente);
 
         Paciente updatedPaciente = pacienteRepositorio.save(paciente);
 
@@ -54,7 +54,7 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public PacienteRespuestaDto patch(Long id, PacienteSolicitudDto requestDto) {
+    public PacienteRespuestaDto patch(Long id, PacienteSolicitudDto solicitudDto) {
         Paciente paciente = findPatientById(id);
 
         ModelMapper patchMapper = new ModelMapper();
@@ -63,7 +63,7 @@ public class PacienteServicioImpl implements PacienteServicio {
                 .setFieldMatchingEnabled(true)
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
 
-        patchMapper.map(requestDto, paciente);
+        patchMapper.map(solicitudDto, paciente);
 
         Paciente patchedPaciente = pacienteRepositorio.save(paciente);
 
@@ -79,6 +79,6 @@ public class PacienteServicioImpl implements PacienteServicio {
 
     private Paciente findPatientById(Long id) {
         return pacienteRepositorio.findById(id)
-                .orElseThrow(() -> new ResourcesNotFoundException("Patient with id " + id + " not found"));
+                .orElseThrow(() -> new ResourcesNotFoundException("Paciente con id " + id + " no encontrado"));
     }
 }

@@ -1,14 +1,12 @@
 package com.handel.HandelAppointly.mappers;
 
 import com.handel.HandelAppointly.dtos.respuesta.UsuarioRespuestaDto;
-import com.handel.HandelAppointly.dtos.solicitud.UsuarioSolicitudDto;
 import com.handel.HandelAppointly.entidades.Usuario;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UsuarioMapper {
 
-    UsuarioRespuestaDto usuarioToUsuarioRespuestaDto(Usuario usuario);
+    UsuarioRespuestaDto aRespuestaDto(Usuario usuario);
 
-    Usuario usuarioSolicitudDtoToUsuario(UsuarioSolicitudDto usuarioSolicitudDto);
 }

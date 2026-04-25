@@ -4,12 +4,14 @@ import com.handel.HandelAppointly.entidades.Divisa;
 import com.handel.HandelAppointly.repositorios.DivisaRepositorio;
 import com.handel.HandelAppointly.servicios.DivisaServicio;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
@@ -36,8 +38,8 @@ public class DataInitializer implements CommandLineRunner {
 
             divisaRepositorio.saveAll(initialCurrencies);
 
-            IO.println("Database Initialized: Basic currencies added");
-            divisaServicio.updateExchangeRates();
+            log.info("Database Initialized: Basic currencies added");
+            divisaServicio.updateTipoCambio();
         }
     }
 }

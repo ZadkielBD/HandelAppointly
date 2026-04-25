@@ -28,7 +28,7 @@ public class DivisaControlador {
 
     @GetMapping("{code}")
     public ResponseEntity<DivisaRespuestaDto> findByCode(@PathVariable String code) {
-        DivisaRespuestaDto currency = divisaServicio.findByCode(code);
+        DivisaRespuestaDto currency = divisaServicio.findByCodigo(code);
         return new ResponseEntity<>(currency, HttpStatus.OK);
     }
 
@@ -40,7 +40,7 @@ public class DivisaControlador {
 
     @PutMapping
     public ResponseEntity<String> update() {
-        divisaServicio.updateExchangeRates();
+        divisaServicio.updateTipoCambio();
         return new ResponseEntity<>("Updated Successfully at " + LocalDateTime.now(), HttpStatus.OK);
     }
 

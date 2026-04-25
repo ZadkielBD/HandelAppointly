@@ -1,10 +1,10 @@
 package com.handel.HandelAppointly.entidades;
 import com.handel.HandelAppointly.enums.EstatusCita;
+import com.handel.HandelAppointly.enums.TipoConsulta;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "citas")
@@ -17,24 +17,30 @@ public class Cita {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, updatable = false, name = "codigo_cita")
+    @Column(nullable = false, unique = true, updatable = false, name = "codigo")
     private String codigoCita;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "patient_id",  nullable = false)
     private Paciente paciente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "doctor_id",  nullable = false)
     private Doctor doctor;
 
-    @Column(nullable = false)
-    private LocalDate fecha;
+    @OneToOne(mappedBy = "cita", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private ConsultaMedica consultaMedica;
 
-    @Column(nullable = false)
-    private LocalTime hora;
+    private String motivo;
 
-    @Column(nullable = false, name = "estatus_cita")
+    @Column(nullable = false, name = "estatus")
     @Enumerated(EnumType.STRING)
-    private EstatusCita estatusCita;
+    private EstatusCita estatus = EstatusCita.PENDIENTE;
+
+    @Column()
+    @Enumerated(EnumType.STRING)
+    private TipoConsulta consulta = TipoConsulta.GENERAL;
+
+    @Column(nullable = false, name = "fecha_hora")
+    private LocalDateTime fechaHora;
 }

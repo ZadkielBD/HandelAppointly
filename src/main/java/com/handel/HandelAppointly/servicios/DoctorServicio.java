@@ -7,15 +7,15 @@ import org.springframework.data.domain.Pageable;
 
 public interface DoctorServicio {
 
-    DoctorRespuestaDto create(DoctorSolicitudDto requestDto);
+    DoctorRespuestaDto create(DoctorSolicitudDto solicitudDto);
 
     DoctorRespuestaDto findById(Long id);
 
-    Page<DoctorRespuestaDto> findAll(Pageable pageable);
+    Page<DoctorRespuestaDto> findAll(Pageable paginable);
 
-    DoctorRespuestaDto update(Long id, DoctorSolicitudDto requestDto);
+    DoctorRespuestaDto update(Long id, DoctorSolicitudDto solicitudDto);
 
-    DoctorRespuestaDto patch(Long id, DoctorSolicitudDto requestDto);
+    DoctorRespuestaDto patch(Long id, DoctorSolicitudDto solicitudDto);
 
     void delete(Long id);
 }

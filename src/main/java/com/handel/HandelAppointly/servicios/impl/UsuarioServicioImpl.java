@@ -4,10 +4,10 @@ import com.handel.HandelAppointly.dtos.respuesta.UsuarioRespuestaDto;
 import com.handel.HandelAppointly.enums.Rol;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.entidades.Usuario;
+import com.handel.HandelAppointly.mappers.UsuarioMapper;
 import com.handel.HandelAppointly.repositorios.UsuarioRepositorio;
 import com.handel.HandelAppointly.servicios.UsuarioServicio;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,15 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UsuarioServicioImpl implements UsuarioServicio {
     private final UsuarioRepositorio usuarioRepositorio;
-    private final ModelMapper modelMapper;
-
+    private final UsuarioMapper usuarioMapper;
 
     @Override
     @Transactional(readOnly = true)
     public UsuarioRespuestaDto getById(Long id) {
         Usuario user = findUserById(id);
 
-        return modelMapper.map(user, UsuarioRespuestaDto.class);
+        return usuarioMapper.aRespuestaDto(user);
     }
 
     /*
@@ -35,30 +34,31 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         Page<User> users;
 
         if (role != null) {
-            users = userRepository.findAllByRole(role, pageable);
+            users = userRepository.findAllByRol(role, pageable);
         } else {
             users = userRepository.findAll(pageable);
         }
 
         return users.map(user -> modelMapper.map(user, UserResponseDto.class));
 
-//        return userRepository.findAllByRole(role).stream().map(user -> modelMapper.map(user, UserResponseDto.class))
+//        return userRepository.findAllByRol(role).stream().map(user -> modelMapper.map(user, UserResponseDto.class))
 //          .collect(Collectors.toList());
     }
      */
 
     @Override
     @Transactional(readOnly = true)
-    public Page<UsuarioRespuestaDto> getAll(Rol rol, Pageable pageable) {
+    public Page<UsuarioRespuestaDto> getAll(Rol rol, Pageable paginable) {
         Page<Usuario> users;
 
         if (rol != null) {
-            users = usuarioRepositorio.findAllByRole(rol, pageable);
+            users = usuarioRepositorio.findAllByRol(rol, paginable);
         } else {
-            users = usuarioRepositorio.findAll(pageable);
+            users = usuarioRepositorio.findAll(paginable);
         }
 
-        return users.map(user -> modelMapper.map(user, UsuarioRespuestaDto.class));
+//        return users.map(user -> modelMapper.map(user, UsuarioRespuestaDto.class));
+        return users.map(usuarioMapper::aRespuestaDto);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     private Usuario findUserById(Long id) {
         return usuarioRepositorio.findById(id)
-                        .orElseThrow(() -> new ResourcesNotFoundException("User with id " + id + " not found"));
+                        .orElseThrow(() -> new ResourcesNotFoundException("Usuario con id " + id + " no encontrado"));
     }
 
 }

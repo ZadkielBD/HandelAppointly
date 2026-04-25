@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor @NoArgsConstructor
 @EqualsAndHashCode(callSuper=true)
 @Table(name = "doctores")
+@PrimaryKeyJoinColumn(name = "usuario_id")
 public class Doctor extends Usuario {
 
     @Column(unique = true ,nullable = false, name = "profesional_id")
