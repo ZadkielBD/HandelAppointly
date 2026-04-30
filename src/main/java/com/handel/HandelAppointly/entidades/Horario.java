@@ -7,9 +7,10 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "horarios_doctores")
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
+@Builder
+@Table(name = "horarios_doctores")
 public class Horario {
 
     @Id

@@ -3,6 +3,7 @@ package com.handel.HandelAppointly.servicios.impl;
 import com.handel.HandelAppointly.dtos.solicitud.DoctorSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
 import com.handel.HandelAppointly.entidades.Doctor;
+import com.handel.HandelAppointly.entidades.Especialidad;
 import com.handel.HandelAppointly.enums.Rol;
 import com.handel.HandelAppointly.excepciones.MethodNotAllowedException;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
@@ -12,14 +13,13 @@ import com.handel.HandelAppointly.repositorios.DoctorRepositorio;
 import com.handel.HandelAppointly.repositorios.EspecialidadRepositorio;
 import com.handel.HandelAppointly.servicios.DoctorServicio;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.util.HashSet;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,15 +33,14 @@ public class DoctorServicioImpl implements DoctorServicio {
     @Override
     @Transactional
     public DoctorRespuestaDto create(DoctorSolicitudDto solicitudDto) {
-        var especialidad = especialidadRepositorio.findByNombre(solicitudDto.especialidad())
-                .orElseThrow(() -> new ResourcesNotFoundException("Especialidad no encontrada"));
+        List<Especialidad> especialidades = especialidadRepositorio.findAllById(solicitudDto.getEspecialidadesIds());
 
-        var divisa = divisaRepositorio.findById(solicitudDto.codigoDivisa())
+        var divisa = divisaRepositorio.findById(solicitudDto.getCodigoDivisa())
                 .orElseThrow(() -> new ResourcesNotFoundException("Divisa no encontrada"));
 
         Doctor doctor =  doctorMapper.aEntidad(solicitudDto);
 
-        doctor.setEspecialidad(especialidad);
+        doctor.setEspecialidades(new HashSet<>(especialidades));
         doctor.setDivisa(divisa);
         doctor.setRol(Rol.DOCTOR);
 
@@ -69,7 +68,18 @@ public class DoctorServicioImpl implements DoctorServicio {
     public DoctorRespuestaDto update(Long id, DoctorSolicitudDto solicitudDto) {
         Doctor doctor = findDoctorById(id);
 
-        doctorMapper.aEntidad(solicitudDto);
+        doctorMapper.actualizarDoctorDesdeDto(solicitudDto, doctor);
+
+        if (solicitudDto.getEspecialidadesIds() != null) {
+            List<Especialidad> especialidades = especialidadRepositorio.findAllById(solicitudDto.getEspecialidadesIds());
+            doctor.setEspecialidades(new HashSet<>(especialidades));
+        }
+
+        if (solicitudDto.getCodigoDivisa() != null) {
+            var divisa = divisaRepositorio.findById(solicitudDto.getCodigoDivisa())
+                    .orElseThrow(() -> new ResourcesNotFoundException("Divisa no encontrada"));
+            doctor.setDivisa(divisa);
+        }
 
         Doctor updatedDoctor = doctorRepositorio.save(doctor);
 
@@ -81,29 +91,22 @@ public class DoctorServicioImpl implements DoctorServicio {
     public DoctorRespuestaDto patch(Long id, DoctorSolicitudDto solicitudDto) {
         Doctor doctor = findDoctorById(id);
 
-        ModelMapper patchMapper = new ModelMapper();
-        patchMapper.getConfiguration()
-                .setSkipNullEnabled(true)
-                .setFieldMatchingEnabled(true)
-                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
+        doctorMapper.actualizarDoctorDesdeDto(solicitudDto, doctor);
 
-        patchMapper.map(solicitudDto, doctor);
-
-        if (solicitudDto.especialidad() != null) {
-            var speciality = especialidadRepositorio.findByNombre(solicitudDto.especialidad())
-                    .orElseThrow(() -> new ResourcesNotFoundException("Especialidad no encontrada"));
-            doctor.setEspecialidad(speciality);
+        if (solicitudDto.getEspecialidadesIds() != null && !solicitudDto.getEspecialidadesIds().isEmpty()) {
+            var especialidades = especialidadRepositorio.findAllById(solicitudDto.getEspecialidadesIds());
+            doctor.setEspecialidades(new HashSet<>(especialidades));
         }
 
-        if (solicitudDto.codigoDivisa() != null) {
-            var currency = divisaRepositorio.findById(solicitudDto.codigoDivisa())
+        if (solicitudDto.getCodigoDivisa() != null) {
+            var divisa = divisaRepositorio.findById(solicitudDto.getCodigoDivisa())
                     .orElseThrow(() -> new ResourcesNotFoundException("Divisa no encontrada"));
-            doctor.setDivisa(currency);
+            doctor.setDivisa(divisa);
         }
 
-        Doctor patchedDoctor = doctorRepositorio.save(doctor);
+        Doctor doctorParcheado = doctorRepositorio.save(doctor);
 
-        return doctorMapper.aRespuestaDto(patchedDoctor);
+        return doctorMapper.aRespuestaDto(doctorParcheado);
     }
 
     @Override

@@ -5,10 +5,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Turno {
-    DIURNA("Diurno"),
-    NOCTURNA("Nocturno"),
-    MIXTA("Mixto");
+public enum EstadoPago {
+    PENDIENTE("Pendiente"),
+    COMPLETADO("Completado"),
+    FALLIDO("Fallido"),
+    REMBOLSADO("Rembolsado"),;
 
     private final String nombre;
 }

@@ -9,9 +9,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UsuarioControlador {
@@ -19,9 +21,10 @@ public class UsuarioControlador {
     private final UsuarioServicio usuarioServicio;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioRespuestaDto> getById(@PathVariable Long id) {
+    public String getById(@PathVariable Long id, Model modelo) {
         UsuarioRespuestaDto user = usuarioServicio.getById(id);
-        return ResponseEntity.ok(user);
+        modelo.addAttribute("user", user);
+        return "layout";
     }
 
     @GetMapping
@@ -29,15 +32,9 @@ public class UsuarioControlador {
             @RequestParam(required = false) Rol rol,
             @PageableDefault(size = 10, sort = "lastName") Pageable pageable) {
         Page<UsuarioRespuestaDto> users = usuarioServicio.getAll(rol, pageable);
-//        return ResponseEntity.ok(users);
+
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
-//    @GetMapping("/roles")
-//    public ResponseEntity<List<UserResponseDto>> findByRole(@RequestBody Role role) {
-//        List<UserResponseDto> users = userService.getAllByRole(role);
-//        return new ResponseEntity<>(users, HttpStatus.OK);
-//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

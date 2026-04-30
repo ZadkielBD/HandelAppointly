@@ -1,6 +1,6 @@
 package com.handel.HandelAppointly.entidades;
 
-import com.handel.HandelAppointly.enums.Turno;
+import com.handel.HandelAppointly.enums.NivelAcceso;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -8,18 +8,16 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
-@EqualsAndHashCode(callSuper=true)
 @SuperBuilder
-@Table(name = "recepcionistas")
+@Table(name = "administrador")
+@EqualsAndHashCode(callSuper=true)
 @PrimaryKeyJoinColumn(name = "usuario_id")
-public class Recepcionista extends Usuario {
+public class Gerente extends Usuario {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "clinica_id", nullable = false)
     private Clinica clinica;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Turno turno;
-
-    @Column(name = "telefono")
-    private String telefonoInterno;
+    private NivelAcceso nivelAcceso;
 }

@@ -4,10 +4,10 @@ import com.handel.HandelAppointly.dtos.solicitud.PacienteSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.PacienteRespuestaDto;
 import com.handel.HandelAppointly.entidades.Paciente;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
+import com.handel.HandelAppointly.mappers.PacienteMapper;
 import com.handel.HandelAppointly.repositorios.PacienteRepositorio;
 import com.handel.HandelAppointly.servicios.PacienteServicio;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,57 +17,51 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PacienteServicioImpl implements PacienteServicio {
     private final PacienteRepositorio pacienteRepositorio;
-    private final ModelMapper modelMapper;
+    private final PacienteMapper pacienteMapper;
 
     @Override
     @Transactional
     public PacienteRespuestaDto create(PacienteSolicitudDto solicitudDto) {
-        Paciente paciente = modelMapper.map(solicitudDto, Paciente.class);
+        Paciente paciente = pacienteMapper.aEntidad(solicitudDto);
 
-        Paciente createdPaciente = pacienteRepositorio.save(paciente);
+        Paciente pacienteCreado = pacienteRepositorio.save(paciente);
 
-        return modelMapper.map(createdPaciente, PacienteRespuestaDto.class);
+        return pacienteMapper.aRespuestaDto(pacienteCreado);
     }
 
     @Override
     public PacienteRespuestaDto findById(Long id) {
         Paciente paciente = findPatientById(id);
 
-        return modelMapper.map(paciente, PacienteRespuestaDto.class);
+        return pacienteMapper.aRespuestaDto(paciente);
     }
 
     @Override
     public Page<PacienteRespuestaDto> findAll(Pageable paginable) {
         return pacienteRepositorio.findAll(paginable)
-                .map(p -> modelMapper.map(p, PacienteRespuestaDto.class));
+                .map(pacienteMapper::aRespuestaDto);
     }
 
     @Override
     public PacienteRespuestaDto update(Long id, PacienteSolicitudDto solicitudDto) {
         Paciente paciente = findPatientById(id);
 
-        modelMapper.map(solicitudDto, paciente);
+        pacienteMapper.actualizarEntidadDesdeDto(solicitudDto, paciente);
 
-        Paciente updatedPaciente = pacienteRepositorio.save(paciente);
+        Paciente pacienteActualizado = pacienteRepositorio.save(paciente);
 
-        return modelMapper.map(updatedPaciente, PacienteRespuestaDto.class);
+        return pacienteMapper.aRespuestaDto(pacienteActualizado);
     }
 
     @Override
     public PacienteRespuestaDto patch(Long id, PacienteSolicitudDto solicitudDto) {
         Paciente paciente = findPatientById(id);
 
-        ModelMapper patchMapper = new ModelMapper();
-        patchMapper.getConfiguration()
-                .setSkipNullEnabled(true)
-                .setFieldMatchingEnabled(true)
-                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
+        pacienteMapper.actualizarEntidadDesdeDto(solicitudDto, paciente);
 
-        patchMapper.map(solicitudDto, paciente);
+        Paciente pacienteActualizado = pacienteRepositorio.save(paciente);
 
-        Paciente patchedPaciente = pacienteRepositorio.save(paciente);
-
-        return modelMapper.map(patchedPaciente, PacienteRespuestaDto.class);
+        return pacienteMapper.aRespuestaDto(pacienteActualizado);
     }
 
     @Override

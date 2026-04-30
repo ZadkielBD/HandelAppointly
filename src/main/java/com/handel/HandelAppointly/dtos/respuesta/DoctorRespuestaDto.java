@@ -1,19 +1,19 @@
 package com.handel.HandelAppointly.dtos.respuesta;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
-public record DoctorRespuestaDto(
-        Long id,
-        String profesionalId,
-        String nombre,
-        String apellido,
-        String email,
-        String numeroTelefono,
-        String especialidad,
-        BigDecimal precioLocal,
-        String codigoDivisa,
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        BigDecimal precioUSD // Precio convertido a dolares
-) {}
+@Data
+public class DoctorRespuestaDto {
+    private Long id;
+    private String profesionalId;
+    private String nombre;
+    private String apellido;
+    private String email;
+    private String numeroTelefono;
+    private String especialidad;
+    private BigDecimal precioLocal;
+    private String codigoDivisa;
+    private BigDecimal precioUSD; // Precio convertido a dolares
+}

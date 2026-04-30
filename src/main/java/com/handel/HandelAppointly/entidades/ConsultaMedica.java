@@ -1,10 +1,7 @@
 package com.handel.HandelAppointly.entidades;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -12,6 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
+@Builder
 @Table(name = "consultas_medicas")
 public class ConsultaMedica {
 

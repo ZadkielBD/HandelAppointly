@@ -5,10 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Turno {
-    DIURNA("Diurno"),
-    NOCTURNA("Nocturno"),
-    MIXTA("Mixto");
+public enum NivelAcceso {
+    DIRECCION_GENERAL("Direccion general"),
+    DIRECCION_MEDICA("Direccion medica");
 
     private final String nombre;
 }

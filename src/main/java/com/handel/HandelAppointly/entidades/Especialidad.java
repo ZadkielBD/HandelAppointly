@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
+@Builder
 @Table(name = "especialidades")
 public class Especialidad {
     @Id
@@ -20,7 +21,4 @@ public class Especialidad {
 
     @Column(columnDefinition = "TEXT")
     private String descripcion;
-
-    @OneToMany(mappedBy = "especialidad", fetch = FetchType.LAZY)
-    private List<Doctor> doctores = new ArrayList<>();
 }

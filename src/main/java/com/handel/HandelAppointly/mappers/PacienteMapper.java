@@ -1,17 +1,21 @@
 package com.handel.HandelAppointly.mappers;
 
 import com.handel.HandelAppointly.dtos.respuesta.PacienteRespuestaDto;
+import com.handel.HandelAppointly.dtos.solicitud.DoctorSolicitudDto;
 import com.handel.HandelAppointly.dtos.solicitud.PacienteSolicitudDto;
+import com.handel.HandelAppointly.entidades.Doctor;
 import com.handel.HandelAppointly.entidades.Paciente;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PacienteMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "citas", ignore = true)
-    Paciente aEntity(PacienteSolicitudDto solicitudDto);
+    Paciente aEntidad(PacienteSolicitudDto solicitudDto);
 
     PacienteRespuestaDto aRespuestaDto(Paciente paciente);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void actualizarEntidadDesdeDto(PacienteSolicitudDto dto, @MappingTarget Paciente entity);
 }

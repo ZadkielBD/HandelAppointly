@@ -7,10 +7,10 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "citas")
 @Getter @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
+@Builder
+@Table(name = "citas")
 public class Cita {
 
     @Id

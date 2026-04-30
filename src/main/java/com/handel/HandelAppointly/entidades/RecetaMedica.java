@@ -1,14 +1,12 @@
 package com.handel.HandelAppointly.entidades;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
+@Builder
 @Table(name = "recetas_medicas")
 public class RecetaMedica {
     @Id

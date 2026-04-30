@@ -1,12 +1,11 @@
 package com.handel.HandelAppointly.dtos.respuesta;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public record ErrorRespuestaDto(
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+public record ErrorRespuestaDto (
         LocalDateTime timestamp,
         int estatus,
         String error,

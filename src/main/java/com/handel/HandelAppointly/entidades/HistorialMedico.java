@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
+@Builder
 @Table(name = "historiales_medicos")
 public class HistorialMedico {
 

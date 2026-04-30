@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      <style>
+
+      </style>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Cuenta</title>
+</head>
+<body layout:decorate="~{doctores/layouts/layout}">
+    <main>
+        <h2>Crear Cuenta</h2>
+        <form th:action="@{/pacientes/crearCuenta}" method="post" th:object="${paciente}">
+            <label for="nombre">nombre</label>
+            <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingresa tu nombre" required>
+            <label for="email">email</label>
+            <input type="text" id="email" th:field="*{email}" placeholder="Ingresa tu email" required>
+            <label for="fechaNacimiento">fechaNacimiento</label>
+            <input type="text" id="fechaNacimiento" th:field="*{email}" placeholder="Ingresa tu fecha de nacimiento" required>
+            <label for="contrasena">contraseña</label>
+            <input type="text" id="contrasena" th:field="*{contrasena}" placeholder="Ingresa tu contraseña" required>
+            <button type="submit">Crear cuenta</button>
+        </form>
+    </main>
+
+</body>
+</html>

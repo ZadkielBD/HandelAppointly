@@ -6,11 +6,11 @@ import com.handel.HandelAppointly.dtos.solicitud.DivisaSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.DivisaRespuestaDto;
 import com.handel.HandelAppointly.entidades.Divisa;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
+import com.handel.HandelAppointly.mappers.DivisaMapper;
 import com.handel.HandelAppointly.repositorios.DivisaRepositorio;
 import com.handel.HandelAppointly.servicios.DivisaServicio;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,27 +27,27 @@ import java.util.List;
 public class DivisaServicioImpl implements DivisaServicio {
     private final DivisaRepositorio divisaRepositorio;
     private final CurrencyApiClient currencyApiClient;
-    private final ModelMapper modelMapper;
+    private final DivisaMapper divisaMapper;
 
     @Override
     public DivisaRespuestaDto add(DivisaSolicitudDto solicitudDto) {
-        Divisa divisa = modelMapper.map(solicitudDto, Divisa.class);
+        Divisa divisa = divisaMapper.aEntidad(solicitudDto);
 
         Divisa createdDivisa = divisaRepositorio.save(divisa);
 
-        return modelMapper.map(createdDivisa, DivisaRespuestaDto.class);
+        return divisaMapper.aRespuesta(createdDivisa);
     }
 
     @Override
     public DivisaRespuestaDto findByCodigo(String codigo) {
         Divisa divisa = findCurrencyById(codigo);
-        return modelMapper.map(divisa, DivisaRespuestaDto.class);
+        return divisaMapper.aRespuesta(divisa);
     }
 
     @Override
     public Page<DivisaRespuestaDto> findAll(Pageable paginable) {
         return divisaRepositorio.findAll(paginable)
-                .map(p -> modelMapper.map(p, DivisaRespuestaDto.class));
+                .map(divisaMapper::aRespuesta);
     }
 
     //Actualizacion a las 12am

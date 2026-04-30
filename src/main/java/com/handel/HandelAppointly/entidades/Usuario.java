@@ -3,16 +3,20 @@ package com.handel.HandelAppointly.entidades;
 import com.handel.HandelAppointly.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "usuarios")
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
+@SuperBuilder
+@Table(name = "usuarios")
 @Inheritance(strategy = InheritanceType.JOINED)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false)
