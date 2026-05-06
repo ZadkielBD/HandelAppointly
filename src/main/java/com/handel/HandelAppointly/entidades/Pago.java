@@ -1,9 +1,10 @@
 package com.handel.HandelAppointly.entidades;
 
 import com.handel.HandelAppointly.enums.EstadoPago;
+import com.handel.HandelAppointly.enums.MetodoPago;
 import jakarta.persistence.*;
-import jdk.jfr.Timestamp;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -31,9 +32,14 @@ public class Pago {
     private Divisa divisa;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "metodo_pago")
+    private MetodoPago metodoPago;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "estado_pago")
     private EstadoPago estadoPago;
 
-    @Timestamp
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private LocalDateTime fechaPago;
 }

@@ -2,10 +2,9 @@ package com.handel.HandelAppointly.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.UUID;
 
-public class CodeGenerator {
+public class GeneradorCodigos {
     public static String generateAppointmentCode() {
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");

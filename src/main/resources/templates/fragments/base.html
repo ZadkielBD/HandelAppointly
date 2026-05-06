@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title} + ' - Handel Appointly'">Handel Appointly</title>
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/IconoFA.svg}" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+</head>
+
+<body>
+
+    <header th:fragment="header">
+        <div class="header-logo">
+            <a th:href="@{/home}">
+                <img class="icono" th:src="@{/img/Icono.png}" alt="icono">
+            </a>
+            <span class="nombre-app">
+                <a th:href="@{/home}">Handel Appointly</a>
+            </span>
+        </div>
+        <nav class="nav-menu">
+            <a th:href="@{/home}">Home</a>
+            <a href="">Nosotros</a>
+            <a href="" class="registro-inicio">Iniciar sesión</a>
+            <a href="" class="registro-inicio">Registrarse</a>
+        </nav>
+    </header>
+
+    <main>
+
+    </main>
+
+    <footer th:fragment="footer">
+        <div class="footer-columna">
+            <div class="footer-icono-nombre">
+                <h3>Handel Appointly</h3>
+                <img class="icono" th:src="@{/img/Icono.png}" alt="icono" >
+                <span>&copy; 2026 Handel Appointly. Todos los derechos reservados.</span>
+            </div>
+        </div>
+
+        <div class="footer-columna">
+                <h3>Servicio</h3>
+                <ul>
+                    <li><a href="#">Privacidad y cookies</a></li>
+                    <li><a href="#">Quienes somos</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-columna">
+                <h3>Para los pacientes</h3>
+                <ul>
+                    <li><a href="#">Especialistas</a></li>
+                    <li><a href="#">Clinicas</a></li>
+                </ul>
+            </div>
+    </footer>
+</body>
+</html>

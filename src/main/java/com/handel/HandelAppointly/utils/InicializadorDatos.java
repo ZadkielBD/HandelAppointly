@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DataInitializer implements CommandLineRunner {
+public class InicializadorDatos implements CommandLineRunner {
 
     private final DivisaRepositorio divisaRepositorio;
     private final DivisaServicio divisaServicio;
