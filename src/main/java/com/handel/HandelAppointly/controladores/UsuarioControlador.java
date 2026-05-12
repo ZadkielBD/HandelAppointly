@@ -24,21 +24,22 @@ public class UsuarioControlador {
     public String getById(@PathVariable Long id, Model modelo) {
         UsuarioRespuestaDto user = usuarioServicio.getById(id);
         modelo.addAttribute("user", user);
-        return "layout";
+        return "usuario";
     }
 
     @GetMapping
-    public ResponseEntity<Page<UsuarioRespuestaDto>> getAll(
+    public String getAll(
             @RequestParam(required = false) Rol rol,
-            @PageableDefault(size = 10, sort = "lastName") Pageable pageable) {
+            @PageableDefault(size = 15, sort = "lastName") Pageable pageable,
+            Model modelo) {
         Page<UsuarioRespuestaDto> users = usuarioServicio.getAll(rol, pageable);
+        modelo.addAttribute("users", users);
 
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return "usuarios";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         usuarioServicio.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }

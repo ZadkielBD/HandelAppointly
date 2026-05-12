@@ -19,10 +19,6 @@ public class PacienteSolicitudDto {
     @Email(message = "El formato del correo electrónico no es válido")
     private String email;
 
-    @NotBlank(message = "La contraseña no puede estar en blanco")
-    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres y un máximo de 20", max = 20)
-    private String contrasena;
-
     @NotBlank(message = "El número de teléfono no puede dejarse en blanco")
     private String numeroTelefono;
 
@@ -31,6 +27,10 @@ public class PacienteSolicitudDto {
 
     private LocalDate fechaNacimiento;
 
+    @NotBlank(message = "La contraseña no puede estar en blanco")
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres y un máximo de 20", max = 20)
+    private String contrasena;
+
     private String contactoEmergenciaNombre;
-    private String contactoEmergenciaNoTelefono;
+    private String contactoEmergenciaTelefono;
 }

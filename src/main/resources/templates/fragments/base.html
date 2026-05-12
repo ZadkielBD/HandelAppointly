@@ -1,60 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
-<head th:fragment="head(title)">
-    <meta charset="UTF-8">
-    <title th:text="${title} + ' - Handel Appointly'">Handel Appointly</title>
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/IconoFA.svg}" />
-    <link rel="stylesheet" th:href="@{/css/base.css}">
-</head>
+    <head th:fragment="head(title)">
+        <meta charset="UTF-8">
+        <title th:text="${title} + ' - Handel Appointly'">Handel Appointly</title>
+        <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/IconoFA.svg}" />
+        <link rel="stylesheet" th:href="@{/css/base.css}">
+    </head>
 
-<body>
-
-    <header th:fragment="header">
-        <div class="header-logo">
-            <a th:href="@{/home}">
-                <img class="icono" th:src="@{/img/Icono.png}" alt="icono">
-            </a>
-            <span class="nombre-app">
-                <a th:href="@{/home}">Handel Appointly</a>
-            </span>
-        </div>
-        <nav class="nav-menu">
-            <a th:href="@{/home}">Home</a>
-            <a href="">Nosotros</a>
-            <a href="" class="registro-inicio">Iniciar sesión</a>
-            <a href="" class="registro-inicio">Registrarse</a>
-        </nav>
-    </header>
-
-    <main>
-
-    </main>
-
-    <footer th:fragment="footer">
-        <div class="footer-columna">
-            <div class="footer-icono-nombre">
-                <h3>Handel Appointly</h3>
-                <img class="icono" th:src="@{/img/Icono.png}" alt="icono" >
-                <span>&copy; 2026 Handel Appointly. Todos los derechos reservados.</span>
+    <body>
+        <header th:fragment="header">
+            <div class="header-logo">
+                <a th:href="@{/}">
+                    <img class="header-icono"
+                         th:src="@{/img/Icono2.png}"
+                         alt="icono">
+                </a>
+                &nbsp;&nbsp;&nbsp;
+                <span class="nombre-app">
+                    <a th:href="@{/}">Handel Appointly</a>
+                </span>
             </div>
-        </div>
+            <nav class="nav-menu">
+                <a th:href="@{/}">Home</a>
+                <a href="">Nosotros</a>
+                <a href="" class="registro-inicio">Iniciar sesión</a>
+                <a th:href="@{/crearCuenta}" class="registro-inicio">Crear cuenta</a>
+            </nav>
+        </header>
 
-        <div class="footer-columna">
-                <h3>Servicio</h3>
-                <ul>
-                    <li><a href="#">Privacidad y cookies</a></li>
-                    <li><a href="#">Quienes somos</a></li>
-                    <li><a href="#">Contacto</a></li>
-                </ul>
+        <main>
+
+        </main>
+
+        <footer th:fragment="footer">
+            <div class="footer-columna footer-marca">
+                <div class="footer-logo">
+                    <img class="footer-icono"
+                         th:src="@{/img/Icono2.png}"
+                         alt="icono" >
+                    &nbsp;&nbsp;&nbsp;
+                    <h3>Handel Appointly</h3>
+                </div>
+                <p>
+                    &copy; 2026 Handel Enterprise.
+                    <br>
+                    Todos los derechos reservados.
+                </p>
             </div>
 
             <div class="footer-columna">
-                <h3>Para los pacientes</h3>
-                <ul>
-                    <li><a href="#">Especialistas</a></li>
-                    <li><a href="#">Clinicas</a></li>
-                </ul>
+                    <h3>Servicio</h3>
+                    <ul>
+                        <li><a href="#">Privacidad y cookies</a></li>
+                        <li><a href="#">Quienes somos</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
             </div>
-    </footer>
-</body>
+
+            <div class="footer-columna">
+                    <h3>Pacientes</h3>
+                    <ul>
+                        <li><a href="#">Doctores</a></li>
+                        <li><a href="#">Especialistas</a></li>
+                        <li><a href="#">Clínicas</a></li>
+                    </ul>
+            </div>
+        </footer>
+    </body>
 </html>

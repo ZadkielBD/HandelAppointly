@@ -10,51 +10,84 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
-@RequestMapping("/patients")
+@Controller
+@RequestMapping("/pacientes")
 @RequiredArgsConstructor
 public class PacienteControlador {
     private final PacienteServicio pacienteServicio;
 
-    @PostMapping
-    public ResponseEntity<PacienteRespuestaDto> create(@Valid @RequestBody PacienteSolicitudDto pacienteSolicitudDto) {
-        PacienteRespuestaDto patient = pacienteServicio.create(pacienteSolicitudDto);
-        return new ResponseEntity<>(patient, HttpStatus.CREATED);
+    // Crear Cuenta
+    @GetMapping("/crear")
+    public String crear(Model modelo) {
+        modelo.addAttribute("paciente", new PacienteSolicitudDto());
+        return "pacientes/crearPaciente";
     }
 
+    @PostMapping("/crear")
+    public String crear(@Valid PacienteSolicitudDto pacienteSolicitudDto,
+                        BindingResult bindingResult,
+                        Model modelo,
+                        RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            modelo.addAttribute("titulo", "Formulario de paciente");
+            return "pacientes/crearPaciente";
+        }
+
+        pacienteServicio.create(pacienteSolicitudDto);
+        redirectAttributes.addFlashAttribute("mensaje", "Paciente guardado correctamente");
+        return "redirect:/";
+    }
+
+    // Conseguir Paciente
     @GetMapping("/{id}")
-    public ResponseEntity<PacienteRespuestaDto> findById(@PathVariable Long id) {
-        PacienteRespuestaDto patient = pacienteServicio.findById(id);
-//        return ResponseEntity.ok(patient);
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+    public String findById(@PathVariable Long id) {
+        pacienteServicio.findById(id);
+        return "paciente";
     }
 
     @GetMapping
-    public ResponseEntity<Page<PacienteRespuestaDto>> findAll(@PageableDefault(size = 10, sort = "lastName")
+    public String findAll(@PageableDefault(size = 10, sort = "lastName")
                                                            Pageable pageable) {
         Page<PacienteRespuestaDto> patient = pacienteServicio.findAll(pageable);
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return "pacientes";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PacienteRespuestaDto> update(@PathVariable Long id,
-                                                       @Valid @RequestBody PacienteSolicitudDto requestDto) {
-        PacienteRespuestaDto patient = pacienteServicio.update(id, requestDto);
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+    // Actualizar Paciente
+    @GetMapping("/actualizar")
+    public String actualizar() {
+        return "actualizarPaciente";
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<PacienteRespuestaDto> patch(@PathVariable Long id,
-                                                      @Valid @RequestBody PacienteSolicitudDto requestDto) {
-        PacienteRespuestaDto patient = pacienteServicio.patch(id, requestDto);
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+    @PutMapping("/actualizar/{id}")
+    public String actualizar(@PathVariable Long id,
+                             @Valid PacienteSolicitudDto requestDto,
+                             RedirectAttributes redirectAttributes) {
+        pacienteServicio.update(id, requestDto);
+        redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
+        return "redirect:/pacientes/" + id;
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @PatchMapping("/actualizar/{id}")
+    public String patch(@PathVariable Long id,
+                        @Valid PacienteSolicitudDto requestDto,
+                        RedirectAttributes redirectAttributes) {
+        pacienteServicio.patch(id, requestDto);
+        redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
+        return "redirect:/pacientes/" + id;
+    }
+
+    // Eliminar Paciente
+    @PostMapping("/eliminar/{id}")
+    public String delete(@PathVariable Long id,
+                         RedirectAttributes redirectAttributes) {
         pacienteServicio.delete(id);
-        return ResponseEntity.noContent().build();
+        redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
+        return "redirect:/";
     }
 }
