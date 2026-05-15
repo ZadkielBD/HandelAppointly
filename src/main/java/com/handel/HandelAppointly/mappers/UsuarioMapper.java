@@ -1,6 +1,7 @@
 package com.handel.HandelAppointly.mappers;
 
 import com.handel.HandelAppointly.dtos.respuesta.UsuarioRespuestaDto;
+import com.handel.HandelAppointly.dtos.respuesta.UsuarioSesionDto;
 import com.handel.HandelAppointly.entidades.Usuario;
 import org.mapstruct.Mapper;
 
@@ -9,4 +10,5 @@ public interface UsuarioMapper {
 
     UsuarioRespuestaDto aRespuestaDto(Usuario usuario);
 
+    UsuarioSesionDto aUsuarioSesionDto(Usuario usuario);
 }

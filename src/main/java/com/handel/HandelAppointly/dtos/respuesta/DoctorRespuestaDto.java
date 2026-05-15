@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 @Data
 public class DoctorRespuestaDto {
     private Long id;
-    private String profesionalId;
     private String nombre;
     private String apellido;
     private String email;

@@ -22,9 +22,6 @@ public class PacienteSolicitudDto {
     @NotBlank(message = "El número de teléfono no puede dejarse en blanco")
     private String numeroTelefono;
 
-    @NotBlank(message = "El número de identificación nacional no puede estar en blanco")
-    private String nacionalId;
-
     private LocalDate fechaNacimiento;
 
     @NotBlank(message = "La contraseña no puede estar en blanco")

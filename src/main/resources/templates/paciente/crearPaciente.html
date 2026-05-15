@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+    <head th:replace="~{fragmento/base :: head('Crear Cuenta', '/css/paciente/crearPaciente.css')}">
+        <meta charset="UTF-8" />
+        <title>Crear Cuenta</title>
+    </head>
+
+    <body>
+        <header th:replace="~{fragmento/base::header}"></header>
+
+        <main>
+            <div class="container">
+                <h2>Crear Cuenta</h2>
+                <form th:action="@{/pacientes/crear}" method="post" th:object="${paciente}">
+                    <div class="input-container">
+                        <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingresa tu nombre" required />
+                        <label for="nombre" class="input-label">Nombre</label>
+                    </div>
+
+                    <div class="input-container">
+                        <input
+                            type="text"
+                            id="apellido"
+                            th:field="*{apellido}"
+                            placeholder="Ingresa tu apellido"
+                            required
+                        />
+                        <label for="apellido" class="input-label">Apellido</label>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="text" id="email" th:field="*{email}" placeholder="Ingresa tu email" required />
+                        <label for="email" class="input-label">Email</label>
+                    </div>
+
+                    <div class="input-container">
+                        <input
+                            type="date"
+                            id="fechaNacimiento"
+                            th:field="*{fechaNacimiento}"
+                            placeholder="Ingresa tu fecha de nacimiento"
+                            required
+                        />
+                        <label for="fechaNacimiento" class="input-label">Fecha de Nacimiento</label>
+                    </div>
+
+                    <div class="input-container">
+                        <input
+                            type="text"
+                            id="telefono"
+                            th:field="*{numeroTelefono}"
+                            placeholder="Ingresa tu numero de telefono"
+                            required
+                        />
+                        <label for="telefono" class="input-label">Número de Teléfono</label>
+                    </div>
+
+                    <div class="input-container">
+                        <input
+                            type="password"
+                            id="contrasena"
+                            th:field="*{contrasena}"
+                            placeholder="Ingresa tu contraseña"
+                            required
+                        />
+                        <label for="contrasena" class="input-label">Contraseña</label>
+                    </div>
+
+                    <!-- <div class="input-container">
+                        <input
+                            type="text"
+                            id="contactoEmergenciaNombre"
+                            th:field="*{contactoEmergenciaNombre}"
+                            placeholder="Nombre del contacto"
+                        />
+                        <label for="contactoEmergenciaNombre" class="input-label">Nombre del contacto</label>
+                    </div>
+
+                    <div class="input-container">
+                        <input
+                            type="text"
+                            id="contactoEmergenciaTelefono"
+                            th:field="*{contactoEmergenciaTelefono}"
+                            placeholder="Telefono del contacto"
+                        />
+                        <label for="contactoEmergenciaTelefono" class="input-label">Telefono del contacto</label>
+                    </div> -->
+                    <div class="buttons-container">
+                        <button type="submit">Crear cuenta</button>
+                    </div>     
+                </form>
+            </div>
+        </main>
+
+        <footer th:replace="~{fragmento/base::footer}"></footer>
+    </body>
+</html>

@@ -3,6 +3,7 @@ package com.handel.HandelAppointly.servicios.impl;
 import com.handel.HandelAppointly.dtos.solicitud.PacienteSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.PacienteRespuestaDto;
 import com.handel.HandelAppointly.entidades.Paciente;
+import com.handel.HandelAppointly.enums.Rol;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.PacienteMapper;
 import com.handel.HandelAppointly.repositorios.PacienteRepositorio;
@@ -23,9 +24,9 @@ public class PacienteServicioImpl implements PacienteServicio {
     @Transactional
     public PacienteRespuestaDto create(PacienteSolicitudDto solicitudDto) {
         Paciente paciente = pacienteMapper.aEntidad(solicitudDto);
+        paciente.setRol(Rol.PACIENTE);
 
         Paciente pacienteCreado = pacienteRepositorio.save(paciente);
-
         return pacienteMapper.aRespuestaDto(pacienteCreado);
     }
 

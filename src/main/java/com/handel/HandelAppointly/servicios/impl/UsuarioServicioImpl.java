@@ -1,6 +1,7 @@
 package com.handel.HandelAppointly.servicios.impl;
 
 import com.handel.HandelAppointly.dtos.respuesta.UsuarioRespuestaDto;
+import com.handel.HandelAppointly.dtos.respuesta.UsuarioSesionDto;
 import com.handel.HandelAppointly.enums.Rol;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.entidades.Usuario;
@@ -27,24 +28,18 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return usuarioMapper.aRespuestaDto(user);
     }
 
-    /*
     @Override
     @Transactional(readOnly = true)
-    public Page<UserResponseDto> getAllByRole(Role role, Pageable pageable) {
-        Page<User> users;
+    public UsuarioSesionDto login(String email, String contrasena) {
+        Usuario usuario = usuarioRepositorio.findByEmail(email)
+                .orElseThrow(() -> new ResourcesNotFoundException("Email o contraseña incorrectos"));
 
-        if (role != null) {
-            users = userRepository.findAllByRol(role, pageable);
-        } else {
-            users = userRepository.findAll(pageable);
+        if (!usuario.getContrasena().equals(contrasena)) {
+            throw new ResourcesNotFoundException("Email o contraseña incorrectos");
         }
 
-        return users.map(user -> modelMapper.map(user, UserResponseDto.class));
-
-//        return userRepository.findAllByRol(role).stream().map(user -> modelMapper.map(user, UserResponseDto.class))
-//          .collect(Collectors.toList());
+        return usuarioMapper.aUsuarioSesionDto(usuario);
     }
-     */
 
     @Override
     @Transactional(readOnly = true)

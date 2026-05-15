@@ -16,9 +16,6 @@ import java.util.*;
 @PrimaryKeyJoinColumn(name = "usuario_id")
 public class Doctor extends Usuario {
 
-    @Column(unique = true ,nullable = false, name = "profesional_id")
-    private String profesionalId;
-
     @Column(nullable = false, name = "precio_cita")
     private BigDecimal precioLocal;
 

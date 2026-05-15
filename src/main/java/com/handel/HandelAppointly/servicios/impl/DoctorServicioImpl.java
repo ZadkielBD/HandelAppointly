@@ -44,8 +44,8 @@ public class DoctorServicioImpl implements DoctorServicio {
         doctor.setDivisa(divisa);
         doctor.setRol(Rol.DOCTOR);
 
-        Doctor createdDoctor = doctorRepositorio.save(doctor);
-        return doctorMapper.aRespuestaDto(createdDoctor);
+        Doctor doctorCreado = doctorRepositorio.save(doctor);
+        return doctorMapper.aRespuestaDto(doctorCreado);
     }
 
     @Override

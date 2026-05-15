@@ -8,10 +8,6 @@ import java.util.Set;
 
 @Data
 public class DoctorSolicitudDto{
-    @NotBlank(message = "Doctor no puede estar en blanco")
-    @Pattern(regexp = "^[0-9]{7,8}$")
-    private String profesionalId; //Matricula, la cual debe de seguir un patron: 87648390
-
     @NotBlank(message = "El nombre no puede dejarse en blanco")
     private String nombre;
 

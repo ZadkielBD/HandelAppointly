@@ -1,0 +1,95 @@
+/* formulario */
+/* inputs */
+form h2 {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+form input {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.input-container {
+    position: relative;
+    margin: 12px 0;
+}
+
+.input-container input {
+    padding: 8px 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: #acacac 2px solid;
+    background-color: transparent;
+    color: #003366;
+    transition: 0.15s ease;
+}
+
+.input-container input:focus {
+    border-color: #003366 2px solid;
+}
+
+.input-container input::placeholder {
+    color: transparent;
+}
+ 
+.input-container .input-label {
+    position: absolute;
+    top: 9px;
+    left: 0;
+    font-size: 18px;
+    padding: 0 10px;
+    color: #acacac;
+    pointer-events: none;
+    transition: 0.15s ease;
+}
+
+.input-container input[type="date"] + .input-label {
+    transform: translate(5px, -22px);
+    background-color: #fff;
+    font-size: 14px;
+    top: 9px;
+    left: 0;
+    font-size: 18px;
+    padding: 0 10px;
+    color: #003366;
+}
+
+.input-container input:focus + .input-label,
+.input-container input:not(:placeholder-shown) + 
+.input-label {
+    transform: translate(5px, -22px);
+    background-color: #fff;
+    font-size: 14px;
+    color: #003366;
+    border-color: #003366 2px solid;
+}
+
+/* botones */
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.buttons-container button {
+    padding: 10px 0;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: transparent;
+    border: #003366 2px solid;
+    cursor: pointer;
+}
+
+.buttons-container button:hover {
+    background-color: #003366;
+    color: white;
+    transition: 0.15s ease;
+}

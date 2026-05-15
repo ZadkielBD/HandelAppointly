@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head th:fragment="head(title, cssExtras)">
+        <meta charset="UTF-8">
+        <title th:text="${title} + ' - Handel Appointly'">Handel Appointly</title>
+        <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/IconoFA.svg}" />
+        <link rel="stylesheet" th:href="@{/css/base.css}">
+        <link rel="stylesheet" th:href="@{/css/utils.css}">
+        <th:block th:if="${cssExtras != null}" 
+                th:each="css : ${#strings.arraySplit(cssExtras, ',')}">
+            <link rel="stylesheet" th:href="${css}">
+        </th:block>
+    </head>
+
+    <body>
+        <header th:fragment="header">
+            <div class="header-logo">
+                <a th:href="@{/}">
+                    <img class="header-icono"
+                         th:src="@{/img/Icono2.png}"
+                         alt="icono">
+                </a>
+                &nbsp;&nbsp;&nbsp;
+                <span class="nombre-app">
+                    <a th:href="@{/}">Handel Appointly</a>
+                </span>
+            </div>
+            <nav class="nav-menu">
+                <a th:href="@{/}">Home</a>
+                <a href="">Nosotros</a>
+
+                <th:block th:if="${session.usuarioLogueado == null}">
+                    <a th:href="@{/login}" class="registro-inicio">Iniciar sesión</a>
+                    <a th:href="@{/crearCuenta}" class="registro-inicio">Crear cuenta</a>
+                </th:block>
+
+                <th:block th:if="${session.usuarioLogueado != null}">
+                    <span th:text="${session.usuarioLogueado.nombre}">
+                        Nombre Usuario
+                    </span>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="regsitro-inicio">Cerrar sesión</button>
+                    </form>
+                </th:block>
+            </nav>
+        </header>
+
+        <main>
+
+        </main>
+
+        <footer th:fragment="footer">
+            <div class="footer-columna footer-marca">
+                <div class="footer-logo">
+                    <img class="footer-icono"
+                         th:src="@{/img/Icono2.png}"
+                         alt="icono" >
+                    &nbsp;&nbsp;&nbsp;
+                    <h3>Handel Appointly</h3>
+                </div>
+                <p>
+                    &copy; 2026 Handel Enterprise.
+                    <br>
+                    Todos los derechos reservados.
+                </p>
+            </div>
+
+            <div class="footer-columna">
+                <h3>Servicio</h3>
+                <ul>
+                    <li><a href="#">Privacidad y cookies</a></li>
+                    <li><a href="#">Quienes somos</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-columna">
+                <h3>Pacientes</h3>
+                <ul>
+                    <li><a href="#">Doctores</a></li>
+                    <li><a href="#">Especialistas</a></li>
+                    <li><a href="#">Clínicas</a></li>
+                </ul>
+            </div>  
+
+            <div class="footer-columna">
+                <h3>Doctores</h3>
+                <ul>
+                    <li><a href="#">Horario</a></li>
+                    <li><a href="#">Especialidades</a></li>
+                    <li><a href="#">Clínicas</a></li>
+                </ul>
+            </div>
+        </footer>
+    </body>
+</html>

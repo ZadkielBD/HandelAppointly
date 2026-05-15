@@ -1,23 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="es">
-    <head th:replace="~{fragments/base :: head('Inicio')}">
-        <meta charset="UTF-8">
+    <head th:replace="~{fragmento/base :: head('Inicio', '/css/index.css')}">
+        <meta charset="UTF-8" />
         <title>Inicio</title>
-        <link rel="stylesheet" th:href="@{/css/index.css}">
     </head>
 
     <body>
-
-        <header th:replace="~{fragments/base::header}"></header>
+        <header th:replace="~{fragmento/base::header}"></header>
 
         <main>
-            <h3>Agenda una cita</h3>
-            <label for="cita"></label>
-            <input class="texto" id="cita" type="text">
+            <form action="">
+                <h3>Agenda una cita</h3>
+                <div class="input-container">
+                    <input id="especialidad" type="text" placeholder="especialidad" />
+                    <label for="especialidad" class="input-label">Especialidad</label>
+                </div>
+
+                <div class="input-container">
+                    <input id="lugar" type="text" placeholder="direccion" />
+                    <label for="lugar" class="input-label">Lugar</label>
+                </div>
+            </form>
         </main>
 
-        <footer th:replace="~{fragments/base::footer}"></footer>
-
+        <footer th:replace="~{fragmento/base::footer}"></footer>
     </body>
 </html>

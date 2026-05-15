@@ -9,7 +9,6 @@ import java.time.LocalDate;
 
 @Data
 public class PacienteRespuestaDto{
-    String nationalId;
     Long id;
     String nombre;
     String apellido;

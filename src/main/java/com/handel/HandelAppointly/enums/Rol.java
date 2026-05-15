@@ -7,8 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Rol {
     DOCTOR("Personal Medico"),
-    ADMIN("Administrador"),
-    PATIENT("Paciente");
+    GERENTE("Gerente"),
+    PACIENTE("Paciente"),
+    RECEPCIONISTA("Recepcionista"),;
 
-    private final String description;
+    private final String descripcion;
 }

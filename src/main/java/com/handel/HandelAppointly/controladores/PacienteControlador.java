@@ -26,7 +26,7 @@ public class PacienteControlador {
     @GetMapping("/crear")
     public String crear(Model modelo) {
         modelo.addAttribute("paciente", new PacienteSolicitudDto());
-        return "pacientes/crearPaciente";
+        return "paciente/crearPaciente";
     }
 
     @PostMapping("/crear")
@@ -36,7 +36,7 @@ public class PacienteControlador {
                         RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             modelo.addAttribute("titulo", "Formulario de paciente");
-            return "pacientes/crearPaciente";
+            return "paciente/crearPaciente";
         }
 
         pacienteServicio.create(pacienteSolicitudDto);
@@ -48,20 +48,20 @@ public class PacienteControlador {
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id) {
         pacienteServicio.findById(id);
-        return "paciente";
+        return "paciente/paciente";
     }
 
     @GetMapping
     public String findAll(@PageableDefault(size = 10, sort = "lastName")
                                                            Pageable pageable) {
         Page<PacienteRespuestaDto> patient = pacienteServicio.findAll(pageable);
-        return "pacientes";
+        return "paciente/pacientes";
     }
 
     // Actualizar Paciente
     @GetMapping("/actualizar")
     public String actualizar() {
-        return "actualizarPaciente";
+        return "pacielte/actualizarPaciente";
     }
 
     @PutMapping("/actualizar/{id}")
@@ -70,7 +70,7 @@ public class PacienteControlador {
                              RedirectAttributes redirectAttributes) {
         pacienteServicio.update(id, requestDto);
         redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
-        return "redirect:/pacientes/" + id;
+        return "redirect:/paciente/" + id;
     }
 
     @PatchMapping("/actualizar/{id}")
@@ -79,7 +79,7 @@ public class PacienteControlador {
                         RedirectAttributes redirectAttributes) {
         pacienteServicio.patch(id, requestDto);
         redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
-        return "redirect:/pacientes/" + id;
+        return "redirect:/paciente/" + id;
     }
 
     // Eliminar Paciente

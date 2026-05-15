@@ -18,9 +18,6 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "usuario_id")
 public class Paciente extends Usuario {
 
-    @Column(unique = true ,nullable = false, name = "nacional_id")
-    private String nacionalId;
-
     @Column(nullable = false, name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
