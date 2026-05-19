@@ -14,16 +14,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/usuarios")
 @RequiredArgsConstructor
 public class UsuarioControlador {
 
     private final UsuarioServicio usuarioServicio;
 
     @GetMapping("/{id}")
-    public String getById(@PathVariable Long id, Model modelo) {
-        UsuarioRespuestaDto user = usuarioServicio.getById(id);
-        modelo.addAttribute("user", user);
+    public String mostrarPorId(@PathVariable Long id, Model modelo) {
+        UsuarioRespuestaDto usuario = usuarioServicio.getById(id);
+        modelo.addAttribute("usuario", usuario);
         return "usuario";
     }
 
@@ -32,8 +32,8 @@ public class UsuarioControlador {
             @RequestParam(required = false) Rol rol,
             @PageableDefault(size = 15, sort = "lastName") Pageable pageable,
             Model modelo) {
-        Page<UsuarioRespuestaDto> users = usuarioServicio.getAll(rol, pageable);
-        modelo.addAttribute("users", users);
+        Page<UsuarioRespuestaDto> usuarios = usuarioServicio.getAll(rol, pageable);
+        modelo.addAttribute("usuarios", usuarios);
 
         return "usuarios";
     }

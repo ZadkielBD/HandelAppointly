@@ -24,7 +24,7 @@ public class NavegacionControlador {
     }
 
     @GetMapping("/crearCuenta")
-    public String registrar() {
+    public String mostrarCrearCuenta() {
         return "navegacion/crearCuenta";
     }
 
@@ -42,15 +42,21 @@ public class NavegacionControlador {
                                 HttpSession session,
                                 Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("loginDto", loginDto);
             return "navegacion/login";
         }
 
         try {
             UsuarioSesionDto usuario = usuarioServicio.login(loginDto.getEmail(), loginDto.getContrasena());
-            session.setAttribute("usuarioLogueado", usuario);
+            session.setAttribute("usuarioLogueado", usuario); // crea una sesión
             return "redirect:/";
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            model.addAttribute("loginDto", loginDto);
             model.addAttribute("error", "Email o contraseña incorrectos");
+            return "navegacion/login";
+        } catch (Exception e) {
+            model.addAttribute("loginDto", loginDto);
+            model.addAttribute("error", "Ha ocurrido un error inesperado");
             return "navegacion/login";
         }
     }
@@ -58,7 +64,7 @@ public class NavegacionControlador {
     // Cierra sesión
     @PostMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); // ← destruye la sesión
+        session.invalidate(); // destruye la sesión
         return "redirect:/";
     }
 }

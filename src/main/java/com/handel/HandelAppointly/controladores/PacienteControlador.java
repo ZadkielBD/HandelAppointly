@@ -53,8 +53,11 @@ public class PacienteControlador {
 
     @GetMapping
     public String findAll(@PageableDefault(size = 10, sort = "lastName")
-                                                           Pageable pageable) {
-        Page<PacienteRespuestaDto> patient = pacienteServicio.findAll(pageable);
+                          Pageable pageable,
+                          Model modelo) {
+        Page<PacienteRespuestaDto> pacientes = pacienteServicio.findAll(pageable);
+        modelo.addAttribute("pacientes", pacientes);
+
         return "paciente/pacientes";
     }
 

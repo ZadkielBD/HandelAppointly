@@ -19,5 +19,7 @@ public interface DoctorMapper {
     DoctorRespuestaDto aRespuestaDto(Doctor doctor);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "citas", ignore = true)
+    @Mapping(target = "rol", ignore = true)
     void actualizarDoctorDesdeDto(DoctorSolicitudDto dto, @MappingTarget Doctor entity);
 }

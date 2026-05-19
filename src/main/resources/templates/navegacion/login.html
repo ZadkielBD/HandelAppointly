@@ -10,19 +10,25 @@
         <main>
             <h2>Iniciar Sesión</h2>
 
-            <!--<p th:if="${error}" th:text="${error}" style="color: red"></p>-->
+            <p th:if="${error}" th:text="${error}" style="color: red"></p>
 
             <form th:action="@{/login}" method="post" th:object="${loginDto}">
                 <div class="input-container">
-                    <input id="email" type="text" th:field="*{email}" placeholder="Correo Electronico" required />
+                    <input id="email" type="text" th:field="*{email}" placeholder="Correo Electronico" />
                     <label class="input-label" for="email">Correo Electronico</label>
-                    <!--<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>-->
+                    <span th:if="${#fields.hasErrors('email')}" 
+                        th:errors="*{email}"
+                        class="error-msg">
+                    </span>    
                 </div>
 
                 <div class="input-container">
-                    <input type="password" id="contrasena" th:field="*{contrasena}" placeholder="Contraseña" required />
+                    <input type="password" id="contrasena" th:field="*{contrasena}" placeholder="Contraseña" />
                     <label class="input-label" for="contrasena">Contraseña</label>
-                    <!-- <span th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}"></span> -->
+                    <span th:if="${#fields.hasErrors('contrasena')}"
+                        th:errors="*{contrasena}"
+                        class="error-msg">
+                    </span>
                 </div>
                 <div class="buttons-container">
                     <button type="submit">Iniciar sesión</button>

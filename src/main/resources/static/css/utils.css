@@ -93,3 +93,10 @@ form input {
     color: white;
     transition: 0.15s ease;
 }
+
+/* errores */
+.error-msg {
+    display: block;
+    color: red;
+    font-size: 14px; 
+}

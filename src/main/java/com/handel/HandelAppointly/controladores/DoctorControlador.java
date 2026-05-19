@@ -1,5 +1,6 @@
 package com.handel.HandelAppointly.controladores;
 
+import com.handel.HandelAppointly.dtos.respuesta.UsuarioRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.DoctorSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
 import com.handel.HandelAppointly.servicios.DoctorServicio;
@@ -11,7 +12,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/doctores")
@@ -19,10 +23,24 @@ import org.springframework.web.bind.annotation.*;
 public class DoctorControlador {
     private final DoctorServicio doctorServicio;
 
+    @GetMapping("/crear")
+    public String crear(Model modelo) {
+        modelo.addAttribute("usuario", new UsuarioRespuestaDto());
+        return "doctor/crearDoctor";
+    }
+
     @PostMapping
-    public ResponseEntity<DoctorRespuestaDto> create(@Valid @RequestBody DoctorSolicitudDto requestDto) {
-        DoctorRespuestaDto doctor = doctorServicio.create(requestDto);
-        return new ResponseEntity<>(doctor, HttpStatus.CREATED);
+    public String crear(@Valid DoctorSolicitudDto doctorSolicitudDto,
+                        BindingResult result,
+                        Model modelo,
+                        RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "doctor/crearDoctor";
+        }
+
+        doctorServicio.create(doctorSolicitudDto);
+        redirectAttributes.addFlashAttribute("message", "Doctor guardado exitosamente");
+        return "redirect:/";
     }
 
     @GetMapping("/{id}")

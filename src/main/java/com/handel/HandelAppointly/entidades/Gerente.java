@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 @SuperBuilder
-@Table(name = "administrador")
+@Table(name = "gerentes")
 @EqualsAndHashCode(callSuper=true)
 @PrimaryKeyJoinColumn(name = "usuario_id")
 public class Gerente extends Usuario {

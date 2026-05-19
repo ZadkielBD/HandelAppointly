@@ -24,8 +24,8 @@ public class Paciente extends Usuario {
     @Column(name = "contacto_emergencia_nombre")
     private String contactoEmergenciaNombre;
 
-    @Column(name = "contacto_emergencia_no_telefono")
-    private String contactoEmergenciaNoTelefono;
+    @Column(name = "contacto_emergencia_telefono")
+    private String contactoEmergenciaTelefono;
 
     @Builder.Default
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
