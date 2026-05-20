@@ -3,7 +3,9 @@ package com.handel.HandelAppointly.controladores;
 import com.handel.HandelAppointly.dtos.respuesta.UsuarioRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.DoctorSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
+import com.handel.HandelAppointly.repositorios.EspecialidadRepositorio;
 import com.handel.HandelAppointly.servicios.DoctorServicio;
+import com.handel.HandelAppointly.servicios.EspecialidadServicio;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,58 +24,88 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class DoctorControlador {
     private final DoctorServicio doctorServicio;
+    private final EspecialidadServicio especialidadServicio;
 
     @GetMapping("/crear")
     public String crear(Model modelo) {
-        modelo.addAttribute("usuario", new UsuarioRespuestaDto());
+        modelo.addAttribute("doctor", new DoctorSolicitudDto());
+        modelo.addAttribute("especialidades", especialidadServicio.findAll());
         return "doctor/crearDoctor";
     }
 
     @PostMapping
     public String crear(@Valid DoctorSolicitudDto doctorSolicitudDto,
                         BindingResult result,
-                        Model modelo,
-                        RedirectAttributes redirectAttributes) {
+                        RedirectAttributes redirectAttributes,
+                        Model modelo) {
         if (result.hasErrors()) {
+            modelo.addAttribute("doctor", doctorSolicitudDto);
+            modelo.addAttribute("especialidades", especialidadServicio.findAll());
             return "doctor/crearDoctor";
         }
 
         doctorServicio.create(doctorSolicitudDto);
-        redirectAttributes.addFlashAttribute("message", "Doctor guardado exitosamente");
+        redirectAttributes.addFlashAttribute("mensaje", "Doctor guardado exitosamente");
         return "redirect:/";
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DoctorRespuestaDto> findById(@PathVariable Long id) {
+    public String findById(@PathVariable Long id, Model modelo) {
         DoctorRespuestaDto doctor = doctorServicio.findById(id);
-//        return ResponseEntity.ok(doctor);
-        return new ResponseEntity<>(doctor, HttpStatus.OK);
+        modelo.addAttribute("doctor", doctor);
+        return "doctor/doctor";
     }
 
     @GetMapping
-    public ResponseEntity<Page<DoctorRespuestaDto>> findAll(@PageableDefault(size = 10, sort = "lastName")
-                                                           Pageable pageable) {
-        Page<DoctorRespuestaDto> doctor = doctorServicio.findAll(pageable);
-        return new ResponseEntity<>(doctor, HttpStatus.OK);
+    public String findAll(@PageableDefault(size = 15, sort = "apellido") Pageable pageable, Model modelo) {
+        Page<DoctorRespuestaDto> doctores = doctorServicio.findAll(pageable);
+        modelo.addAttribute("doctores", doctores);
+        return "doctor/doctores";
+    }
+
+    @GetMapping("/actualizar/{id}")
+    public String actualizar(@PathVariable Long id, Model modelo) {
+        DoctorRespuestaDto doctor = doctorServicio.findById(id);
+        modelo.addAttribute("doctor", doctor);
+        return "doctor/actualizarDoctor";
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DoctorRespuestaDto> update(@PathVariable Long id,
-                                                     @Valid @RequestBody DoctorSolicitudDto requestDto) {
-         DoctorRespuestaDto doctor = doctorServicio.update(id, requestDto);
-         return new ResponseEntity<>(doctor, HttpStatus.OK);
+    public String update(@PathVariable Long id,
+                         @Valid DoctorSolicitudDto solicitudDto,
+                         BindingResult result,
+                         Model modelo,
+                         RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            modelo.addAttribute("doctor", solicitudDto);
+            return "doctor/actualizarDoctor";
+        }
+
+         doctorServicio.update(id, solicitudDto);
+         redirectAttributes.addFlashAttribute("mensaje", "Doctor actualizado");
+         return "redirect:/doctores/" + id;
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<DoctorRespuestaDto> patch(@PathVariable Long id,
-                                                    @Valid @RequestBody DoctorSolicitudDto requestDto) {
-        DoctorRespuestaDto doctor = doctorServicio.patch(id, requestDto);
-        return new ResponseEntity<>(doctor, HttpStatus.OK);
+    public String patch(@PathVariable Long id,
+                        @Valid DoctorSolicitudDto solicitudDto,
+                        BindingResult result,
+                        Model modelo,
+                        RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            modelo.addAttribute("doctor", solicitudDto);
+            return "doctor/actualizarDoctor";
+        }
+
+        doctorServicio.patch(id, solicitudDto);
+        redirectAttributes.addFlashAttribute("mensaje", "Doctor actualizado");
+        return "redirect:/doctores/" + id;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         doctorServicio.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }

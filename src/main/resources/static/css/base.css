@@ -43,6 +43,12 @@ header {
     font-weight: bold;
 }
 
+.nav-menu form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
 .nav-menu a {
     color: #fff;
     text-decoration: none;
@@ -134,11 +140,24 @@ footer {
 }
 
 .logout-button {
-    padding: 10px 0;
-    font-size: 15px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
     font-weight: bold;
     border-radius: 25px;
     background-color: #e0f2fe;
+    color: #003366;
     border: none;
     cursor: pointer;
+    margin-left: 20px; 
+}
+
+.logout-button:hover {
+    opacity: 0.8;
+}
+
+.nav-menu span {
+    color: #fff;
+    margin-left: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
 }

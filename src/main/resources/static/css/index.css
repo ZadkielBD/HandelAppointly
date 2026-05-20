@@ -7,3 +7,9 @@ main {
     flex-flow: column;
     color: black;
 }
+
+h1 {
+    font-size: 2rem;
+    color: #003366;
+    margin-bottom: 8px;
+}

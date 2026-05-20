@@ -9,7 +9,7 @@
         <header th:replace="~{fragmento/base::header}"></header>
 
         <main>
-            <form th:action="@{/pacientes}" method="post" th:object="${paciente}">
+            <form th:action="@{/doctores}" method="post" th:object="${doctor}">
                 <h1>Crear Cuenta</h1>
                 <div class="input-container">
                     <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingresa tu nombre" />
@@ -28,22 +28,36 @@
 
                 <div class="input-container">
                     <input
-                        type="date"
-                        id="fechaNacimiento"
-                        th:field="*{fechaNacimiento}"
-                        placeholder="Ingresa tu fecha de nacimiento"
-                    />
-                    <label for="fechaNacimiento" class="input-label">Fecha de Nacimiento</label>
-                </div>
-
-                <div class="input-container">
-                    <input
                         type="text"
                         id="telefono"
                         th:field="*{numeroTelefono}"
                         placeholder="Ingresa tu numero de telefono"
                     />
                     <label for="telefono" class="input-label">Número de Teléfono</label>
+                </div>
+
+                <select id="especialidades" th:field="*{especialidadesIds}" class="select-multiple" multiple>
+                    <option th:each="esp : ${especialidades}" th:value="${esp.id}" th:text="${esp.nombre}"></option>
+                </select>
+
+                <div class="input-container">
+                    <input
+                        type="text"
+                        id="precioLocal"
+                        th:field="*{precioLocal}"
+                        placeholder="Ingresa el precio de consulta"
+                    />
+                    <label for="precioLocal" class="input-label">Precio</label>
+                </div>
+
+                <div class="input-container">
+                    <input
+                        type="text"
+                        id="codigoDivisa"
+                        th:field="*{codigoDivisa}"
+                        placeholder="Ingresa el código de la divisa"
+                    />
+                    <label for="codigoDivisa" class="input-label">Código de Divisa</label>
                 </div>
 
                 <div class="input-container">
@@ -56,25 +70,6 @@
                     <label for="contrasena" class="input-label">Contraseña</label>
                 </div>
 
-                <!-- <div class="input-container">
-                        <input
-                            type="text"
-                            id="contactoEmergenciaNombre"
-                            th:field="*{contactoEmergenciaNombre}"
-                            placeholder="Nombre del contacto"
-                        />
-                        <label for="contactoEmergenciaNombre" class="input-label">Nombre del contacto</label>
-                    </div>
-
-                    <div class="input-container">
-                        <input
-                            type="text"
-                            id="contactoEmergenciaTelefono"
-                            th:field="*{contactoEmergenciaTelefono}"
-                            placeholder="Telefono del contacto"
-                        />
-                        <label for="contactoEmergenciaTelefono" class="input-label">Telefono del contacto</label>
-                    </div> -->
                 <div class="buttons-container">
                     <button type="submit">Crear cuenta</button>
                 </div>

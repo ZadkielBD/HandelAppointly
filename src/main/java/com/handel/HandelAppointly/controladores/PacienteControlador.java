@@ -29,13 +29,11 @@ public class PacienteControlador {
         return "paciente/crearPaciente";
     }
 
-    @PostMapping("/crear")
+    @PostMapping
     public String crear(@Valid PacienteSolicitudDto pacienteSolicitudDto,
                         BindingResult bindingResult,
-                        Model modelo,
                         RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            modelo.addAttribute("titulo", "Formulario de paciente");
             return "paciente/crearPaciente";
         }
 
@@ -46,13 +44,14 @@ public class PacienteControlador {
 
     // Conseguir Paciente
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id) {
-        pacienteServicio.findById(id);
+    public String findById(@PathVariable Long id, Model modelo) {
+        PacienteRespuestaDto paciente = pacienteServicio.findById(id);
+        modelo.addAttribute("paciente", paciente);
         return "paciente/paciente";
     }
 
     @GetMapping
-    public String findAll(@PageableDefault(size = 10, sort = "lastName")
+    public String findAll(@PageableDefault(size = 15, sort = "apellido")
                           Pageable pageable,
                           Model modelo) {
         Page<PacienteRespuestaDto> pacientes = pacienteServicio.findAll(pageable);

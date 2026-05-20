@@ -8,11 +8,10 @@
         <header th:replace="~{fragmento/base::header}"></header>
 
         <main>
-            <h2>Iniciar Sesión</h2>
-
             <p th:if="${error}" th:text="${error}" style="color: red"></p>
 
             <form th:action="@{/login}" method="post" th:object="${loginDto}">
+                <h1>Iniciar Sesión</h1>
                 <div class="input-container">
                     <input id="email" type="text" th:field="*{email}" placeholder="Correo Electronico" />
                     <label class="input-label" for="email">Correo Electronico</label>

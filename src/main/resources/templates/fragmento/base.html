@@ -35,7 +35,7 @@
                 </th:block>
 
                 <th:block th:if="${session.usuarioLogueado != null}">
-                    <span th:text="${session.usuarioLogueado.nombre}">
+                    <span th:text="|Hola, ${session.usuarioLogueado.nombre}|">
                         Nombre Usuario
                     </span>
                     <form th:action="@{/logout}" method="post">

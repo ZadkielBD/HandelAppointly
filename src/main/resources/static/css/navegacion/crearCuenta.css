@@ -1,6 +1,69 @@
-.links {
-    color: black;
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.crear-cuenta-container {
+    text-align: center;
+    padding: 40px 20px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.crear-cuenta-container h1 {
+    font-size: 2rem;
+    color: #003366;
+    margin-bottom: 8px;
+}
+
+.subtitulo {
+    font-size: 1rem;
+    color: #acacac;
+    margin-bottom: 40px;
+}
+
+.roles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.rol-card {
+    background-color: #fff;
+    border: 2px solid #e0f2fe;
+    border-radius: 16px;
+    padding: 36px 24px;
     text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
+    color: #003366;
+    transition: 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 51, 102, 0.08);
+}
+
+.rol-card:hover {
+    border-color: #003366;
+    background-color: #e0f2fe;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 51, 102, 0.15);
+}
+
+.rol-icono {
+    font-size: 3rem;
+}
+
+.rol-card h3 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.rol-card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+    text-align: center;
 }

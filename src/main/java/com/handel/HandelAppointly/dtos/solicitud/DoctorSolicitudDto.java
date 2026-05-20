@@ -25,7 +25,7 @@ public class DoctorSolicitudDto{
     @NotBlank(message = "El número de teléfono no puede dejarse en blanco")
     private String numeroTelefono;
 
-    @NotBlank(message = "Especialidad no puede estar en blanco")
+    @NotEmpty(message = "Especialidad no puede estar en blanco")
     private Set<Long> especialidadesIds;
 
     @NotNull(message = "Precio local no puede estar en blanco")

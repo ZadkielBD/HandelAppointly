@@ -6,7 +6,8 @@ main {
     padding: 5px;
 }
 
-.container h2,
-.container p {
-    text-align: justify;
+main h1 {
+    font-size: 2rem;
+    color: #003366;
+    margin-bottom: 8px;
 }

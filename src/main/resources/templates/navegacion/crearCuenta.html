@@ -11,19 +11,24 @@
 <header th:replace="~{fragmento/base::header}"></header>
 
 <main>
-    <div class="links">
-        <a th:href="@{/pacientes/crear}">
-            Soy Paciente
+    <div class="crear-cuenta-container">
+        <h1>¿Cómo deseas registrarte?</h1>
+        <p class="subtitulo">Selecciona tu perfil para comenzar</p>
+
+        <div class="roles-grid">
+            <a th:href="@{/pacientes/crear}" class="rol-card">
+            <h3>Soy Paciente</h3>
+            <p>Agenda citas con los mejores especialistas</p>
         </a>
-        <a th:href="@{/}">
-            Soy Doctor
+        <a th:href="@{/doctores/crear}" class="rol-card">
+            <h3>Soy Doctor</h3>
+            <p>Gestiona tus citas y pacientes fácilmente</p>
         </a>
-        <a th:href="@{/}">
-            Soy Recepcionista
+        <a th:href="@{/administradores/crear}" class="rol-card">
+            <h3>Soy Administrador</h3>
+            <p>Administra doctores, pacientes y el sistema</p>
         </a>
-        <a th:href="@{/}">
-            Soy Gerente
-        </a>
+        </div>
     </div>
 </main>
 

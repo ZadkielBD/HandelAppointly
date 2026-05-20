@@ -56,7 +56,7 @@ public class InicializadorDatos implements CommandLineRunner {
         if (pacienteRepositorio.count() == 0) {
             List<Paciente> pacientesIniciales = List.of(
                     Paciente.builder()
-                            .nombre("Zadkiel").apellido("Barron Dominguez").email("barrondominguezzadkiel@gmail.comm")
+                            .nombre("Zadkiel").apellido("Barron Dominguez").email("barrondominguezzadkiel@gmail.com")
                             .contrasena("Zadkiel#2009").numeroTelefono("5621724816")
                             .rol(Rol.PACIENTE).fechaNacimiento(LocalDate.of(2009,10,17))
                             .contactoEmergenciaNombre("Leonardo").contactoEmergenciaTelefono("5512174406")
