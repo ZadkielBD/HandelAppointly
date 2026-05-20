@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=true)
 @SuperBuilder
 @Table(name = "pacientes")
-@PrimaryKeyJoinColumn(name = "usuario_id")
+@PrimaryKeyJoinColumn(name = "id")
 public class Paciente extends Usuario {
 
     @Column(nullable = false, name = "fecha_nacimiento")

@@ -8,16 +8,13 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
-@SuperBuilder
-@Table(name = "gerentes")
 @EqualsAndHashCode(callSuper=true)
-@PrimaryKeyJoinColumn(name = "usuario_id")
-public class Gerente extends Usuario {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clinica_id", nullable = false)
-    private Clinica clinica;
-
+@SuperBuilder
+@Table(name = "administradores")
+@PrimaryKeyJoinColumn(name = "id")
+public class Administrador extends Usuario {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private NivelAcceso nivelAcceso;
 }
+

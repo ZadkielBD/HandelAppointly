@@ -11,5 +11,5 @@ import java.util.Set;
 
 @Repository
 public interface EspecialidadRepositorio extends JpaRepository<Especialidad,Long> {
-
+    Optional<Especialidad> findByNombre(String name);
 }

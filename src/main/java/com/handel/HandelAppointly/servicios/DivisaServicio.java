@@ -15,5 +15,5 @@ public interface DivisaServicio {
 
     void updateTipoCambio();
 
-    void delete(String code);
+    void delete(String codigo);
 }

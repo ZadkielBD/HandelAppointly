@@ -20,7 +20,7 @@ public class FrankfurterClient implements CurrencyApiClient {
                     String.format(URL, base),
                     FrankfurterRespuestaDto.class);
         } catch (Exception e) {
-            throw new RuntimeException("Error calling Frankfurter API ", e);
+            throw new RuntimeException("Error al llamar Frankfurter API ", e);
         }
     }
 }

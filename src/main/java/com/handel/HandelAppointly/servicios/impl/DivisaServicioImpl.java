@@ -50,7 +50,7 @@ public class DivisaServicioImpl implements DivisaServicio {
                 .map(divisaMapper::aRespuesta);
     }
 
-    //Actualizacion a las 12am
+    //Actualizacion automática a las 12 am
     @Override
     @Transactional
     @Scheduled(cron = "0 0 0 * * *")
@@ -58,22 +58,22 @@ public class DivisaServicioImpl implements DivisaServicio {
         try {
             FrankfurterRespuestaDto response = currencyApiClient.getExchangeRates("USD");
 
-            if (response == null || response.rates() == null) {
+            if (response == null || response.tasaCambio() == null) {
                 log.error("La respuesta esta vacía");
                 return;
             }
 
-            List<Divisa> updatedCurrencies = new ArrayList<>();
+            List<Divisa> divisasActualizadas = new ArrayList<>();
 
-            response.rates().forEach((code, rate) ->
-                divisaRepositorio.findById(code).ifPresent(divisa -> {
-                    divisa.setTipoCambio(rate);
+            response.tasaCambio().forEach((codigo, tasaCambio) ->
+                divisaRepositorio.findById(codigo).ifPresent(divisa -> {
+                    divisa.setTipoCambio(tasaCambio);
                     divisa.setUltimaActualizacion(LocalDateTime.now());
-                    updatedCurrencies.add(divisa);
+                    divisasActualizadas.add(divisa);
                 })
             );
 
-            divisaRepositorio.saveAll(updatedCurrencies);
+            divisaRepositorio.saveAll(divisasActualizadas);
 
             log.info("Las divisas se han actualizado correctamente a las {}", LocalDateTime.now());
 
@@ -83,13 +83,13 @@ public class DivisaServicioImpl implements DivisaServicio {
     }
 
     @Override
-    public void delete(String code) {
-        Divisa divisa = findCurrencyById(code);
+    public void delete(String codigo) {
+        Divisa divisa = findCurrencyById(codigo);
         divisaRepositorio.delete(divisa);
     }
 
-    private Divisa findCurrencyById(String code) {
-        return divisaRepositorio.findById(code)
-                .orElseThrow(() -> new ResourcesNotFoundException("Divisa con codigo " + code + " no encontrado"));
+    private Divisa findCurrencyById(String codigo) {
+        return divisaRepositorio.findById(codigo)
+                .orElseThrow(() -> new ResourcesNotFoundException("Divisa con codigo " + codigo + " no encontrado"));
     }
 }

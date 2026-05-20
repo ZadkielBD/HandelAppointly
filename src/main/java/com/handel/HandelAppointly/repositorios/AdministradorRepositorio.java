@@ -1,9 +1,9 @@
 package com.handel.HandelAppointly.repositorios;
 
-import com.handel.HandelAppointly.entidades.Gerente;
+import com.handel.HandelAppointly.entidades.Administrador;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GerenteRepositorio extends JpaRepository<Gerente,Long> {
+public interface AdministradorRepositorio extends JpaRepository<Administrador,Long> {
 }

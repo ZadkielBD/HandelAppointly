@@ -8,11 +8,11 @@ import java.util.Map;
 
 //La respuesta de la api
 public record FrankfurterRespuestaDto(
-        BigDecimal amount,
+        BigDecimal cantidad,
         String base,
 
         @JsonFormat(pattern = "yyyy-MM-dd")
-        LocalDate date,
+        LocalDate fecha,
 
-        Map<String, BigDecimal> rates
+        Map<String, BigDecimal> tasaCambio
 ) { }

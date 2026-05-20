@@ -13,7 +13,7 @@ import java.util.*;
 @EqualsAndHashCode(callSuper=true)
 @SuperBuilder
 @Table(name = "doctores")
-@PrimaryKeyJoinColumn(name = "usuario_id")
+@PrimaryKeyJoinColumn(name = "id")
 public class Doctor extends Usuario {
 
     @Column(nullable = false, name = "precio_cita")
@@ -31,10 +31,6 @@ public class Doctor extends Usuario {
             inverseJoinColumns = @JoinColumn(name = "especialidad_id")
     )
     private Set<Especialidad> especialidades = new HashSet<>();
-
-    @Builder.Default
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "doctores")
-    private Set<Clinica> clinicas = new HashSet<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
