@@ -55,17 +55,6 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public PacienteRespuestaDto patch(Long id, PacienteSolicitudDto solicitudDto) {
-        Paciente paciente = findPatientById(id);
-
-        pacienteMapper.actualizarEntidadDesdeDto(solicitudDto, paciente);
-
-        Paciente pacienteActualizado = pacienteRepositorio.save(paciente);
-
-        return pacienteMapper.aRespuestaDto(pacienteActualizado);
-    }
-
-    @Override
     public void delete(Long id) {
         Paciente paciente = findPatientById(id);
 

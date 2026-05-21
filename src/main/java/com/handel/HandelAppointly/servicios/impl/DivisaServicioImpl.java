@@ -58,14 +58,14 @@ public class DivisaServicioImpl implements DivisaServicio {
         try {
             FrankfurterRespuestaDto response = currencyApiClient.getExchangeRates("USD");
 
-            if (response == null || response.tasaCambio() == null) {
+            if (response == null || response.rates() == null) {
                 log.error("La respuesta esta vacía");
                 return;
             }
 
             List<Divisa> divisasActualizadas = new ArrayList<>();
 
-            response.tasaCambio().forEach((codigo, tasaCambio) ->
+            response.rates().forEach((codigo, tasaCambio) ->
                 divisaRepositorio.findById(codigo).ifPresent(divisa -> {
                     divisa.setTipoCambio(tasaCambio);
                     divisa.setUltimaActualizacion(LocalDateTime.now());

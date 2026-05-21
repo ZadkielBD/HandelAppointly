@@ -26,6 +26,20 @@ public class DoctorControlador {
     private final DoctorServicio doctorServicio;
     private final EspecialidadServicio especialidadServicio;
 
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Long id, Model modelo) {
+        DoctorRespuestaDto doctor = doctorServicio.findById(id);
+        modelo.addAttribute("doctor", doctor);
+        return "doctor/doctor";
+    }
+
+    @GetMapping
+    public String findAll(@PageableDefault(size = 15, sort = "apellido") Pageable pageable, Model modelo) {
+        Page<DoctorRespuestaDto> doctores = doctorServicio.findAll(pageable);
+        modelo.addAttribute("doctores", doctores);
+        return "doctor/doctores";
+    }
+
     @GetMapping("/crear")
     public String crear(Model modelo) {
         modelo.addAttribute("doctor", new DoctorSolicitudDto());
@@ -49,20 +63,6 @@ public class DoctorControlador {
         return "redirect:/";
     }
 
-    @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model modelo) {
-        DoctorRespuestaDto doctor = doctorServicio.findById(id);
-        modelo.addAttribute("doctor", doctor);
-        return "doctor/doctor";
-    }
-
-    @GetMapping
-    public String findAll(@PageableDefault(size = 15, sort = "apellido") Pageable pageable, Model modelo) {
-        Page<DoctorRespuestaDto> doctores = doctorServicio.findAll(pageable);
-        modelo.addAttribute("doctores", doctores);
-        return "doctor/doctores";
-    }
-
     @GetMapping("/actualizar/{id}")
     public String actualizar(@PathVariable Long id, Model modelo) {
         DoctorRespuestaDto doctor = doctorServicio.findById(id);
@@ -70,7 +70,7 @@ public class DoctorControlador {
         return "doctor/actualizarDoctor";
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("actualizar/{id}")
     public String update(@PathVariable Long id,
                          @Valid DoctorSolicitudDto solicitudDto,
                          BindingResult result,
@@ -87,24 +87,7 @@ public class DoctorControlador {
          return "redirect:/doctores/" + id;
     }
 
-    @PatchMapping("/{id}")
-    public String patch(@PathVariable Long id,
-                        @Valid DoctorSolicitudDto solicitudDto,
-                        BindingResult result,
-                        Model modelo,
-                        RedirectAttributes redirectAttributes) {
-
-        if (result.hasErrors()) {
-            modelo.addAttribute("doctor", solicitudDto);
-            return "doctor/actualizarDoctor";
-        }
-
-        doctorServicio.patch(id, solicitudDto);
-        redirectAttributes.addFlashAttribute("mensaje", "Doctor actualizado");
-        return "redirect:/doctores/" + id;
-    }
-
-    @DeleteMapping("/{id}")
+    @PostMapping("eliminar/{id}")
     public void delete(@PathVariable Long id) {
         doctorServicio.delete(id);
     }

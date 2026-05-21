@@ -1,15 +1,16 @@
 <!doctype html>
-<html lang="en">
-    <head th:replace="~{fragmento/base :: head('Crear Doctor', '/css/paciente/crearPaciente.css')}">
+
+<html lang="es">
+    <head th:replace="~{fragmento/base :: head('Crear Administrador', '/css/administrador/crearAdministrador.css')}">
         <meta charset="UTF-8" />
-        <title>Crear Cuenta</title>
+        <title>Crear Administrador</title>
     </head>
 
     <body>
         <header th:replace="~{fragmento/base::header}"></header>
 
         <main>
-            <form th:action="@{/doctores}" method="post" th:object="${doctor}">
+            <form th:action="@{/administradores}" method="post" th:object="${administrador}">
                 <h1>Crear Cuenta</h1>
                 <div class="input-container">
                     <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingresa tu nombre" />
@@ -36,36 +37,6 @@
                     <label for="telefono" class="input-label">Número de Teléfono</label>
                 </div>
 
-                <div class="select-container">
-                    <label>Especialidades</label>
-                    <select id="especialidades" th:field="*{especialidadesIds}" class="select-field" multiple>
-                        <option disabled selected value="">Selecciona tus especialidades</option>
-                        <option th:each="esp : ${especialidades}" th:value="${esp.id}" th:text="${esp.nombre}"></option>
-                    </select>
-                </div>
-
-                <div class="input-container">
-                    <input
-                        type="text"
-                        id="precioLocal"
-                        th:field="*{precioLocal}"
-                        placeholder="Ingresa el precio de consulta"
-                    />
-                    <label for="precioLocal" class="input-label">Precio de consulta</label>
-                </div>
-
-                <div class="select-container">
-                    <label>Código de Divisa</label>
-                    <select th:field="*{codigoDivisa}" class="select-field">
-                        <option disabled selected value="">Selecciona una divisa</option>
-                        <option
-                            th:each="divisa : ${divisas}"
-                            th:value="${divisa.codigo}"
-                            th:text="${divisa.nombre}"
-                        ></option>
-                    </select>
-                </div>
-
                 <div class="input-container">
                     <input
                         type="password"
@@ -74,6 +45,14 @@
                         placeholder="Ingresa tu contraseña"
                     />
                     <label for="contrasena" class="input-label">Contraseña</label>
+                </div>
+
+                <div class="select-container">
+                    <label>Nivel de Acceso</label>
+                    <select th:field="*{nivelAcceso}" class="select-field">
+                        <option disabled selected value="">Selecciona el nivel de Acceso</option>
+                        <option th:each="nivelAcceso : ${nivelesAcceso}" th:value="${nivelAcceso}" th:text="${nivelAcceso}"></option>
+                    </select>
                 </div>
 
                 <div class="buttons-container">

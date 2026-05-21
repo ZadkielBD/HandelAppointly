@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/currencies")
+@RequestMapping("/divisas")
 @RequiredArgsConstructor
 public class DivisaControlador {
     private final DivisaServicio divisaServicio;
@@ -41,7 +41,7 @@ public class DivisaControlador {
     @PutMapping
     public ResponseEntity<String> update() {
         divisaServicio.updateTipoCambio();
-        return new ResponseEntity<>("Updated Successfully at " + LocalDateTime.now(), HttpStatus.OK);
+        return new ResponseEntity<>("Actualizacion exitosa a las " + LocalDateTime.now(), HttpStatus.OK);
     }
 
     public ResponseEntity<Void> delete(String code) {

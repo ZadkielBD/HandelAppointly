@@ -1,7 +1,9 @@
 package com.handel.HandelAppointly.dtos.solicitud;
 
+import com.handel.HandelAppointly.enums.NivelAcceso;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -25,4 +27,7 @@ public class AdministradorSolicitudDto {
 
     @NotBlank(message = "El número de teléfono no puede dejarse en blanco")
     private String numeroTelefono;
+
+    @NotNull(message = "El nivel de acceso es obligatorio")
+    private NivelAcceso nivelAcceso;
 }

@@ -99,7 +99,10 @@ public class InicializadorDatos implements CommandLineRunner {
             List<Especialidad> especialidadesIniciales = List.of(
                     new Especialidad(null ,"Cardiologia", "Especialidad médica que se ocupa del estudio del corazón"),
                     new Especialidad(null ,"Pediatria", "Especialidad medica dedicada al cuidado integral de la salud de niños y adolescentes"),
-                    new Especialidad(null ,"Dermatologia", "Especialidad médica que estudia la piel")
+                    new Especialidad(null ,"Dermatologia", "Especialidad médica que estudia la piel"),
+                    new Especialidad(null, "Anestesiologia", "Manejo del dolor y cuidado perioperatorio antes, durante y después de cirugías"),
+                    new Especialidad(null, "Psiquiatría", "Diagnóstico y tratamiento de trastornos mentales y emocionales"),
+                    new Especialidad(null, "Endocrinología", "Manejo de glándulas y hormonas, incluyendo diabetes y trastornos tiroideos")
             );
 
             especialidadRepositorio.saveAll(especialidadesIniciales);

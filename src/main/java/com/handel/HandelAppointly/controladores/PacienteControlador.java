@@ -22,6 +22,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PacienteControlador {
     private final PacienteServicio pacienteServicio;
 
+    // Conseguir Paciente
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Long id, Model modelo) {
+        PacienteRespuestaDto paciente = pacienteServicio.findById(id);
+        modelo.addAttribute("paciente", paciente);
+        return "paciente/paciente";
+    }
+
+    @GetMapping
+    public String findAll(@PageableDefault(size = 15, sort = "apellido")
+                          Pageable pageable,
+                          Model modelo) {
+        Page<PacienteRespuestaDto> pacientes = pacienteServicio.findAll(pageable);
+        modelo.addAttribute("pacientes", pacientes);
+
+        return "paciente/pacientes";
+    }
+
+
     // Crear Cuenta
     @GetMapping("/crear")
     public String crear(Model modelo) {
@@ -42,44 +61,17 @@ public class PacienteControlador {
         return "redirect:/";
     }
 
-    // Conseguir Paciente
-    @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model modelo) {
-        PacienteRespuestaDto paciente = pacienteServicio.findById(id);
-        modelo.addAttribute("paciente", paciente);
-        return "paciente/paciente";
-    }
-
-    @GetMapping
-    public String findAll(@PageableDefault(size = 15, sort = "apellido")
-                          Pageable pageable,
-                          Model modelo) {
-        Page<PacienteRespuestaDto> pacientes = pacienteServicio.findAll(pageable);
-        modelo.addAttribute("pacientes", pacientes);
-
-        return "paciente/pacientes";
-    }
-
     // Actualizar Paciente
     @GetMapping("/actualizar")
     public String actualizar() {
         return "pacielte/actualizarPaciente";
     }
 
-    @PutMapping("/actualizar/{id}")
+    @PostMapping("/actualizar/{id}")
     public String actualizar(@PathVariable Long id,
                              @Valid PacienteSolicitudDto requestDto,
                              RedirectAttributes redirectAttributes) {
         pacienteServicio.update(id, requestDto);
-        redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
-        return "redirect:/paciente/" + id;
-    }
-
-    @PatchMapping("/actualizar/{id}")
-    public String patch(@PathVariable Long id,
-                        @Valid PacienteSolicitudDto requestDto,
-                        RedirectAttributes redirectAttributes) {
-        pacienteServicio.patch(id, requestDto);
         redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
         return "redirect:/paciente/" + id;
     }

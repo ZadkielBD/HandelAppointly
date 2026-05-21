@@ -68,7 +68,20 @@ form input {
     border-color: #003366 2px solid;
 }
 
-.select-multiple {
+.select-container {
+    margin: 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.select-container label {
+    font-size: 14px;
+    color: #003366;
+    font-weight: bold;
+}
+
+.select-field {
     width: 100%;
     border: 2px solid #acacac;
     border-radius: 5px;
@@ -82,22 +95,22 @@ form input {
     transition: 0.15s ease;
 }
 
-.select-multiple:focus {
+.select-field:focus {
     border-color: #003366;
 }
 
-.select-multiple option {
+.select-field option {
     padding: 8px 10px;
     font-size: 16px;
     cursor: pointer;
 }
 
-.select-multiple option:checked {
+.select-field option:checked {
     background-color: #003366;
     color: #fff;
 }
 
-.select-multiple option:hover {
+.select-field option:hover {
     background-color: #e0f2fe;
 }
 

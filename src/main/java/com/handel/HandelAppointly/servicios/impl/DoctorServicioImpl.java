@@ -88,29 +88,6 @@ public class DoctorServicioImpl implements DoctorServicio {
 
     @Override
     @Transactional
-    public DoctorRespuestaDto patch(Long id, DoctorSolicitudDto solicitudDto) {
-        Doctor doctor = findDoctorById(id);
-
-        doctorMapper.actualizarDoctorDesdeDto(solicitudDto, doctor);
-
-        if (solicitudDto.getEspecialidadesIds() != null && !solicitudDto.getEspecialidadesIds().isEmpty()) {
-            var especialidades = especialidadRepositorio.findAllById(solicitudDto.getEspecialidadesIds());
-            doctor.setEspecialidades(new HashSet<>(especialidades));
-        }
-
-        if (solicitudDto.getCodigoDivisa() != null) {
-            var divisa = divisaRepositorio.findById(solicitudDto.getCodigoDivisa())
-                    .orElseThrow(() -> new ResourcesNotFoundException("Divisa no encontrada"));
-            doctor.setDivisa(divisa);
-        }
-
-        Doctor doctorParcheado = doctorRepositorio.save(doctor);
-
-        return doctorMapper.aRespuestaDto(doctorParcheado);
-    }
-
-    @Override
-    @Transactional
     public void delete(Long id) {
         Doctor doctor = findDoctorById(id);
 

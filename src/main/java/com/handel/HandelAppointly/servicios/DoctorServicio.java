@@ -15,7 +15,5 @@ public interface DoctorServicio {
 
     DoctorRespuestaDto update(Long id, DoctorSolicitudDto solicitudDto);
 
-    DoctorRespuestaDto patch(Long id, DoctorSolicitudDto solicitudDto);
-
     void delete(Long id);
 }
