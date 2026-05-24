@@ -3,6 +3,7 @@ package com.handel.HandelAppointly.controladores;
 import com.handel.HandelAppointly.dtos.respuesta.UsuarioSesionDto;
 import com.handel.HandelAppointly.dtos.solicitud.LoginSolicitudDto;
 import com.handel.HandelAppointly.entidades.Usuario;
+import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.servicios.UsuarioServicio;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -37,12 +38,12 @@ public class NavegacionControlador {
 
     // Procesa el formulario de login
     @PostMapping("/login")
-    public String procesarLogin(@Valid LoginSolicitudDto loginDto,
-                                BindingResult bindingResult,
+    public String procesarLogin(@Valid @ModelAttribute("loginDto") LoginSolicitudDto loginDto,
+                                BindingResult result,
                                 HttpSession session,
                                 Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("loginDto", loginDto);
+
+        if (result.hasErrors()) {
             return "navegacion/login";
         }
 
@@ -50,7 +51,7 @@ public class NavegacionControlador {
             UsuarioSesionDto usuario = usuarioServicio.login(loginDto.getEmail(), loginDto.getContrasena());
             session.setAttribute("usuarioLogueado", usuario); // crea una sesión
             return "redirect:/";
-        } catch (RuntimeException e) {
+        } catch (ResourcesNotFoundException e) {
             model.addAttribute("loginDto", loginDto);
             model.addAttribute("error", "Email o contraseña incorrectos");
             return "navegacion/login";

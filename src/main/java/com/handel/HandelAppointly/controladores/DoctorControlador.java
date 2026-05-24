@@ -4,6 +4,7 @@ import com.handel.HandelAppointly.dtos.respuesta.UsuarioRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.DoctorSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
 import com.handel.HandelAppointly.repositorios.EspecialidadRepositorio;
+import com.handel.HandelAppointly.servicios.DivisaServicio;
 import com.handel.HandelAppointly.servicios.DoctorServicio;
 import com.handel.HandelAppointly.servicios.EspecialidadServicio;
 import jakarta.validation.Valid;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class DoctorControlador {
     private final DoctorServicio doctorServicio;
     private final EspecialidadServicio especialidadServicio;
+    private final DivisaServicio divisaServicio;
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model modelo) {
@@ -41,20 +43,21 @@ public class DoctorControlador {
     }
 
     @GetMapping("/crear")
-    public String crear(Model modelo) {
+    public String mostrarCrear(Model modelo) {
         modelo.addAttribute("doctor", new DoctorSolicitudDto());
         modelo.addAttribute("especialidades", especialidadServicio.findAll());
+        modelo.addAttribute("divisas", divisaServicio.findAll());
         return "doctor/crearDoctor";
     }
 
     @PostMapping
-    public String crear(@Valid DoctorSolicitudDto doctorSolicitudDto,
+    public String procesarCrear(@Valid @ModelAttribute("doctor") DoctorSolicitudDto doctorSolicitudDto,
                         BindingResult result,
                         RedirectAttributes redirectAttributes,
                         Model modelo) {
         if (result.hasErrors()) {
-            modelo.addAttribute("doctor", doctorSolicitudDto);
             modelo.addAttribute("especialidades", especialidadServicio.findAll());
+            modelo.addAttribute("divisas", divisaServicio.findAll());
             return "doctor/crearDoctor";
         }
 
@@ -64,21 +67,24 @@ public class DoctorControlador {
     }
 
     @GetMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable Long id, Model modelo) {
+    public String mostrasActualizar(@PathVariable Long id, Model modelo) {
         DoctorRespuestaDto doctor = doctorServicio.findById(id);
         modelo.addAttribute("doctor", doctor);
+        modelo.addAttribute("especialidades", especialidadServicio.findAll());
+        modelo.addAttribute("divisas", divisaServicio.findAll());
         return "doctor/actualizarDoctor";
     }
 
     @PostMapping("actualizar/{id}")
-    public String update(@PathVariable Long id,
-                         @Valid DoctorSolicitudDto solicitudDto,
+    public String procesarActualizar(@PathVariable Long id,
+                         @Valid @ModelAttribute("doctor") DoctorSolicitudDto solicitudDto,
                          BindingResult result,
                          Model modelo,
                          RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-            modelo.addAttribute("doctor", solicitudDto);
+            modelo.addAttribute("especialidades", especialidadServicio.findAll());
+            modelo.addAttribute("divisas", divisaServicio.findAll());
             return "doctor/actualizarDoctor";
         }
 
@@ -88,7 +94,9 @@ public class DoctorControlador {
     }
 
     @PostMapping("eliminar/{id}")
-    public void delete(@PathVariable Long id) {
+    public String procesarEliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         doctorServicio.delete(id);
+        redirectAttributes.addFlashAttribute("mensaje", "Doctor eliminado");
+        return "redirect:/";
     }
 }

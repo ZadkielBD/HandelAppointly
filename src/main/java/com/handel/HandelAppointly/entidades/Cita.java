@@ -21,7 +21,7 @@ public class Cita {
     private String codigoCita;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "patient_id",  nullable = false)
+    @JoinColumn(name = "paciente_id",  nullable = false)
     private Paciente paciente;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

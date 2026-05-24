@@ -1,5 +1,6 @@
 package com.handel.HandelAppointly.controladores;
 
+import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.PacienteSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.PacienteRespuestaDto;
 import com.handel.HandelAppointly.servicios.PacienteServicio;
@@ -43,13 +44,13 @@ public class PacienteControlador {
 
     // Crear Cuenta
     @GetMapping("/crear")
-    public String crear(Model modelo) {
+    public String mostrarCrear(Model modelo) {
         modelo.addAttribute("paciente", new PacienteSolicitudDto());
         return "paciente/crearPaciente";
     }
 
     @PostMapping
-    public String crear(@Valid PacienteSolicitudDto pacienteSolicitudDto,
+    public String procesarCrear(@Valid @ModelAttribute("paciente") PacienteSolicitudDto pacienteSolicitudDto,
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
@@ -62,15 +63,23 @@ public class PacienteControlador {
     }
 
     // Actualizar Paciente
-    @GetMapping("/actualizar")
-    public String actualizar() {
+    @GetMapping("/actualizar/{id}")
+    public String mostrarActualizar(@PathVariable Long id, Model modelo) {
+        PacienteRespuestaDto paciente = pacienteServicio.findById(id);
+        modelo.addAttribute("paciente", paciente);
         return "pacielte/actualizarPaciente";
     }
 
     @PostMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable Long id,
-                             @Valid PacienteSolicitudDto requestDto,
+    public String procesarActualizar(@PathVariable Long id,
+                             @Valid @ModelAttribute("paciente") PacienteSolicitudDto requestDto,
+                             BindingResult result,
                              RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            return "doctor/actualizarDoctor";
+        }
+
         pacienteServicio.update(id, requestDto);
         redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
         return "redirect:/paciente/" + id;
@@ -78,10 +87,10 @@ public class PacienteControlador {
 
     // Eliminar Paciente
     @PostMapping("/eliminar/{id}")
-    public String delete(@PathVariable Long id,
+    public String procesarEliminar(@PathVariable Long id,
                          RedirectAttributes redirectAttributes) {
         pacienteServicio.delete(id);
-        redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
+        redirectAttributes.addFlashAttribute("mensaje", "Paciente eliminado");
         return "redirect:/";
     }
 }

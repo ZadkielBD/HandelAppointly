@@ -22,33 +22,33 @@ public class AdministradorControlador {
     final AdministradorServicio administradorServicio;
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model modelo) {
+    public String mostrarPorId(@PathVariable Long id, Model modelo) {
         AdministradorRespuestaDto respuestaDto = administradorServicio.findById(id);
         modelo.addAttribute("administrador", respuestaDto);
         return "administrador/administrador";
     }
 
     @GetMapping
-    public String findAll(@PageableDefault(size = 15, sort = "apellido") Pageable pageable, Model modelo) {
+    public String mostrarTodos(@PageableDefault(size = 15, sort = "apellido") Pageable pageable, Model modelo) {
         Page<AdministradorRespuestaDto> administradores = administradorServicio.findAll(pageable);
         modelo.addAttribute("administradores", administradores);
         return "administrador/administradores";
     }
 
     @GetMapping("/crear")
-    public String crear(Model modelo) {
+    public String mostrarCrear(Model modelo) {
         modelo.addAttribute("administrador", new AdministradorSolicitudDto());
         modelo.addAttribute("nivelesAcceso", NivelAcceso.values());
         return "administrador/crearAdministrador";
     }
 
     @PostMapping
-    public String crear(@Valid AdministradorSolicitudDto solicitudDto,
+    public String procesarCrear(@Valid @ModelAttribute("administrador") AdministradorSolicitudDto solicitudDto,
                         BindingResult result,
                         RedirectAttributes redirectAttributes,
                         Model modelo) {
+
         if (result.hasErrors()) {
-            modelo.addAttribute("administrador", solicitudDto);
             modelo.addAttribute("nivelesAcceso", NivelAcceso.values());
             return "administrador/crearAdministrador";
         }
@@ -59,21 +59,22 @@ public class AdministradorControlador {
     }
 
     @GetMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable Long id, Model modelo) {
+    public String mostrarActualizar(@PathVariable Long id, Model modelo) {
         AdministradorRespuestaDto administrador = administradorServicio.findById(id);
         modelo.addAttribute("administrador", administrador);
+        modelo.addAttribute("nivelesAcceso", NivelAcceso.values());
         return "administrador/actualizarAdministrador";
     }
 
     @PostMapping("actualizar/{id}")
-    public String update(@PathVariable Long id,
-                         @Valid AdministradorSolicitudDto solicitudDto,
+    public String procesarActualizar(@PathVariable Long id,
+                         @Valid @ModelAttribute("administrador") AdministradorSolicitudDto solicitudDto,
                          BindingResult result,
                          Model modelo,
                          RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-            modelo.addAttribute("administrador", solicitudDto);
+            modelo.addAttribute("nivelesAcceso", NivelAcceso.values());
             return "administrador/actualizarAdministrador";
         }
 
@@ -83,7 +84,7 @@ public class AdministradorControlador {
     }
 
     @PostMapping("eliminar/{id}")
-    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String procesarEliminar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         administradorServicio.delete(id);
         redirectAttributes.addFlashAttribute("mensaje", "Administrador eliminado");
         return "redirect:/";

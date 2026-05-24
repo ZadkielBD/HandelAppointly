@@ -11,19 +11,25 @@
         <main>
             <form th:action="@{/pacientes}" method="post" th:object="${paciente}">
                 <h1>Crear Cuenta</h1>
+
+                <p th:if="${error}" th:text="${error}" class="error-general"></p>
+
                 <div class="input-container">
                     <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingresa tu nombre" />
                     <label for="nombre" class="input-label">Nombre</label>
+                    <span th:errors="*{nombre}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
                     <input type="text" id="apellido" th:field="*{apellido}" placeholder="Ingresa tu apellido" />
                     <label for="apellido" class="input-label">Apellido</label>
+                    <span th:errors="*{apellido}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
                     <input type="text" id="email" th:field="*{email}" placeholder="Ingresa tu email" />
                     <label for="email" class="input-label">Email</label>
+                    <span th:errors="*{email}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
@@ -34,6 +40,7 @@
                         placeholder="Ingresa tu fecha de nacimiento"
                     />
                     <label for="fechaNacimiento" class="input-label">Fecha de Nacimiento</label>
+                    <span th:errors="*{fechaNacimiento}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
@@ -44,6 +51,7 @@
                         placeholder="Ingresa tu numero de telefono"
                     />
                     <label for="telefono" class="input-label">Número de Teléfono</label>
+                    <span th:errors="*{numeroTelefono}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
@@ -54,6 +62,7 @@
                         placeholder="Ingresa tu contraseña"
                     />
                     <label for="contrasena" class="input-label">Contraseña</label>
+                    <span th:errors="*{contrasena}" class="error-msg"></span>
                 </div>
 
                 <!-- <div class="input-container">

@@ -12,19 +12,25 @@
         <main>
             <form th:action="@{/administradores}" method="post" th:object="${administrador}">
                 <h1>Crear Cuenta</h1>
+
+                <p th:if="${error}" th:text="${error}" class="error"></p>
+
                 <div class="input-container">
                     <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingresa tu nombre" />
                     <label for="nombre" class="input-label">Nombre</label>
+                    <span th:errors="*{nombre}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
                     <input type="text" id="apellido" th:field="*{apellido}" placeholder="Ingresa tu apellido" />
                     <label for="apellido" class="input-label">Apellido</label>
+                    <span th:errors="*{apellido}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
                     <input type="text" id="email" th:field="*{email}" placeholder="Ingresa tu email" />
                     <label for="email" class="input-label">Email</label>
+                    <span th:errors="*{email}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
@@ -35,6 +41,24 @@
                         placeholder="Ingresa tu numero de telefono"
                     />
                     <label for="telefono" class="input-label">Número de Teléfono</label>
+                    <span th:errors="*{numeroTelefono}" class="error-msg"></span>
+                </div>
+
+                <div class="ss-wrap" id="nivelAccesoWrap">
+                    <span class="ss-label">Nivel de Acceso</span>
+                    <div id="nivelAccesoData" style="display: none">
+                        <div
+                            th:each="nivel : ${nivelesAcceso}"
+                            th:data-id="${nivel}"
+                            th:data-nombre="${nivel.nombre}"
+                        ></div>
+                    </div>
+                    <div class="ss-input-row" id="nivelAccesoInputRow">
+                        <input class="ss-bare-input" id="nivelAccesoInput" autocomplete="off" type="text" />
+                    </div>
+                    <div class="ss-dropdown" id="nivelAccesoDropdown"></div>
+                    <div id="nivelAccesoHiddenFields"></div>
+                    <span th:errors="*{nivelAcceso}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
@@ -45,14 +69,7 @@
                         placeholder="Ingresa tu contraseña"
                     />
                     <label for="contrasena" class="input-label">Contraseña</label>
-                </div>
-
-                <div class="select-container">
-                    <label>Nivel de Acceso</label>
-                    <select th:field="*{nivelAcceso}" class="select-field">
-                        <option disabled selected value="">Selecciona el nivel de Acceso</option>
-                        <option th:each="nivelAcceso : ${nivelesAcceso}" th:value="${nivelAcceso}" th:text="${nivelAcceso}"></option>
-                    </select>
+                    <span th:errors="*{contrasena}" class="error-msg"></span>
                 </div>
 
                 <div class="buttons-container">
@@ -62,5 +79,8 @@
         </main>
 
         <footer th:replace="~{fragmento/base::footer}"></footer>
+
+        <script th:src="@{/js/utils/dropdown.js}"></script>
+        <script th:src="@{/js/administrador/crearAdministrador.js}"></script>
     </body>
 </html>

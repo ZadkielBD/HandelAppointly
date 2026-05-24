@@ -32,7 +32,7 @@ public class PacienteServicioImpl implements PacienteServicio {
 
     @Override
     public PacienteRespuestaDto findById(Long id) {
-        Paciente paciente = findPatientById(id);
+        Paciente paciente = findPacienteById(id);
 
         return pacienteMapper.aRespuestaDto(paciente);
     }
@@ -40,12 +40,12 @@ public class PacienteServicioImpl implements PacienteServicio {
     @Override
     public Page<PacienteRespuestaDto> findAll(Pageable paginable) {
         return pacienteRepositorio.findAll(paginable)
-                .map(pacienteMapper::aRespuestaDto);
+                .map(pacienteMapper::aRespuestaDto); // .map(p -> pacienteMapper.aRespuestaDto(p))
     }
 
     @Override
     public PacienteRespuestaDto update(Long id, PacienteSolicitudDto solicitudDto) {
-        Paciente paciente = findPatientById(id);
+        Paciente paciente = findPacienteById(id);
 
         pacienteMapper.actualizarEntidadDesdeDto(solicitudDto, paciente);
 
@@ -56,12 +56,12 @@ public class PacienteServicioImpl implements PacienteServicio {
 
     @Override
     public void delete(Long id) {
-        Paciente paciente = findPatientById(id);
+        Paciente paciente = findPacienteById(id);
 
         pacienteRepositorio.delete(paciente);
     }
 
-    private Paciente findPatientById(Long id) {
+    private Paciente findPacienteById(Long id) {
         return pacienteRepositorio.findById(id)
                 .orElseThrow(() -> new ResourcesNotFoundException("Paciente con id " + id + " no encontrado"));
     }

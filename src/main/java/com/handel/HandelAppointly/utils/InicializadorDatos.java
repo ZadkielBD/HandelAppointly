@@ -113,16 +113,16 @@ public class InicializadorDatos implements CommandLineRunner {
     public void inicializarDivisas() {
         if (divisaRepositorio.count() == 0) {
             List<Divisa> divisasIniciales = List.of(
-                    new Divisa("USD", "$", "US Dollar", BigDecimal.ONE, null),
-                    new Divisa("MXN", "$", "Mexican Peso", BigDecimal.ZERO, null),
+                    new Divisa("USD", "$", "Dólar Estadounidense", BigDecimal.ONE, null),
+                    new Divisa("MXN", "$", "Peso Mexicano", BigDecimal.ZERO, null),
                     new Divisa("EUR", "€", "Euro", BigDecimal.ZERO, null),
-                    new Divisa("GBP", "£", "British Pound", BigDecimal.ZERO, null),
-                    new Divisa("CAD", "$", "Canadian Dollar", BigDecimal.ZERO, null),
-                    new Divisa("NZD", "$", "New Zealand Dollar", BigDecimal.ZERO, null),
-                    new Divisa("CNY", "¥", "Chinese Renminbi", BigDecimal.ZERO, null),
-                    new Divisa("JPY", "¥", "Japanese yen", BigDecimal.ZERO, null),
-                    new Divisa("BRL", "R$", "Brazilian real", BigDecimal.ZERO, null),
-                    new Divisa("INR", "₹", "Indian rupee", BigDecimal.ZERO, null)
+                    new Divisa("GBP", "£", "Libra esterlina", BigDecimal.ZERO, null),
+                    new Divisa("CAD", "$", "Dólar canadiense", BigDecimal.ZERO, null),
+                    new Divisa("NZD", "$", "Dólar neozelandés", BigDecimal.ZERO, null),
+                    new Divisa("CNY", "¥", "Renminbi chino", BigDecimal.ZERO, null),
+                    new Divisa("JPY", "¥", "Yen japonés", BigDecimal.ZERO, null),
+                    new Divisa("BRL", "R$", "Real brasileño", BigDecimal.ZERO, null),
+                    new Divisa("INR", "₹", "Rupia india", BigDecimal.ZERO, null)
             );
 
             divisaRepositorio.saveAll(divisasIniciales);

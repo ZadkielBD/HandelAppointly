@@ -11,19 +11,25 @@
         <main>
             <form th:action="@{/doctores}" method="post" th:object="${doctor}">
                 <h1>Crear Cuenta</h1>
+
+                <p th:if="${error}" th:text="${error}" class="error-general"></p>
+
                 <div class="input-container">
                     <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingresa tu nombre" />
                     <label for="nombre" class="input-label">Nombre</label>
+                    <span th:errors="*{nombre}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
                     <input type="text" id="apellido" th:field="*{apellido}" placeholder="Ingresa tu apellido" />
                     <label for="apellido" class="input-label">Apellido</label>
+                    <span th:errors="*{apellido}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
                     <input type="text" id="email" th:field="*{email}" placeholder="Ingresa tu email" />
                     <label for="email" class="input-label">Email</label>
+                    <span th:errors="*{email}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
@@ -31,17 +37,36 @@
                         type="text"
                         id="telefono"
                         th:field="*{numeroTelefono}"
-                        placeholder="Ingresa tu numero de telefono"
+                        placeholder="Número de Teléfono"
                     />
                     <label for="telefono" class="input-label">Número de Teléfono</label>
+                    <span th:errors="*{numeroTelefono}" class="error-msg"></span>
                 </div>
 
-                <div class="select-container">
-                    <label>Especialidades</label>
-                    <select id="especialidades" th:field="*{especialidadesIds}" class="select-field" multiple>
-                        <option disabled selected value="">Selecciona tus especialidades</option>
-                        <option th:each="esp : ${especialidades}" th:value="${esp.id}" th:text="${esp.nombre}"></option>
-                    </select>
+                <div class="ss-wrap" id="ssWrap">
+                    <span class="ss-label">Especialidades médicas</span>
+
+                    <div id="ssData" style="display: none">
+                        <div
+                            th:each="esp : ${especialidades}"
+                            th:data-id="${esp.id}"
+                            th:data-nombre="${esp.nombre}"
+                        ></div>
+                    </div>
+
+                    <div class="ss-input-row" id="ssInputRow">
+                        <input
+                            class="ss-bare-input"
+                            id="ssInput"
+                            autocomplete="off"
+                            type="text"
+                        />
+                    </div>
+
+                    <div class="ss-dropdown" id="ssDropdown"></div>
+
+                    <div id="ssHiddenFields"></div>
+                    <span th:errors="*{especialidades}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
@@ -52,18 +77,33 @@
                         placeholder="Ingresa el precio de consulta"
                     />
                     <label for="precioLocal" class="input-label">Precio de consulta</label>
+                    <span th:errors="*{precioLocal}" class="error-msg"></span>
                 </div>
 
-                <div class="select-container">
-                    <label>Código de Divisa</label>
-                    <select th:field="*{codigoDivisa}" class="select-field">
-                        <option disabled selected value="">Selecciona una divisa</option>
-                        <option
+                <div class="ss-wrap" id="divisaWrap">
+                    <span class="ss-label">Divisa</span>
+
+                    <div id="divisaData" style="display: none">
+                        <div
                             th:each="divisa : ${divisas}"
-                            th:value="${divisa.codigo}"
-                            th:text="${divisa.nombre}"
-                        ></option>
-                    </select>
+                            th:data-id="${divisa.codigo}"
+                            th:data-nombre="${divisa.nombre}"
+                        ></div>
+                    </div>
+
+                    <div class="ss-input-row" id="divisaInputRow">
+                        <input
+                            class="ss-bare-input"
+                            id="divisaInput"
+                            autocomplete="off"
+                            type="text"
+                        />
+                    </div>
+
+                    <div class="ss-dropdown" id="divisaDropdown"></div>
+                    
+                    <div id="divisaHiddenFields"></div>
+                    <span th:errors="*{divisas}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
@@ -74,6 +114,7 @@
                         placeholder="Ingresa tu contraseña"
                     />
                     <label for="contrasena" class="input-label">Contraseña</label>
+                    <span th:errors="*{contrasena}" class="error-msg"></span>
                 </div>
 
                 <div class="buttons-container">
@@ -83,5 +124,8 @@
         </main>
 
         <footer th:replace="~{fragmento/base::footer}"></footer>
+
+        <script th:src="@{/js/utils/dropdown.js}"></script>
+        <script th:src="@{/js/doctor/crearDoctor.js}"></script>
     </body>
 </html>

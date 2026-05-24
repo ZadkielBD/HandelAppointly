@@ -1,5 +1,21 @@
 /* formulario */
 /* inputs */
+form {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
 form h2 {
     display: flex;
     flex-direction: column;
@@ -8,7 +24,7 @@ form h2 {
     text-align: center;
 }
 
-form input {
+.input-container input {
     margin-bottom: 20px;
     display: block;
 }
@@ -26,6 +42,8 @@ form input {
     background-color: transparent;
     color: #003366;
     transition: 0.15s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .input-container input:focus {
@@ -68,52 +86,180 @@ form input {
     border-color: #003366 2px solid;
 }
 
-.select-container {
+/* dropdown */
+
+.ss-wrap {
+    position: relative;
     margin: 12px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    width: 100%;
 }
 
-.select-container label {
-    font-size: 14px;
+.ss-input-row {
+    display: flex;
+    align-items: center;
+    border: 2px solid #acacac;
+    border-radius: 5px;
+    background: #fff;
+    transition: border-color 0.15s;
+    padding: 8px 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+    cursor: text;
+    min-height: 42px;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.ss-bare-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
     color: #003366;
+    min-width: 0px;
+    flex: 1;
+    padding: 2px 0;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    display: inline;
+}
+
+.ss-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 2px solid #acacac;
+    border-radius: 5px;
+    z-index: 999;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.ss-dropdown.open {
+    display: block;
+}
+
+.ss-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #003366;
+    transition: background 0.1s;
+}
+
+.ss-option:hover,
+.ss-option.focused {
+    background: #e0f2fe;
+}
+
+.ss-option.selected {
+    background: #e0f2fe;
     font-weight: bold;
 }
 
-.select-field {
-    width: 100%;
-    border: 2px solid #acacac;
-    border-radius: 5px;
-    padding: 8px;
-    font-size: 18px;
-    font-family: 'Montserrat', sans-serif;
-    color: #003366;
-    background-color: #fff;
-    outline: none;
-    cursor: pointer;
-    transition: 0.15s ease;
+.ss-opt-icon {
+    font-size: 1.2rem;
 }
 
-.select-field:focus {
+.ss-opt-name {
+    flex: 1;
+}
+
+.ss-opt-badge {
+    font-size: 11px;
+    color: #acacac;
+    background: #f5f5f5;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.ss-opt-check {
+    opacity: 0;
+    color: #003366;
+    transition: opacity 0.15s;
+}
+
+.ss-option.selected .ss-opt-check {
+    opacity: 1;
+}
+
+.ss-empty {
+    padding: 16px 14px;
+    font-size: 13px;
+    color: #acacac;
+    text-align: center;
+}
+
+.ss-hint {
+    font-size: 12px;
+    color: #acacac;
+    margin-top: 6px;
+}
+
+.ss-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #e0f2fe;
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: #003366;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.ss-tag button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #003366;
+    font-size: 14px;
+    padding: 0;
+    line-height: 1;
+}
+
+.ss-label {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    font-size: 18px;
+    color: #acacac;
+    pointer-events: none;
+    transition: 0.15s ease;
+    background-color: #fff;
+    padding: 0 4px;
+    z-index: 1;
+}
+
+.ss-wrap.activo .ss-label {
+    transform: translate(0px, -22px);
+    font-size: 14px;
+    color: #acacac;
+}
+
+.ss-wrap.activo.enfocado .ss-label {
+    color: #003366;
+}
+
+.ss-input-row:focus-within {
     border-color: #003366;
 }
 
-.select-field option {
-    padding: 8px 10px;
-    font-size: 16px;
-    cursor: pointer;
+.ss-wrap.has-focus .ss-label,
+.ss-wrap.has-value .ss-label {
+    transform: translate(0px, -22px);
+    font-size: 14px;
+    color: #003366;
 }
-
-.select-field option:checked {
-    background-color: #003366;
-    color: #fff;
-}
-
-.select-field option:hover {
-    background-color: #e0f2fe;
-}
-
 /* botones */
 
 .buttons-container {
@@ -143,6 +289,60 @@ form input {
 /* errores */
 .error-msg {
     display: block;
-    color: red;
-    font-size: 14px; 
+    color: #d32f2f;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 4px;
+    font-weight: 500;
+}
+
+.input-container:has(.error-msg:not(:empty)) input {
+    border-color: #d32f2f;
+}
+
+.input-container:has(.error-msg:not(:empty)) .input-label {
+    color: #d32f2f;
+}
+
+.ss-wrap:has(.error-msg:not(:empty)) .ss-input-row {
+    border-color: #d32f2f;
+}
+
+.ss-wrap:has(.error-msg:not(:empty)) .ss-label {
+    color: #d32f2f;
+}
+
+.error-general {
+    display: block;
+    background-color: #fdecea;
+    color: #d32f2f;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px 14px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+/* simbolos */ 
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    font-size: 20px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.ss-arrow {
+    color: #acacac;
+    transition: transform 0.15s ease, color 0.15s ease;
+    flex-shrink: 0;
+}
+
+.ss-wrap.enfocado .ss-arrow {
+    color: #003366;
+}
+
+.ss-wrap:not(.multiple).enfocado .ss-arrow {
+    transform: rotate(180deg);
 }

@@ -39,12 +39,24 @@ public class DivisaServicioImpl implements DivisaServicio {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DivisaRespuestaDto findByCodigo(String codigo) {
         Divisa divisa = findCurrencyById(codigo);
         return divisaMapper.aRespuesta(divisa);
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<DivisaRespuestaDto> findAll() {
+        return divisaRepositorio.findAll()
+                .stream()
+                .map(divisaMapper::aRespuesta) // .map(d -> divisaMapper.aRespuesta(d))
+                .toList();
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Page<DivisaRespuestaDto> findAll(Pageable paginable) {
         return divisaRepositorio.findAll(paginable)
                 .map(divisaMapper::aRespuesta);
