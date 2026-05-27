@@ -7,6 +7,8 @@
     <body>
         <header th:replace="~{fragmento/base::header}"></header>
 
+        <div th:replace="~{fragmento/base::mensaje}"></div>
+
         <main>
             <form th:action="@{/login}" method="post" th:object="${loginDto}">
                 <h1>Iniciar Sesión</h1>

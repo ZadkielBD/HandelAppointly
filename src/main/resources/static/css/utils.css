@@ -324,6 +324,35 @@ form h2 {
     font-weight: 500;
 }
 
+/* mensaje de exito*/
+
+.mensaje-exito {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 10px auto;
+    width: fit-content;
+    min-width: 200px;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mensaje-exito-cerrar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #2e7d32;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
 /* simbolos */ 
 .material-symbols-outlined {
     font-family: 'Material Symbols Outlined';

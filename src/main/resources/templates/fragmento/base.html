@@ -46,9 +46,26 @@
             </nav>
         </header>
 
-        <main>
-
-        </main>
+        <th:block th:fragment="mensaje" th:if="${mensaje}">
+            <div id="mensajeExito" class="mensaje-exito">
+                <span th:text="${mensaje}"></span>
+                <button class="mensaje-exito-cerrar" 
+                        onclick="this.parentElement.remove()" 
+                        type="button">
+                    <span class="material-symbols-outlined" style="font-size:18px">close</span>
+                </button>
+            </div>
+            <script>
+                const msg = document.getElementById('mensajeExito');
+                if (msg) {
+                    setTimeout(() => {
+                        msg.style.transition = 'opacity 0.5s ease';
+                        msg.style.opacity = '0';
+                        setTimeout(() => msg.remove(), 500);
+                    }, 10000);
+                }
+            </script>
+        </th:block>
 
         <footer th:fragment="footer">
             <div class="footer-columna footer-marca">

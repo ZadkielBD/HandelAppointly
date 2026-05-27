@@ -8,6 +8,8 @@
     <body>
         <header th:replace="~{fragmento/base::header}"></header>
 
+        <div th:replace="~{fragmento/base::mensaje}"></div>
+
         <main>
             <form th:action="@{/doctores}" method="post" th:object="${doctor}">
                 <h1>Crear Cuenta</h1>

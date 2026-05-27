@@ -31,7 +31,7 @@ public abstract class Usuario {
     @Column(nullable = false)
     private String contrasena;
 
-    @Column(nullable = false, name = "numero_telefono")
+    @Column(nullable = false, name = "numero_telefono", unique = true)
     private String numeroTelefono;
 
     @Column(nullable = false)

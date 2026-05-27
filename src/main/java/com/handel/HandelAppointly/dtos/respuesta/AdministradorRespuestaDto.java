@@ -1,5 +1,6 @@
 package com.handel.HandelAppointly.dtos.respuesta;
 
+import com.handel.HandelAppointly.enums.NivelAcceso;
 import com.handel.HandelAppointly.enums.Rol;
 import lombok.Data;
 
@@ -11,5 +12,5 @@ public class AdministradorRespuestaDto {
     private String email;
     private String numeroTelefono;
     private Rol rol;
-    private Rol nivelAcceso;
+    private NivelAcceso nivelAcceso;
 }
