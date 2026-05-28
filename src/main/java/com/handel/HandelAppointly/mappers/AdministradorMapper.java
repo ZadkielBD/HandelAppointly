@@ -10,7 +10,7 @@ import org.mapstruct.*;
 public interface AdministradorMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "rol", expression = "java(com.handel.HandelAppointly.enums.Rol.ADMINISTRADOR)")
+    @Mapping(target = "rol", ignore = true)
     Administrador aEntidad(AdministradorSolicitudDto solicitudDto);
 
     AdministradorRespuestaDto aRespuestaDto(Administrador administrador);

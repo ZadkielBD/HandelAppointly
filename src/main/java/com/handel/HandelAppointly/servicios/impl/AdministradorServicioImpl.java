@@ -25,15 +25,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdministradorServicioImpl implements AdministradorServicio {
 
-    private AdministradorRepositorio administradorRepositorio;
-    private AdministradorMapper administradorMapper;
+    private final AdministradorRepositorio administradorRepositorio;
+    private final AdministradorMapper administradorMapper;
 
     @Override
     @Transactional
     public AdministradorRespuestaDto create(AdministradorSolicitudDto solicitudDto) {
         Administrador administrador = administradorMapper.aEntidad(solicitudDto);
 
-        administrador.setRol(Rol.DOCTOR);
+        administrador.setRol(Rol.ADMINISTRADOR);
 
         Administrador administradorCreado = administradorRepositorio.save(administrador);
         return administradorMapper.aRespuestaDto(administradorCreado);
