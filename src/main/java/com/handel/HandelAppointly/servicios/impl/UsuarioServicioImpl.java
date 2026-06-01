@@ -22,7 +22,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     @Transactional(readOnly = true)
-    public UsuarioRespuestaDto getById(Long id) {
+    public UsuarioRespuestaDto findById(Long id) {
         Usuario user = findUserById(id);
 
         return usuarioMapper.aRespuestaDto(user);

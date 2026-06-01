@@ -4,9 +4,11 @@ import com.handel.HandelAppointly.dtos.solicitud.PacienteSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.PacienteRespuestaDto;
 import com.handel.HandelAppointly.entidades.Paciente;
 import com.handel.HandelAppointly.enums.Rol;
+import com.handel.HandelAppointly.excepciones.EmailDuplicadoException;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.PacienteMapper;
 import com.handel.HandelAppointly.repositorios.PacienteRepositorio;
+import com.handel.HandelAppointly.repositorios.UsuarioRepositorio;
 import com.handel.HandelAppointly.servicios.PacienteServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,10 +21,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class PacienteServicioImpl implements PacienteServicio {
     private final PacienteRepositorio pacienteRepositorio;
     private final PacienteMapper pacienteMapper;
+    private final UsuarioRepositorio usuarioRepositorio;
 
     @Override
     @Transactional
     public PacienteRespuestaDto create(PacienteSolicitudDto solicitudDto) {
+        if (usuarioRepositorio.findByEmail(solicitudDto.getEmail()).isPresent()) {
+            throw new EmailDuplicadoException("El email " + solicitudDto.getEmail() + " ya está registrado");
+        }
+
         Paciente paciente = pacienteMapper.aEntidad(solicitudDto);
         paciente.setRol(Rol.PACIENTE);
 
@@ -31,6 +38,7 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PacienteRespuestaDto findById(Long id) {
         Paciente paciente = findPacienteById(id);
 
@@ -38,12 +46,14 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<PacienteRespuestaDto> findAll(Pageable paginable) {
         return pacienteRepositorio.findAll(paginable)
                 .map(pacienteMapper::aRespuestaDto); // .map(p -> pacienteMapper.aRespuestaDto(p))
     }
 
     @Override
+    @Transactional
     public PacienteRespuestaDto update(Long id, PacienteSolicitudDto solicitudDto) {
         Paciente paciente = findPacienteById(id);
 
@@ -55,6 +65,7 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         Paciente paciente = findPacienteById(id);
 

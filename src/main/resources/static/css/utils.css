@@ -47,7 +47,7 @@ form h2 {
 }
 
 .input-container input:focus {
-    border-color: #003366 2px solid;
+    border: 2px solid #003366;
 }
 
 .input-container input::placeholder {
@@ -71,19 +71,17 @@ form h2 {
     font-size: 14px;
     top: 9px;
     left: 0;
-    font-size: 18px;
     padding: 0 10px;
     color: #003366;
 }
 
 .input-container input:focus + .input-label,
-.input-container input:not(:placeholder-shown) + 
-.input-label {
+.input-container input:not(:placeholder-shown) + .input-label {
     transform: translate(5px, -22px);
     background-color: #fff;
     font-size: 14px;
     color: #003366;
-    border-color: #003366 2px solid;
+    border: 2px solid #003366;
 }
 
 /* dropdown */
@@ -118,7 +116,7 @@ form h2 {
     background: transparent;
     font-size: 16px;
     color: #003366;
-    min-width: 0px;
+    min-width: 0;
     flex: 1;
     padding: 2px 0;
     font-family: 'Montserrat', sans-serif;
@@ -336,8 +334,8 @@ form h2 {
     font-weight: 500;
     margin: 10px auto;
     width: fit-content;
-    min-width: 200px;
-    max-width: 400px;
+    min-width: 350px;
+    max-width: 500px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -355,7 +353,7 @@ form h2 {
 
 /* simbolos */ 
 .material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
+    font-family: 'Material Symbols Outlined', serif;
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     font-size: 20px;
     user-select: none;

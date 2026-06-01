@@ -1,9 +1,7 @@
 package com.handel.HandelAppointly.servicios;
 
 import com.handel.HandelAppointly.dtos.respuesta.AdministradorRespuestaDto;
-import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.AdministradorSolicitudDto;
-import com.handel.HandelAppointly.dtos.solicitud.DoctorSolicitudDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

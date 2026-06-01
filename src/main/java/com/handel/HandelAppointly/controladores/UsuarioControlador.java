@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +20,7 @@ public class UsuarioControlador {
 
     @GetMapping("/{id}")
     public String mostrarPorId(@PathVariable Long id, Model modelo) {
-        UsuarioRespuestaDto usuario = usuarioServicio.getById(id);
+        UsuarioRespuestaDto usuario = usuarioServicio.findById(id);
         modelo.addAttribute("usuario", usuario);
         return "usuario";
     }

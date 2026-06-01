@@ -1,16 +1,14 @@
 package com.handel.HandelAppointly.servicios.impl;
 
 import com.handel.HandelAppointly.dtos.respuesta.AdministradorRespuestaDto;
-import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.AdministradorSolicitudDto;
-import com.handel.HandelAppointly.dtos.solicitud.DoctorSolicitudDto;
 import com.handel.HandelAppointly.entidades.Administrador;
-import com.handel.HandelAppointly.entidades.Doctor;
-import com.handel.HandelAppointly.entidades.Especialidad;
 import com.handel.HandelAppointly.enums.Rol;
+import com.handel.HandelAppointly.excepciones.EmailDuplicadoException;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.AdministradorMapper;
 import com.handel.HandelAppointly.repositorios.AdministradorRepositorio;
+import com.handel.HandelAppointly.repositorios.UsuarioRepositorio;
 import com.handel.HandelAppointly.servicios.AdministradorServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,19 +16,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class AdministradorServicioImpl implements AdministradorServicio {
-
     private final AdministradorRepositorio administradorRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
     private final AdministradorMapper administradorMapper;
 
     @Override
     @Transactional
     public AdministradorRespuestaDto create(AdministradorSolicitudDto solicitudDto) {
+        if (usuarioRepositorio.findByEmail(solicitudDto.getEmail()).isPresent()) {
+            throw new EmailDuplicadoException("El email " + solicitudDto.getEmail() + " ya está registrado");
+        }
+
         Administrador administrador = administradorMapper.aEntidad(solicitudDto);
 
         administrador.setRol(Rol.ADMINISTRADOR);

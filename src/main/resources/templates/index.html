@@ -1,37 +1,163 @@
 <!doctype html>
-
 <html lang="es">
     <head th:replace="~{fragmento/base :: head('Inicio', '/css/index.css')}">
-        <meta charset="UTF-8" />
+        <meta charset="UTF-8"/>
         <title>Inicio</title>
     </head>
-
     <body>
         <header th:replace="~{fragmento/base::header}"></header>
-
         <div th:replace="~{fragmento/base::mensaje}"></div>
 
         <main>
-            <h1>Agenda tu cita medica en minutos</h1>
-            <form action="">
-                <h3>Agenda una cita</h3>
-                <div class="input-container">
-                    <input id="especialidad" type="text" placeholder="especialidad" />
-                    <label for="especialidad" class="input-label">Especialidad</label>
-                </div>
+            <!-- HERO — visible para todos -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Tu salud, nuestra prioridad</h1>
+                    <p class="hero-subtitulo">Agenda citas médicas con los mejores especialistas de forma rápida, segura y desde cualquier lugar.</p>
 
-                <div class="input-container">
-                    <input id="lugar" type="text" placeholder="direccion" />
-                    <label for="lugar" class="input-label">Direccion</label>
+                    <!-- Sin sesión -->
+                    <div th:if="${session.usuarioLogueado == null}" class="hero-acciones">
+                        <a th:href="@{/login}" class="btn-primario">Iniciar sesión</a>
+                        <a th:href="@{/crearCuenta}" class="btn-secundario">Crear cuenta</a>
+                    </div>
                 </div>
+            </section>
 
-                <div class="buttons-container">
-                    <button type="submit">
-                        Buscar
-                    </button>
+            <!-- SIN SESIÓN — buscador -->
+            <section th:if="${session.usuarioLogueado == null}" class="seccion-buscador">
+                <h2>Encuentra tu especialista</h2>
+                <form th:action="@{/doctores}" method="get" class="buscador-form">
+                    <div class="input-container">
+                        <input type="text" id="especialidad" name="especialidad" placeholder="especialidad"/>
+                        <label for="especialidad" class="input-label">Especialidad o doctor</label>
+                    </div>
+                    <div class="buttons-container">
+                        <button type="submit">Buscar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- PACIENTE -->
+            <section th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol.name() == 'PACIENTE'}" class="seccion-dashboard">
+                <h2 th:text="|Bienvenido, ${session.usuarioLogueado.nombre}|"></h2>
+                <p class="dashboard-subtitulo">¿Qué deseas hacer hoy?</p>
+
+                <div class="tarjetas-grid">
+                    <a th:href="@{/doctores}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">search</span>
+                        <h3>Buscar Doctor</h3>
+                        <p>Encuentra especialistas disponibles</p>
+                    </a>
+                    <a th:href="@{/citas/crear}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">calendar_add_on</span>
+                        <h3>Agendar Cita</h3>
+                        <p>Programa una nueva consulta</p>
+                    </a>
+                    <a th:href="@{/citas}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">calendar_month</span>
+                        <h3>Mis Citas</h3>
+                        <p>Revisa tus citas programadas</p>
+                    </a>
+                    <a th:href="@{/historial}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">history</span>
+                        <h3>Mi Historial</h3>
+                        <p>Consulta tu historial médico</p>
+                    </a>
+                    <a th:href="@{/pagos}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">payments</span>
+                        <h3>Pagos</h3>
+                        <p>Gestiona tus pagos y facturas</p>
+                    </a>
+                    <a th:href="@{/perfil}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">person</span>
+                        <h3>Mi Perfil</h3>
+                        <p>Actualiza tus datos personales</p>
+                    </a>
                 </div>
-            
-            </form>
+            </section>
+
+            <!-- DOCTOR -->
+            <section th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol.name() == 'DOCTOR'}" class="seccion-dashboard">
+                <h2 th:text="|Bienvenido, Dr. ${session.usuarioLogueado.apellido}|"></h2>
+                <p class="dashboard-subtitulo">Panel de gestión médica</p>
+
+                <div class="tarjetas-grid">
+                    <a th:href="@{/citas}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">calendar_today</span>
+                        <h3>Mis Citas</h3>
+                        <p>Citas programadas y del día</p>
+                    </a>
+                    <a th:href="@{/pacientes}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">groups</span>
+                        <h3>Mis Pacientes</h3>
+                        <p>Consulta tu lista de pacientes</p>
+                    </a>
+                    <a th:href="@{/historial}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">medical_information</span>
+                        <h3>Historial Médico</h3>
+                        <p>Consulta y actualiza historiales</p>
+                    </a>
+                    <a th:href="@{/pagos}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">payments</span>
+                        <h3>Pagos</h3>
+                        <p>Revisa tus ingresos y cobros</p>
+                    </a>
+                    <a th:href="@{/perfil}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">person</span>
+                        <h3>Mi Perfil</h3>
+                        <p>Actualiza tus datos y especialidades</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ADMINISTRADOR -->
+            <section th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol.name() == 'ADMINISTRADOR'}" class="seccion-dashboard">
+                <h2 th:text="|Bienvenido, ${session.usuarioLogueado.nombre}|"></h2>
+                <p class="dashboard-subtitulo">Panel de administración</p>
+
+                <div class="tarjetas-grid">
+                    <a th:href="@{/pacientes}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">person_add</span>
+                        <h3>Pacientes</h3>
+                        <p>Gestiona los pacientes del sistema</p>
+                    </a>
+                    <a th:href="@{/doctores}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">stethoscope</span>
+                        <h3>Doctores</h3>
+                        <p>Gestiona el cuerpo médico</p>
+                    </a>
+                    <a th:href="@{/administradores}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">admin_panel_settings</span>
+                        <h3>Administradores</h3>
+                        <p>Gestiona los administradores</p>
+                    </a>
+                    <a th:href="@{/citas}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">calendar_month</span>
+                        <h3>Citas</h3>
+                        <p>Supervisa todas las citas</p>
+                    </a>
+                    <a th:href="@{/especialidades}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">local_hospital</span>
+                        <h3>Especialidades</h3>
+                        <p>Gestiona las especialidades médicas</p>
+                    </a>
+                    <a th:href="@{/medicinas}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">medication</span>
+                        <h3>Medicinas</h3>
+                        <p>Gestiona el inventario de medicinas</p>
+                    </a>
+                    <a th:href="@{/divisas}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">currency_exchange</span>
+                        <h3>Divisas</h3>
+                        <p>Gestiona los tipos de cambio</p>
+                    </a>
+                    <a th:href="@{/perfil}" class="tarjeta">
+                        <span class="material-symbols-outlined tarjeta-icono">manage_accounts</span>
+                        <h3>Mi Perfil</h3>
+                        <p>Actualiza tus datos de administrador</p>
+                    </a>
+                </div>
+            </section>
         </main>
 
         <footer th:replace="~{fragmento/base::footer}"></footer>

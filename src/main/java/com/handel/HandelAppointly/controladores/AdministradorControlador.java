@@ -3,6 +3,7 @@ package com.handel.HandelAppointly.controladores;
 import com.handel.HandelAppointly.dtos.respuesta.AdministradorRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.AdministradorSolicitudDto;
 import com.handel.HandelAppointly.enums.NivelAcceso;
+import com.handel.HandelAppointly.excepciones.EmailDuplicadoException;
 import com.handel.HandelAppointly.servicios.AdministradorServicio;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,9 +54,14 @@ public class AdministradorControlador {
             return "administrador/crearAdministrador";
         }
 
-        administradorServicio.create(solicitudDto);
-        redirectAttributes.addFlashAttribute("mensaje", "Administrador guardado exitosamente");
-        return "redirect:/";
+        try {
+            administradorServicio.create(solicitudDto);
+            redirectAttributes.addFlashAttribute("mensaje", "Administrador guardado exitosamente");
+            return "redirect:/";
+        } catch (EmailDuplicadoException e) {
+            modelo.addAttribute("error", e.getMessage());
+            return "paciente/crearPaciente";
+        }
     }
 
     @GetMapping("/actualizar/{id}")

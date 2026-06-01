@@ -5,12 +5,14 @@ import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
 import com.handel.HandelAppointly.entidades.Doctor;
 import com.handel.HandelAppointly.entidades.Especialidad;
 import com.handel.HandelAppointly.enums.Rol;
+import com.handel.HandelAppointly.excepciones.EmailDuplicadoException;
 import com.handel.HandelAppointly.excepciones.MethodNotAllowedException;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.DoctorMapper;
 import com.handel.HandelAppointly.repositorios.DivisaRepositorio;
 import com.handel.HandelAppointly.repositorios.DoctorRepositorio;
 import com.handel.HandelAppointly.repositorios.EspecialidadRepositorio;
+import com.handel.HandelAppointly.repositorios.UsuarioRepositorio;
 import com.handel.HandelAppointly.servicios.DoctorServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,15 +26,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DoctorServicioImpl implements DoctorServicio {
-
     private final DoctorRepositorio doctorRepositorio;
     private final EspecialidadRepositorio especialidadRepositorio;
     private final DivisaRepositorio divisaRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
     private final DoctorMapper doctorMapper;
 
     @Override
     @Transactional
     public DoctorRespuestaDto create(DoctorSolicitudDto solicitudDto) {
+        if (usuarioRepositorio.findByEmail(solicitudDto.getEmail()).isPresent()) {
+            throw new EmailDuplicadoException("El email " + solicitudDto.getEmail() + " ya está registrado");
+        }
+
         List<Especialidad> especialidades = especialidadRepositorio.findAllById(solicitudDto.getEspecialidadesIds());
 
         var divisa = divisaRepositorio.findById(solicitudDto.getCodigoDivisa())

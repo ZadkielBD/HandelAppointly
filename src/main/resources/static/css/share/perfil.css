@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    text-align: left;
+}
+.perfil-card {
+    background: white;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+img {
+    border-radius: 50%;
+}
+h2 {
+    margin: 10px 0;
+}
+p {
+    color: #555;
+}

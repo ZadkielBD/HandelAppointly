@@ -88,4 +88,18 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(EmailDuplicadoException.class)
+    public ResponseEntity<ErrorRespuestaDto> handleEmailDuplicado(EmailDuplicadoException ex,
+                                                                  WebRequest request) {
+        ErrorRespuestaDto error = new ErrorRespuestaDto(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Email duplicado",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", ""),
+                null
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
 }

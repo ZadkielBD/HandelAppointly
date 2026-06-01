@@ -1,16 +1,14 @@
 package com.handel.HandelAppointly.controladores;
 
-import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.PacienteSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.PacienteRespuestaDto;
+import com.handel.HandelAppointly.excepciones.EmailDuplicadoException;
 import com.handel.HandelAppointly.servicios.PacienteServicio;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,14 +50,21 @@ public class PacienteControlador {
     @PostMapping
     public String procesarCrear(@Valid @ModelAttribute("paciente") PacienteSolicitudDto pacienteSolicitudDto,
                         BindingResult bindingResult,
-                        RedirectAttributes redirectAttributes) {
+                        RedirectAttributes redirectAttributes,
+                        Model modelo) {
         if (bindingResult.hasErrors()) {
             return "paciente/crearPaciente";
         }
 
-        pacienteServicio.create(pacienteSolicitudDto);
-        redirectAttributes.addFlashAttribute("mensaje", "Paciente guardado correctamente");
-        return "redirect:/";
+        try {
+            pacienteServicio.create(pacienteSolicitudDto);
+            redirectAttributes.addFlashAttribute("mensaje", "Paciente guardado correctamente");
+            return "redirect:/";
+        } catch (EmailDuplicadoException e) {
+            modelo.addAttribute("error", e.getMessage());
+            return "paciente/crearPaciente";
+        }
+
     }
 
     // Actualizar Paciente
@@ -67,7 +72,7 @@ public class PacienteControlador {
     public String mostrarActualizar(@PathVariable Long id, Model modelo) {
         PacienteRespuestaDto paciente = pacienteServicio.findById(id);
         modelo.addAttribute("paciente", paciente);
-        return "pacielte/actualizarPaciente";
+        return "paciente/actualizarPaciente";
     }
 
     @PostMapping("/actualizar/{id}")
@@ -77,7 +82,7 @@ public class PacienteControlador {
                              RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-            return "doctor/actualizarDoctor";
+            return "paciente/actualizarPaciente";
         }
 
         pacienteServicio.update(id, requestDto);

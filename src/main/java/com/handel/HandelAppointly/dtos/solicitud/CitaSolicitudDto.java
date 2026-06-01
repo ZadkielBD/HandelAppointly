@@ -1,6 +1,5 @@
 package com.handel.HandelAppointly.dtos.solicitud;
 
-import com.handel.HandelAppointly.enums.EstatusCita;
 import com.handel.HandelAppointly.enums.TipoConsulta;
 import jakarta.validation.constraints.*;
 import lombok.Data;

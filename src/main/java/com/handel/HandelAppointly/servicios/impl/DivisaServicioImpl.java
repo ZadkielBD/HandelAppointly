@@ -30,6 +30,7 @@ public class DivisaServicioImpl implements DivisaServicio {
     private final DivisaMapper divisaMapper;
 
     @Override
+    @Transactional
     public DivisaRespuestaDto add(DivisaSolicitudDto solicitudDto) {
         Divisa divisa = divisaMapper.aEntidad(solicitudDto);
 
@@ -95,6 +96,7 @@ public class DivisaServicioImpl implements DivisaServicio {
     }
 
     @Override
+    @Transactional
     public void delete(String codigo) {
         Divisa divisa = findCurrencyById(codigo);
         divisaRepositorio.delete(divisa);

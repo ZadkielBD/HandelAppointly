@@ -1,9 +1,8 @@
 package com.handel.HandelAppointly.controladores;
 
-import com.handel.HandelAppointly.dtos.respuesta.UsuarioRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.DoctorSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
-import com.handel.HandelAppointly.repositorios.EspecialidadRepositorio;
+import com.handel.HandelAppointly.excepciones.EmailDuplicadoException;
 import com.handel.HandelAppointly.servicios.DivisaServicio;
 import com.handel.HandelAppointly.servicios.DoctorServicio;
 import com.handel.HandelAppointly.servicios.EspecialidadServicio;
@@ -12,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,10 +57,14 @@ public class DoctorControlador {
             modelo.addAttribute("divisas", divisaServicio.findAll());
             return "doctor/crearDoctor";
         }
-
-        doctorServicio.create(doctorSolicitudDto);
-        redirectAttributes.addFlashAttribute("mensaje", "Doctor guardado exitosamente");
-        return "redirect:/";
+        try {
+            doctorServicio.create(doctorSolicitudDto);
+            redirectAttributes.addFlashAttribute("mensaje", "Doctor guardado exitosamente");
+            return "redirect:/";
+        } catch (EmailDuplicadoException e) {
+            modelo.addAttribute("error", e.getMessage());
+            return "paciente/crearPaciente";
+        }
     }
 
     @GetMapping("/actualizar/{id}")
