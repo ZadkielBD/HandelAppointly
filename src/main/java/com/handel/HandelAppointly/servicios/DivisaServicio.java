@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DivisaServicio {
 
-    DivisaRespuestaDto add(DivisaSolicitudDto solicitudDto);
+    DivisaRespuestaDto create(DivisaSolicitudDto solicitudDto);
 
     DivisaRespuestaDto findByCodigo(String codigo);
 

@@ -47,7 +47,7 @@ form h2 {
 }
 
 .input-container input:focus {
-    border: 2px solid #003366;
+    border: #003366;
 }
 
 .input-container input::placeholder {
@@ -81,7 +81,7 @@ form h2 {
     background-color: #fff;
     font-size: 14px;
     color: #003366;
-    border: 2px solid #003366;
+    border: #003366;
 }
 
 /* dropdown */
@@ -322,23 +322,31 @@ form h2 {
     font-weight: 500;
 }
 
-/* mensaje de exito*/
+/* mensaje de éxito*/
 
 .mensaje-exito {
     background-color: #e8f5e9;
     color: #2e7d32;
     border: 1px solid #a5d6a7;
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 13px;
+    border-radius: 10px;
+    padding: 16px 24px;
+    font-size: 15px;
     font-weight: 500;
-    margin: 10px auto;
+
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 99999;
+    box-shadow: 0 6px 16px rgba(0, 51, 102, 0.12);
+
     width: fit-content;
-    min-width: 350px;
-    max-width: 500px;
+    min-width: 420px;
+    max-width: 600px;
+
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
+    gap: 16px;
 }
 
 .mensaje-exito-cerrar {
@@ -349,9 +357,14 @@ form h2 {
     padding: 0;
     display: flex;
     align-items: center;
+    transition: transform 0.2s ease;
 }
 
-/* simbolos */ 
+.mensaje-exito-cerrar:hover {
+    transform: scale(1.15);
+}
+
+/* símbolos */
 .material-symbols-outlined {
     font-family: 'Material Symbols Outlined', serif;
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;

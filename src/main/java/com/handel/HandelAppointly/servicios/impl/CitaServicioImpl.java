@@ -59,6 +59,13 @@ public class CitaServicioImpl implements CitaServicio {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<CitaRespuestaDto> findByPacienteId(Long pacienteId, Pageable paginable) {
+        return citaRepositorio.findByPacienteId(pacienteId, paginable)
+                .map(citaMapper::aRespuestaDto);
+    }
+
+    @Override
     @Transactional
     public CitaRespuestaDto update(Long id, CitaSolicitudDto solicitudDto) {
         Cita cita = findCitaById(id);

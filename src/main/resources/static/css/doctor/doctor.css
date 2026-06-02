@@ -1,0 +1,243 @@
+main {
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.perfil-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Header del perfil */
+.perfil-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 32px;
+    background: linear-gradient(135deg, #003366 0%, #0066cc 100%);
+    border-radius: 16px;
+    color: white;
+}
+
+.perfil-avatar {
+    background-color: #e0f2fe;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.perfil-avatar .material-symbols-outlined {
+    font-size: 2.5rem;
+    color: #003366;
+}
+
+.perfil-info {
+    flex: 1;
+}
+
+.perfil-info h1 {
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.especialidades-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.especialidad-tag {
+    background-color: rgba(255,255,255,0.2);
+    color: white;
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.perfil-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-agendar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #e0f2fe;
+    color: #003366;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.15s ease;
+}
+
+.btn-agendar:hover {
+    background-color: #fff;
+}
+
+.btn-editar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: rgba(255,255,255,0.2);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+    border: 2px solid rgba(255,255,255,0.4);
+    transition: 0.15s ease;
+}
+
+.btn-editar:hover {
+    background-color: rgba(255,255,255,0.3);
+}
+
+.btn-eliminar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #d32f2f;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #b71c1c;
+}
+
+/* Datos de contacto */
+.perfil-datos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.dato-card {
+    display: flex;
+    align-items: flex-start; 
+    gap: 16px;
+    padding: 20px;
+    border: 2px solid #e0f2fe;
+    border-radius: 12px;
+    background: #fff;
+    min-width: 0; 
+}
+
+.dato-icono {
+    font-size: 1.8rem;
+    color: #003366;
+    background: #e0f2fe;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.dato-label {
+    font-size: 11px;
+    color: #acacac;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dato-valor {
+    font-size: 15px;
+    color: #003366;
+    font-weight: 600;
+    margin: 0;
+    overflow-wrap: break-word;  
+    word-break: break-word;     
+    hyphens: auto;              
+}
+
+/* Horarios */
+.perfil-seccion h2 {
+    font-size: 1.3rem;
+    color: #003366;
+    margin-bottom: 16px;
+}
+
+.horarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.horario-card {
+    padding: 16px;
+    border: 2px solid #e0f2fe;
+    border-radius: 10px;
+    text-align: center;
+    background: #fff;
+}
+
+.horario-dia {
+    font-weight: bold;
+    color: #003366;
+    font-size: 13px;
+    margin: 0 0 6px 0;
+    text-transform: capitalize;
+}
+
+.horario-horas {
+    font-size: 14px;
+    color: #333;
+    margin: 0 0 4px 0;
+}
+
+.horario-intervalo {
+    font-size: 11px;
+    color: #acacac;
+    margin: 0;
+}
+
+.sin-horarios {
+    text-align: center;
+    padding: 40px;
+    color: #acacac;
+    border: 2px dashed #e0f2fe;
+    border-radius: 12px;
+}
+
+.sin-horarios .material-symbols-outlined {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Botón volver */
+.btn-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #003366;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.15s ease;
+}
+
+.btn-volver:hover {
+    opacity: 0.7;
+}

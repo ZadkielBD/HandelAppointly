@@ -4,15 +4,13 @@ import com.handel.HandelAppointly.dtos.solicitud.DoctorSolicitudDto;
 import com.handel.HandelAppointly.dtos.respuesta.DoctorRespuestaDto;
 import com.handel.HandelAppointly.entidades.Doctor;
 import com.handel.HandelAppointly.entidades.Especialidad;
+import com.handel.HandelAppointly.entidades.Horario;
 import com.handel.HandelAppointly.enums.Rol;
 import com.handel.HandelAppointly.excepciones.EmailDuplicadoException;
 import com.handel.HandelAppointly.excepciones.MethodNotAllowedException;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.DoctorMapper;
-import com.handel.HandelAppointly.repositorios.DivisaRepositorio;
-import com.handel.HandelAppointly.repositorios.DoctorRepositorio;
-import com.handel.HandelAppointly.repositorios.EspecialidadRepositorio;
-import com.handel.HandelAppointly.repositorios.UsuarioRepositorio;
+import com.handel.HandelAppointly.repositorios.*;
 import com.handel.HandelAppointly.servicios.DoctorServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,6 +29,7 @@ public class DoctorServicioImpl implements DoctorServicio {
     private final DivisaRepositorio divisaRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
     private final DoctorMapper doctorMapper;
+    private final HorarioRepositorio horarioRepositorio;
 
     @Override
     @Transactional
@@ -67,6 +66,20 @@ public class DoctorServicioImpl implements DoctorServicio {
     public Page<DoctorRespuestaDto> findAll(Pageable paginable) {
         return doctorRepositorio.findAll(paginable)
                 .map(doctorMapper::aRespuestaDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<DoctorRespuestaDto> findByEspecialidad(String especialidad, Pageable paginable) {
+        return doctorRepositorio.findByEspecialidadNombre(especialidad, paginable)
+                .map(doctorMapper::aRespuestaDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Horario> findHorarios(Long id) {
+        findDoctorById(id); // valida que existe
+        return horarioRepositorio.findByDoctorIdOrderByDiaDeSemanaAscHoraInicioAsc(id);
     }
 
     @Override

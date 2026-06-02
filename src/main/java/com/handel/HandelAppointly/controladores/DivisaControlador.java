@@ -22,7 +22,7 @@ public class DivisaControlador {
 
     @PostMapping
     public ResponseEntity<DivisaRespuestaDto> add(@Valid @RequestBody DivisaSolicitudDto requestDto) {
-        DivisaRespuestaDto currency = divisaServicio.add(requestDto);
+        DivisaRespuestaDto currency = divisaServicio.create(requestDto);
         return new ResponseEntity<>(currency, HttpStatus.CREATED);
     }
 

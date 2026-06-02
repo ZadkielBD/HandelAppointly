@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragmento/base :: head('Perfil','/css/share/perfil.css')}">
+    <meta charset="UTF-8">
+    <title>Perfil</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+
+<main>
+    <div class="perfil-card">
+        <h2 th:text="${paciente.nombre}"></h2>
+        <p><strong>Apellido:</strong> <span th:text="${paciente.apellido}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${paciente.email}"></span></p>
+        <p><strong>Teléfono:</strong> <span th:text="${paciente.numeroTelefono}"></span></p>
+        <p><strong>Fecha de Nacimiento:</strong> <span th:text="${paciente.fechaNacimiento}"></span></p>
+        <p><strong>Nivel de acceso:</strong> <span th:text="${paciente.nivelAcceso}"></span></p>
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

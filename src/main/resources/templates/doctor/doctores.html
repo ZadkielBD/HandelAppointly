@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Doctores', '/css/doctor/doctores.css')}">
+    <meta charset="UTF-8"/>
+    <title>Doctores</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div >
+
+<main class="vista-lista-doctores">
+    <div class="doctores-page-wrapper">
+    
+        <div class="doctores-header">
+            <h1>Nuestros Doctores</h1>
+            <p>Encuentra al especialista que necesitas</p>
+        </div>
+
+        <form th:action="@{/doctores}" method="get" class="filtro-form" id="filtroEspecialidadForm">
+            <div class="filtro-container">
+                <div class="ss-wrap" id="especialidadWrap">
+                    <span class="ss-label">Especialidad</span>
+                    <div id="especialidadData" style="display:none">
+                        <div th:each="esp : ${especialidades}"
+                             th:data-id="${esp.nombre}"
+                             th:data-nombre="${esp.nombre}">
+                        </div>
+                    </div>
+                    <div class="ss-input-row" id="especialidadInputRow">
+                        <input class="ss-bare-input" id="especialidadInput"
+                               autocomplete="off" type="text"
+                               th:value="${especialidadFiltro}"/>
+                    </div>
+                    <div class="ss-dropdown" id="especialidadDropdown"></div>
+                    <div id="especialidadHiddenFields"></div>
+                </div>
+                
+                <div class="botones-filtro-grupo">
+                    <button type="submit" class="btn-buscar">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                    <a th:if="${especialidadFiltro != null}"
+                       th:href="@{/doctores}" class="btn-limpiar">
+                        <span class="material-symbols-outlined">close</span>
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        <div class="doctores-grid">
+            <div th:each="doctor : ${doctores.content}" class="doctor-card">
+                <div class="doctor-card-header">
+                    <span class="material-symbols-outlined doctor-icono">stethoscope</span>
+                    <div>
+                        <h3 th:text="|Dr. ${doctor.nombre} ${doctor.apellido}|"></h3>
+                        <div class="especialidades-tags">
+                            <span th:each="esp : ${doctor.especialidades}"
+                                  class="especialidad-tag"
+                                  th:text="${esp}">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="doctor-card-body">
+                    <p class="doctor-precio">
+                        <span class="material-symbols-outlined">payments</span>
+                        <span th:text="|${doctor.simboloDivisa} ${doctor.precioLocal}|"></span>
+                    </p>
+                </div>
+                <div class="doctor-card-footer">
+                    <a th:href="@{/doctores/{id}(id=${doctor.id})}" class="btn-ver-doctor">
+                        Ver perfil
+                    </a>
+                    <a th:href="@{/citas/crear(doctorId=${doctor.id})}" class="btn-agendar">
+                        Agendar cita
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${doctores.content.empty}" class="sin-resultados">
+            <span class="material-symbols-outlined">search_off</span>
+            <p>No se encontraron doctores con esa especialidad</p>
+            <a th:href="@{/doctores}">Ver todos los doctores</a>
+        </div>
+
+        <div class="paginacion" th:if="${doctores.totalPages > 1}">
+            <a th:if="${doctores.hasPrevious()}"
+               th:href="@{/doctores(page=${doctores.number - 1}, especialidad=${especialidadFiltro})}"
+               class="btn-pagina">Anterior</a>
+            <span th:text="|${doctores.number + 1} de ${doctores.totalPages}|"></span>
+            <a th:if="${doctores.hasNext()}"
+               th:href="@{/doctores(page=${doctores.number + 1}, especialidad=${especialidadFiltro})}"
+               class="btn-pagina">Siguiente</a>
+        </div>
+        
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+<script th:src="@{/js/utils/dropdown.js}"></script>
+<script th:src="@{/js/doctor/doctores.js}"></script>
+</body>
+</html>

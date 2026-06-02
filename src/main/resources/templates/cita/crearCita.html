@@ -1,83 +1,104 @@
 <!doctype html>
 <html lang="es">
-<head th:replace="~{fragmento/base :: head('Crear Cita', '/css/cita/crearCita.css')}">
+<head th:replace="~{fragmento/base :: head('Agendar Cita', '/css/cita/crearCita.css')}">
     <meta charset="UTF-8"/>
-    <title>Crear Cita</title>
+    <title>Agendar Cita</title>
 </head>
 <body>
 <header th:replace="~{fragmento/base::header}"></header>
 <div th:replace="~{fragmento/base::mensaje}"></div>
 
 <main>
-    <form th:action="@{/citas}" method="post" th:object="${cita}">
-        <h1>Crear Cita</h1>
+    <div class="form-container">
+        <div class="form-header">
+            <a th:href="@{/doctores}" class="btn-volver">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h1>Agendar Cita</h1>
+        </div>
 
         <p th:if="${error}" th:text="${error}" class="error-general"></p>
 
-        <div class="ss-wrap" id="pacienteWrap">
-            <span class="ss-label">Paciente</span>
-            <div id="pacienteData" style="display:none">
-                <div th:each="p : ${pacientes.content}"
-                     th:data-id="${p.id}"
-                     th:data-nombre="${p.nombre + ' ' + p.apellido}">
+        <form th:action="@{/citas}" method="post" th:object="${cita}">
+
+            <!-- Doctor preseleccionado -->
+            <div th:if="${doctorPreseleccionado != null}" class="dato-card">
+                <span class="material-symbols-outlined dato-icono">stethoscope</span>
+                <div>
+                    <p class="dato-label">Doctor</p>
+                    <p class="dato-valor"
+                       th:text="|Dr. ${doctorPreseleccionado.nombre} ${doctorPreseleccionado.apellido}|">
+                    </p>
+                    <div class="especialidades-tags">
+                                <span th:each="esp : ${doctorPreseleccionado.especialidades}"
+                                      class="especialidad-tag"
+                                      th:text="${esp}">
+                                </span>
+                    </div>
                 </div>
+                <input type="hidden" name="doctorId" th:value="${doctorPreseleccionado.id}"/>
             </div>
-            <div class="ss-input-row" id="pacienteInputRow">
-                <input class="ss-bare-input" id="pacienteInput" autocomplete="off" type="text"/>
-            </div>
-            <div class="ss-dropdown" id="pacienteDropdown"></div>
-            <div id="pacienteHiddenFields"></div>
-            <span th:errors="*{pacienteId}" class="error-msg"></span>
-        </div>
 
-        <div class="ss-wrap" id="doctorWrap">
-            <span class="ss-label">Doctor</span>
-            <div id="doctorData" style="display:none">
-                <div th:each="d : ${doctores.content}"
-                     th:data-id="${d.id}"
-                     th:data-nombre="${d.nombre + ' ' + d.apellido}">
+            <!-- Buscador de doctor si no viene preseleccionado -->
+            <div th:if="${doctorPreseleccionado == null}" class="ss-wrap" id="doctorWrap">
+                <span class="ss-label">Doctor</span>
+                <div id="doctorData" style="display:none">
+                    <div th:each="d : ${doctores.content}"
+                         th:data-id="${d.id}"
+                         th:data-nombre="|Dr. ${d.nombre} ${d.apellido}|">
+                    </div>
                 </div>
-            </div>
-            <div class="ss-input-row" id="doctorInputRow">
-                <input class="ss-bare-input" id="doctorInput" autocomplete="off" type="text"/>
-            </div>
-            <div class="ss-dropdown" id="doctorDropdown"></div>
-            <div id="doctorHiddenFields"></div>
-            <span th:errors="*{doctorId}" class="error-msg"></span>
-        </div>
-
-        <div class="ss-wrap" id="tipoConsultaWrap">
-            <span class="ss-label">Tipo de Consulta</span>
-            <div id="tipoConsultaData" style="display:none">
-                <div th:each="tipo : ${tiposConsulta}"
-                     th:data-id="${tipo}"
-                     th:data-nombre="${tipo}">
+                <div class="ss-input-row" id="doctorInputRow">
+                    <input class="ss-bare-input" id="doctorInput"
+                           autocomplete="off" type="text"/>
                 </div>
+                <div class="ss-dropdown" id="doctorDropdown"></div>
+                <div id="doctorHiddenFields"></div>
+                <span th:errors="*{doctorId}" class="error-msg"></span>
             </div>
-            <div class="ss-input-row" id="tipoConsultaInputRow">
-                <input class="ss-bare-input" id="tipoConsultaInput" autocomplete="off" type="text"/>
+
+            <!-- Paciente oculto — viene de la sesión -->
+            <input type="hidden" name="pacienteId" th:value="${session.usuarioLogueado.id}"/>
+
+            <!-- Tipo de consulta -->
+            <div class="ss-wrap" id="tipoConsultaWrap">
+                <span class="ss-label">Tipo de Consulta</span>
+                <div id="tipoConsultaData" style="display:none">
+                    <div th:each="tipo : ${tiposConsulta}"
+                         th:data-id="${tipo}"
+                         th:data-nombre="${tipo}">
+                    </div>
+                </div>
+                <div class="ss-input-row" id="tipoConsultaInputRow">
+                    <input class="ss-bare-input" id="tipoConsultaInput"
+                           autocomplete="off" type="text"/>
+                </div>
+                <div class="ss-dropdown" id="tipoConsultaDropdown"></div>
+                <div id="tipoConsultaHiddenFields"></div>
+                <span th:errors="*{consulta}" class="error-msg"></span>
             </div>
-            <div class="ss-dropdown" id="tipoConsultaDropdown"></div>
-            <div id="tipoConsultaHiddenFields"></div>
-            <span th:errors="*{consulta}" class="error-msg"></span>
-        </div>
 
-        <div class="input-container">
-            <input type="text" id="motivo" th:field="*{motivo}" placeholder="Motivo"/>
-            <label for="motivo" class="input-label">Motivo</label>
-            <span th:errors="*{motivo}" class="error-msg"></span>
-        </div>
+            <!-- Motivo -->
+            <div class="input-container">
+                <input type="text" id="motivo" th:field="*{motivo}"
+                       placeholder="Motivo de la consulta"/>
+                <label for="motivo" class="input-label">Motivo</label>
+                <span th:errors="*{motivo}" class="error-msg"></span>
+            </div>
 
-        <div class="input-container">
-            <input type="datetime-local" id="fechaHora" th:field="*{fechaHora}" placeholder="Fecha y Hora"/>
-            <label for="fechaHora" class="input-label">Fecha y Hora</label>
-            <span th:errors="*{fechaHora}" class="error-msg"></span>
-        </div>
+            <!-- Fecha y hora -->
+            <div class="input-container">
+                <input type="datetime-local" id="fechaHora"
+                       th:field="*{fechaHora}" placeholder="Fecha y Hora"/>
+                <label for="fechaHora" class="input-label">Fecha y Hora</label>
+                <span th:errors="*{fechaHora}" class="error-msg"></span>
+            </div>
 
-        <div class="buttons-container">
-            <button type="submit">Crear Cita</button>
-        </div>
-    </form>
+            <div class="buttons-container">
+                <button type="submit">Confirmar Cita</button>
+            </div>
+        </form>
+    </div>
 </main>
 
 <footer th:replace="~{fragmento/base::footer}"></footer>

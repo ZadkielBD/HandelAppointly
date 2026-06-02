@@ -1,28 +1,18 @@
-initSearchSelect({
-    wrapperId: 'pacienteWrap',
-    dataId: 'pacienteData',
-    inputId: 'pacienteInput',
-    inputRowId: 'pacienteInputRow',
-    dropdownId: 'pacienteDropdown',
-    hiddenFieldsId: 'pacienteHiddenFields',
-    fieldName: 'pacienteId',
-    badgeText: 'Paciente',
-    icon: '🧑',
-    multiple: false
-});
-
-initSearchSelect({
-    wrapperId: 'doctorWrap',
-    dataId: 'doctorData',
-    inputId: 'doctorInput',
-    inputRowId: 'doctorInputRow',
-    dropdownId: 'doctorDropdown',
-    hiddenFieldsId: 'doctorHiddenFields',
-    fieldName: 'doctorId',
-    badgeText: 'Doctor',
-    icon: '👨‍⚕️',
-    multiple: false
-});
+// Solo inicializa el buscador de doctor si no viene preseleccionado
+if (document.getElementById('doctorWrap')) {
+    initSearchSelect({
+        wrapperId: 'doctorWrap',
+        dataId: 'doctorData',
+        inputId: 'doctorInput',
+        inputRowId: 'doctorInputRow',
+        dropdownId: 'doctorDropdown',
+        hiddenFieldsId: 'doctorHiddenFields',
+        fieldName: 'doctorId',
+        badgeText: 'Doctor',
+        icon: '👨‍⚕️',
+        multiple: false
+    });
+}
 
 initSearchSelect({
     wrapperId: 'tipoConsultaWrap',

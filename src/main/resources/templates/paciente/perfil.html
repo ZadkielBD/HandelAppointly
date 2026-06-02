@@ -10,8 +10,16 @@
         <main>
             <div class="perfil-card">
                 <h2 th:text="${paciente.nombre}"></h2>
+                <p><strong>Apellido:</strong> <span th:text="${paciente.apellido}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${paciente.email}"></span></p>
-                
+                <p><strong>Teléfono:</strong> <span th:text="${paciente.numeroTelefono}"></span></p>
+                <p><strong>Fecha de Nacimiento:</strong> <span th:text="${paciente.fechaNacimiento}"></span></p>
+                <th:block th:if="${paciente.emergencyContactName != null && !paciente.emergencyContactName.isEmpty()}">
+                    <p><strong>Contacto de Emergencia:</strong> <span th:text="${paciente.emergencyContactName}"></span></p>
+                </th:block>
+                <th:block th:if="${paciente.emergencyContactPhoneNumber != null && !paciente.emergencyContactPhoneNumber.isEmpty()}">
+                    <p><strong>Teléfono de Emergencia:</strong> <span th:text="${paciente.emergencyContactPhoneNumber}"></span></p>
+                </th:block>
             </div>
         </main>
 

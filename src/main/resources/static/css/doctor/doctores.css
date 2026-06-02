@@ -1,0 +1,263 @@
+
+main.vista-lista-doctores {
+    display: block; 
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.doctores-page-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.doctores-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.doctores-header h1 {
+    font-size: 2.2rem;
+    color: #003366;
+    margin: 0 0 8px 0;
+}
+
+.doctores-header p {
+    color: #acacac;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+form.filtro-form {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto 40px auto;
+    padding: 0;
+}
+
+.filtro-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.filtro-container .ss-wrap {
+    flex: 1;
+    margin: 0;
+}
+
+.filtro-container .ss-input-row {
+    margin-bottom: 0;
+}
+
+.botones-filtro-grupo {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-buscar, .btn-limpiar {
+    height: 42px;
+    width: 42px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: 0.15s ease;
+    box-sizing: border-box;
+}
+
+.btn-buscar {
+    background-color: #003366;
+    color: white;
+}
+
+.btn-buscar:hover {
+    background-color: #002244;
+}
+
+.btn-limpiar {
+    background-color: #acacac;
+    color: white;
+}
+
+.btn-limpiar:hover {
+    background-color: #888888;
+}
+
+/* === Grid de Tarjetas de Doctores === */
+.doctores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.doctor-card {
+    border: 2px solid #e0f2fe;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: 0.2s ease;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 51, 102, 0.04);
+}
+
+.doctor-card:hover {
+    border-color: #003366;
+    box-shadow: 0 6px 18px rgba(0, 51, 102, 0.1);
+    transform: translateY(-2px);
+}
+
+.doctor-card-header {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.doctor-icono {
+    font-size: 2rem;
+    color: #003366;
+    background: #e0f2fe;
+    border-radius: 50%;
+    padding: 12px;
+    flex-shrink: 0;
+}
+
+.doctor-card-header h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    color: #003366;
+    line-height: 1.3;
+}
+
+.especialidades-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.especialidad-tag {
+    background: #e0f2fe;
+    color: #003366;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 500;
+}
+
+.doctor-card-body {
+    margin: 0;
+}
+
+.doctor-precio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #003366;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.doctor-card-footer {
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.btn-ver-doctor, .btn-agendar {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.15s ease;
+    box-sizing: border-box;
+}
+
+.btn-ver-doctor {
+    border: 2px solid #003366;
+    color: #003366;
+    background: transparent;
+}
+
+.btn-ver-doctor:hover {
+    background-color: #e0f2fe;
+}
+
+.btn-agendar {
+    background-color: #003366;
+    border: 2px solid #003366;
+    color: white;
+}
+
+.btn-agendar:hover {
+    background-color: #002244;
+    border-color: #002244;
+}
+
+.sin-resultados {
+    text-align: center;
+    padding: 60px 20px;
+    color: #acacac;
+}
+
+.sin-resultados .material-symbols-outlined {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.sin-resultados p {
+    font-size: 1.1rem;
+    margin: 0 0 12px 0;
+}
+
+.sin-resultados a {
+    color: #003366;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sin-resultados a:hover {
+    text-decoration: underline;
+}
+
+/* === Paginación === */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    color: #003366;
+    font-weight: bold;
+}
+
+.btn-pagina {
+    padding: 8px 20px;
+    border: 2px solid #003366;
+    border-radius: 5px;
+    color: #003366;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.15s ease;
+}
+
+.btn-pagina:hover {
+    background-color: #003366;
+    color: white;
+}

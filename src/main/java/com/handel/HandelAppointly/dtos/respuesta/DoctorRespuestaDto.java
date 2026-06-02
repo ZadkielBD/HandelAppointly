@@ -3,6 +3,7 @@ package com.handel.HandelAppointly.dtos.respuesta;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class DoctorRespuestaDto {
@@ -11,8 +12,9 @@ public class DoctorRespuestaDto {
     private String apellido;
     private String email;
     private String numeroTelefono;
-    private String especialidad;
+    private List<String> especialidades;
     private BigDecimal precioLocal;
     private String codigoDivisa;
-    private BigDecimal precioUSD; // Precio convertido a dolares
+    private String simboloDivisa;
+    private BigDecimal precioUSD;
 }

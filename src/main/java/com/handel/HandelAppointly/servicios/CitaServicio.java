@@ -12,6 +12,8 @@ public interface CitaServicio {
 
     Page<CitaRespuestaDto> findAll(Pageable paginable);
 
+    Page<CitaRespuestaDto> findByPacienteId(Long pacienteId, Pageable paginable);
+
     CitaRespuestaDto update(Long id, CitaSolicitudDto solicitudDto);
 
     void delete(Long id);

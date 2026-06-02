@@ -26,16 +26,27 @@ public class DoctorControlador {
     private final DivisaServicio divisaServicio;
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model modelo) {
-        DoctorRespuestaDto doctor = doctorServicio.findById(id);
-        modelo.addAttribute("doctor", doctor);
+    public String mostrarPerfil(@PathVariable Long id, Model modelo) {
+        modelo.addAttribute("doctor", doctorServicio.findById(id));
+        modelo.addAttribute("horarios", doctorServicio.findHorarios(id));
         return "doctor/doctor";
     }
 
     @GetMapping
-    public String findAll(@PageableDefault(size = 15, sort = "apellido") Pageable pageable, Model modelo) {
-        Page<DoctorRespuestaDto> doctores = doctorServicio.findAll(pageable);
+    public String findAll(@PageableDefault(size = 12, sort = "apellido") Pageable pageable,
+                          @RequestParam(required = false) String especialidad,
+                          Model modelo) {
+        Page<DoctorRespuestaDto> doctores;
+
+        if (especialidad != null && !especialidad.isBlank()) {
+            doctores = doctorServicio.findByEspecialidad(especialidad, pageable);
+            modelo.addAttribute("especialidadFiltro", especialidad);
+        } else {
+            doctores = doctorServicio.findAll(pageable);
+        }
+
         modelo.addAttribute("doctores", doctores);
+        modelo.addAttribute("especialidades", especialidadServicio.findAll());
         return "doctor/doctores";
     }
 

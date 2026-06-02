@@ -38,13 +38,14 @@ public class NavegacionControlador {
         // Dependiendo del rol, rediriges a su vista correspondiente
         if (usuario.getRol() == Rol.PACIENTE) {
             model.addAttribute("paciente", pacienteServicio.findById(usuario.getId()));
-            return "paciente/perfil"; // html de paciente
+            return "paciente/perfil";
         } else if (usuario.getRol() == Rol.DOCTOR) {
             model.addAttribute("doctor", doctorServicio.findById(usuario.getId()));
-            return "doctor/perfil"; // html de doctor
+            model.addAttribute("horarios", doctorServicio.findHorarios(usuario.getId()));
+            return "doctor/doctor";
         } else if (usuario.getRol() == Rol.ADMINISTRADOR) {
-            model.addAttribute("doctor", administradorServicio.findById(usuario.getId()));
-            return "admin/perfil"; // html de admin
+            model.addAttribute("administrador", administradorServicio.findById(usuario.getId()));
+            return "administrador/perfil";
         }
 
         return "redirect:/";

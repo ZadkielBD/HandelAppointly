@@ -1,11 +1,13 @@
 package com.handel.HandelAppointly.controladores;
 
+import com.handel.HandelAppointly.dtos.respuesta.UsuarioSesionDto;
 import com.handel.HandelAppointly.dtos.solicitud.CitaSolicitudDto;
 import com.handel.HandelAppointly.enums.TipoConsulta;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.servicios.CitaServicio;
 import com.handel.HandelAppointly.servicios.DoctorServicio;
 import com.handel.HandelAppointly.servicios.PacienteServicio;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +28,16 @@ public class CitaControlador {
 
     @GetMapping
     public String mostrarTodas(@PageableDefault(size = 15, sort = "fechaHora") Pageable pageable,
+                               HttpSession session,
                                Model modelo) {
-        modelo.addAttribute("citas", citaServicio.findAll(pageable));
+        UsuarioSesionDto usuario = (UsuarioSesionDto) session.getAttribute("usuarioLogueado");
+        if (usuario == null) return "redirect:/login";
+
+        if (usuario.getRol() == com.handel.HandelAppointly.enums.Rol.ADMINISTRADOR) {
+            modelo.addAttribute("citas", citaServicio.findAll(pageable));
+        } else {
+            modelo.addAttribute("citas", citaServicio.findByPacienteId(usuario.getId(), pageable));
+        }
         return "cita/citas";
     }
 
@@ -38,9 +48,22 @@ public class CitaControlador {
     }
 
     @GetMapping("/crear")
-    public String mostrarCrear(Model modelo) {
-        modelo.addAttribute("cita", new CitaSolicitudDto());
-        modelo.addAttribute("pacientes", pacienteServicio.findAll(Pageable.unpaged()));
+    public String mostrarCrear(@RequestParam(required = false) Long doctorId,
+                               HttpSession session,
+                               Model modelo) {
+
+        UsuarioSesionDto usuario = (UsuarioSesionDto) session.getAttribute("usuarioLogueado");
+        if (usuario == null) return "redirect:/login";
+
+        CitaSolicitudDto cita = new CitaSolicitudDto();
+
+        if (doctorId != null) {
+            cita.setPacienteId(usuario.getId());
+            cita.setDoctorId(doctorId);
+            modelo.addAttribute("doctorPreseleccionado", doctorServicio.findById(doctorId));
+        }
+
+        modelo.addAttribute("cita", cita);
         modelo.addAttribute("doctores", doctorServicio.findAll(Pageable.unpaged()));
         modelo.addAttribute("tiposConsulta", TipoConsulta.values());
         return "cita/crearCita";

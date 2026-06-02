@@ -31,7 +31,7 @@ public class DivisaServicioImpl implements DivisaServicio {
 
     @Override
     @Transactional
-    public DivisaRespuestaDto add(DivisaSolicitudDto solicitudDto) {
+    public DivisaRespuestaDto create(DivisaSolicitudDto solicitudDto) {
         Divisa divisa = divisaMapper.aEntidad(solicitudDto);
 
         Divisa createdDivisa = divisaRepositorio.save(divisa);
