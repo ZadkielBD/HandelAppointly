@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Perfil Doctor', '/css/doctor/doctor.css')}">
+    <meta charset="UTF-8"/>
+    <title>Perfil Doctor</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+
+<main>
+    <div class="perfil-container">
+
+        <!-- Encabezado del perfil -->
+        <div class="perfil-header">
+            <div class="perfil-avatar">
+                <span class="material-symbols-outlined">stethoscope</span>
+            </div>
+            <div class="perfil-info">
+                <h1 th:text="|Dr. ${doctor.nombre} ${doctor.apellido}|"></h1>
+                <div class="especialidades-tags">
+                            <span th:each="esp : ${doctor.especialidades}"
+                                  class="especialidad-tag"
+                                  th:text="${esp}">
+                            </span>
+                </div>
+            </div>
+
+            <!-- Acciones según rol -->
+            <div class="perfil-acciones">
+                <!-- Sin sesión o Paciente -->
+                <a th:if="${session.usuarioLogueado == null or session.usuarioLogueado.rol.name() == 'PACIENTE'}"
+                   th:href="@{/citas/crear(doctorId=${doctor.id})}"
+                   class="btn-agendar">
+                    <span class="material-symbols-outlined">calendar_add_on</span>
+                    Agendar cita
+                </a>
+                <!-- Administrador -->
+                <th:block th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol.name() == 'ADMINISTRADOR'}">
+                    <a th:href="@{/doctores/actualizar/{id}(id=${doctor.id})}" class="btn-editar">
+                        <span class="material-symbols-outlined">edit</span>
+                        Editar
+                    </a>
+                    <form th:action="@{/doctores/eliminar/{id}(id=${doctor.id})}" method="post">
+                        <button type="submit" class="btn-eliminar">
+                            <span class="material-symbols-outlined">delete</span>
+                            Eliminar
+                        </button>
+                    </form>
+                </th:block>
+                <!-- Doctor viendo su propio perfil -->
+                <a th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol.name() == 'DOCTOR' and session.usuarioLogueado.id == doctor.id}"
+                   th:href="@{/doctores/actualizar/{id}(id=${doctor.id})}"
+                   class="btn-editar">
+                    <span class="material-symbols-outlined">edit</span>
+                    Editar mi perfil
+                </a>
+            </div>
+        </div>
+
+        <!-- Datos de contacto y precio -->
+        <div class="perfil-datos">
+            <div class="dato-card">
+                <span class="material-symbols-outlined dato-icono">mail</span>
+                <div>
+                    <p class="dato-label">Correo electrónico</p>
+                    <p class="dato-valor" th:text="${doctor.email}"></p>
+                </div>
+            </div>
+            <div class="dato-card">
+                <span class="material-symbols-outlined dato-icono">phone</span>
+                <div>
+                    <p class="dato-label">Teléfono</p>
+                    <p class="dato-valor" th:text="${doctor.numeroTelefono}"></p>
+                </div>
+            </div>
+            <div class="dato-card">
+                <span class="material-symbols-outlined dato-icono">payments</span>
+                <div>
+                    <p class="dato-label">Precio de consulta</p>
+                    <p class="dato-valor" th:text="|${doctor.simboloDivisa} ${doctor.precioLocal} ${doctor.codigoDivisa}|"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Horarios -->
+        <div class="perfil-seccion">
+            <h2>Horarios de atención</h2>
+
+            <div th:if="${horarios.empty}" class="sin-horarios">
+                <span class="material-symbols-outlined">schedule</span>
+                <p>No hay horarios registrados</p>
+            </div>
+
+            <div th:if="${!horarios.empty}" class="horarios-grid">
+                <div th:each="horario : ${horarios}" class="horario-card">
+                    <p class="horario-dia" th:text="${horario.diaDeSemana}"></p>
+                    <p class="horario-horas"
+                       th:text="|${horario.horaInicio} - ${horario.horaFinal}|">
+                    </p>
+                    <p class="horario-intervalo"
+                       th:text="|Cada ${horario.duracionIntervaloMinutos} min|">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón volver -->
+        <a th:href="@{/doctores}" class="btn-volver">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Volver a doctores
+        </a>
+
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

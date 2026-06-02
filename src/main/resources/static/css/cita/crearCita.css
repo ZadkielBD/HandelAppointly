@@ -1,0 +1,90 @@
+main {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.form-header h1 {
+    font-size: 1.8rem;
+    color: #003366;
+    margin: 0;
+}
+
+.btn-volver {
+    display: flex;
+    align-items: center;
+    color: #003366;
+    text-decoration: none;
+    padding: 6px;
+    border-radius: 8px;
+    transition: 0.15s ease;
+}
+
+.btn-volver:hover {
+    background-color: #e0f2fe;
+}
+
+/* Tarjeta del doctor preseleccionado */
+.dato-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border: 2px solid #e0f2fe;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: #f5f9ff;
+}
+
+.dato-icono {
+    font-size: 1.8rem;
+    color: #003366;
+    background: #e0f2fe;
+    padding: 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.dato-label {
+    font-size: 11px;
+    color: #acacac;
+    margin: 0 0 2px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dato-valor {
+    font-size: 15px;
+    color: #003366;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+}
+
+.especialidades-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.especialidad-tag {
+    background: #e0f2fe;
+    color: #003366;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+}
