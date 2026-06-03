@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-    <head th:replace="~{fragmento/base :: head('Crear Doctor', '/css/paciente/crearPaciente.css')}">
+    <head th:replace="~{fragmento/base :: head('Crear Doctor', '/css/doctor/crearDoctor.css')}">
         <meta charset="UTF-8" />
         <title>Crear Cuenta</title>
     </head>
@@ -68,7 +68,7 @@
                     <div class="ss-dropdown" id="ssDropdown"></div>
 
                     <div id="ssHiddenFields"></div>
-                    <span th:errors="*{especialidades}" class="error-msg"></span>
+                    <span th:errors="*{especialidadesIds}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
@@ -105,7 +105,7 @@
                     <div class="ss-dropdown" id="divisaDropdown"></div>
                     
                     <div id="divisaHiddenFields"></div>
-                    <span th:errors="*{divisas}" class="error-msg"></span>
+                    <span th:errors="*{codigoDivisa}" class="error-msg"></span>
                 </div>
 
                 <div class="input-container">
