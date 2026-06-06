@@ -1,0 +1,164 @@
+main {
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.detalle-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.detalle-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.detalle-header h1 {
+    font-size: 1.6rem;
+    color: #003366;
+    margin: 0 0 4px 0;
+}
+
+.codigo-cita {
+    font-size: 13px;
+    color: #acacac;
+    font-family: monospace;
+}
+
+.btn-volver {
+    display: flex;
+    align-items: center;
+    color: #003366;
+    text-decoration: none;
+    padding: 6px;
+    border-radius: 8px;
+    transition: 0.15s ease;
+    flex-shrink: 0;
+}
+
+.btn-volver:hover {
+    background-color: #e0f2fe;
+}
+
+/* Badge estatus */
+.badge-estatus {
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.badge-estatus.pendiente {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.badge-estatus.confirmada {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-estatus.cancelada {
+    background-color: #fdecea;
+    color: #d32f2f;
+}
+
+.badge-estatus.completada {
+    background-color: #e3f2fd;
+    color: #003366;
+}
+
+/* Grid de datos */
+.detalle-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.dato-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border: 2px solid #e0f2fe;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.dato-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.dato-icono {
+    font-size: 1.6rem;
+    color: #003366;
+    background: #e0f2fe;
+    padding: 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.dato-label {
+    font-size: 11px;
+    color: #acacac;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dato-valor {
+    font-size: 15px;
+    color: #003366;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Acciones */
+.detalle-acciones {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-editar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #003366;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.15s ease;
+}
+
+.btn-editar:hover {
+    background-color: #0066cc;
+}
+
+.btn-eliminar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #d32f2f;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #b71c1c;
+}

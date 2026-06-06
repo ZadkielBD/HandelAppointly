@@ -1,0 +1,173 @@
+main {
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.historial-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.historial-header h1 {
+    font-size: 1.8rem;
+    color: #003366;
+    margin-bottom: 4px;
+}
+
+.historial-subtitulo {
+    font-size: 13px;
+    color: #acacac;
+}
+
+/* Sin resultados */
+.sin-resultados {
+    text-align: center;
+    padding: 60px;
+    color: #acacac;
+    border: 2px dashed #e0f2fe;
+    border-radius: 12px;
+}
+
+.sin-resultados .material-symbols-outlined {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.btn-agendar {
+    display: inline-block;
+    margin-top: 16px;
+    background-color: #003366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Lista de consultas */
+.consultas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.consulta-card {
+    border: 2px solid #e0f2fe;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.consulta-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #003366 0%, #0066cc 100%);
+    color: white;
+}
+
+.consulta-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.consulta-info .material-symbols-outlined {
+    font-size: 1.8rem;
+    color: #e0f2fe;
+}
+
+.consulta-doctor {
+    font-weight: bold;
+    font-size: 15px;
+    margin: 0 0 2px 0;
+    color: white;
+}
+
+.consulta-fecha {
+    font-size: 12px;
+    color: #e0f2fe;
+    margin: 0;
+}
+
+.consulta-codigo {
+    font-size: 11px;
+    color: #e0f2fe;
+    font-family: monospace;
+}
+
+.consulta-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.consulta-dato {
+    border-left: 3px solid #e0f2fe;
+    padding-left: 12px;
+}
+
+.dato-label {
+    font-size: 11px;
+    color: #acacac;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 4px 0;
+}
+
+.dato-texto {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Receta */
+.receta-card {
+    margin: 0 20px 20px 20px;
+    border: 2px solid #e0f2fe;
+    border-radius: 8px;
+    padding: 16px;
+    background: #f5f9ff;
+}
+
+.receta-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    color: #003366;
+}
+
+.receta-header .material-symbols-outlined {
+    font-size: 1.3rem;
+}
+
+.receta-header h3 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.receta-datos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.receta-dato .dato-label {
+    font-size: 10px;
+}
+
+.receta-dato .dato-texto {
+    font-size: 13px;
+    font-weight: 600;
+    color: #003366;
+}

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Detalle Cita', '/css/cita/cita.css')}">
+    <meta charset="UTF-8"/>
+    <title>Detalle Cita</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+
+<main>
+    <div class="detalle-container">
+
+        <div class="detalle-header">
+            <a th:href="@{/citas}" class="btn-volver">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <div>
+                <h1>Detalle de Cita</h1>
+                <span class="codigo-cita" th:text="${cita.codigoCita}"></span>
+            </div>
+            <span class="badge-estatus" th:text="${cita.estatus}"
+                  th:classappend="${cita.estatus.name() == 'PENDIENTE' ? ' pendiente' :
+                                   cita.estatus.name() == 'CONFIRMADA' ? ' confirmada' :
+                                   cita.estatus.name() == 'CANCELADA' ? ' cancelada' : ' completada'}">
+            </span>
+        </div>
+
+        <div class="detalle-grid">
+
+            <div class="dato-card">
+                <span class="material-symbols-outlined dato-icono">person</span>
+                <div>
+                    <p class="dato-label">Paciente</p>
+                    <p class="dato-valor" th:text="${cita.paciente}"></p>
+                </div>
+            </div>
+
+            <div class="dato-card">
+                <span class="material-symbols-outlined dato-icono">stethoscope</span>
+                <div>
+                    <p class="dato-label">Doctor</p>
+                    <p class="dato-valor" th:text="|Dr. ${cita.doctorNombre}|"></p>
+                </div>
+            </div>
+
+            <div class="dato-card">
+                <span class="material-symbols-outlined dato-icono">calendar_month</span>
+                <div>
+                    <p class="dato-label">Fecha y Hora</p>
+                    <p class="dato-valor"
+                       th:text="${#temporals.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}">
+                    </p>
+                </div>
+            </div>
+
+            <div class="dato-card">
+                <span class="material-symbols-outlined dato-icono">medical_services</span>
+                <div>
+                    <p class="dato-label">Tipo de Consulta</p>
+                    <p class="dato-valor" th:text="${cita.consulta}"></p>
+                </div>
+            </div>
+
+            <div class="dato-card full-width">
+                <span class="material-symbols-outlined dato-icono">notes</span>
+                <div>
+                    <p class="dato-label">Motivo</p>
+                    <p class="dato-valor" th:text="${cita.motivo}"></p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Acciones -->
+        <div class="detalle-acciones">
+            <a th:href="@{/citas/actualizar/{id}(id=${cita.id})}" class="btn-editar">
+                <span class="material-symbols-outlined">edit</span>
+                Editar cita
+            </a>
+            <form th:action="@{/citas/eliminar/{id}(id=${cita.id})}" method="post">
+                <button type="submit" class="btn-eliminar"
+                        onclick="return confirm('¿Estás seguro de eliminar esta cita?')">
+                    <span class="material-symbols-outlined">delete</span>
+                    Eliminar cita
+                </button>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

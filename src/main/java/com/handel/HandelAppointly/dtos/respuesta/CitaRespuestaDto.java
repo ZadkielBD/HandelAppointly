@@ -12,7 +12,9 @@ public class CitaRespuestaDto {
     private Long id;
     private String codigoCita;
     private String paciente;
+    private Long pacienteId;
     private String doctorNombre;
+    private Long doctorId;
     private LocalDateTime fechaHora;
     private EstatusCita estatus;
     private TipoConsulta consulta;

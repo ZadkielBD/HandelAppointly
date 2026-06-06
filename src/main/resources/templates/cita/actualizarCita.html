@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Editar Cita', '/css/cita/crearCita.css')}">
+    <meta charset="UTF-8"/>
+    <title>Editar Cita</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+
+<main>
+    <div class="form-container">
+        <div class="form-header">
+            <a th:href="@{/citas}" class="btn-volver">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h1>Editar Cita</h1>
+        </div>
+
+        <form th:action="@{/citas/actualizar/{id}(id=${citaDetalle.id})}"
+              method="post" th:object="${cita}">
+
+            <div class="dato-card" th:if="${citaDetalle != null}">
+                <span class="material-symbols-outlined dato-icono">stethoscope</span>
+                <div>
+                    <p class="dato-label">Doctor</p>
+                    <p class="dato-valor" th:text="|Dr. ${citaDetalle.doctorNombre}|"></p>
+                </div>
+            </div>
+
+            <input type="hidden" name="doctorId" th:value="${citaDetalle.doctorId}"/>
+            <input type="hidden" name="pacienteId" th:value="${citaDetalle.pacienteId}"/>
+
+            <div class="ss-wrap" id="tipoConsultaWrap">
+                <span class="ss-label">Tipo de Consulta</span>
+                <div id="tipoConsultaData" style="display:none">
+                    <div th:each="tipo : ${tiposConsulta}"
+                         th:data-id="${tipo}"
+                         th:data-nombre="${tipo}">
+                    </div>
+                </div>
+                <div class="ss-input-row" id="tipoConsultaInputRow">
+                    <input class="ss-bare-input" id="tipoConsultaInput"
+                           autocomplete="off" type="text"/>
+                </div>
+                <div class="ss-dropdown" id="tipoConsultaDropdown"></div>
+                <div id="tipoConsultaHiddenFields"></div>
+                <span th:errors="*{consulta}" class="error-msg"></span>
+            </div>
+
+            <!-- Motivo -->
+            <div class="input-container">
+                <input type="text" id="motivo" th:field="*{motivo}"
+                       placeholder="Motivo de la consulta"/>
+                <label for="motivo" class="input-label">Motivo</label>
+                <span th:errors="*{motivo}" class="error-msg"></span>
+            </div>
+
+            <!-- Fecha y hora -->
+            <div class="input-container">
+                <input type="datetime-local" id="fechaHora"
+                       th:field="*{fechaHora}" placeholder="Fecha y Hora"/>
+                <label for="fechaHora" class="input-label">Fecha y Hora</label>
+                <span th:errors="*{fechaHora}" class="error-msg"></span>
+            </div>
+
+            <div class="buttons-container">
+                <button type="submit">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+<script th:src="@{/js/utils/dropdown.js}"></script>
+<script>
+    initSearchSelect({
+        wrapperId: 'tipoConsultaWrap',
+        dataId: 'tipoConsultaData',
+        inputId: 'tipoConsultaInput',
+        inputRowId: 'tipoConsultaInputRow',
+        dropdownId: 'tipoConsultaDropdown',
+        hiddenFieldsId: 'tipoConsultaHiddenFields',
+        fieldName: 'consulta',
+        badgeText: 'Tipo',
+        icon: '🏥',
+        multiple: false
+    });
+</script>
+</body>
+</html>

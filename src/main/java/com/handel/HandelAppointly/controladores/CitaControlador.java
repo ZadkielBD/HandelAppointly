@@ -1,5 +1,6 @@
 package com.handel.HandelAppointly.controladores;
 
+import com.handel.HandelAppointly.dtos.respuesta.CitaRespuestaDto;
 import com.handel.HandelAppointly.dtos.respuesta.UsuarioSesionDto;
 import com.handel.HandelAppointly.dtos.solicitud.CitaSolicitudDto;
 import com.handel.HandelAppointly.enums.TipoConsulta;
@@ -96,9 +97,15 @@ public class CitaControlador {
 
     @GetMapping("/actualizar/{id}")
     public String mostrarActualizar(@PathVariable Long id, Model modelo) {
-        modelo.addAttribute("cita", citaServicio.findById(id));
-        modelo.addAttribute("pacientes", pacienteServicio.findAll(Pageable.unpaged()));
-        modelo.addAttribute("doctores", doctorServicio.findAll(Pageable.unpaged()));
+        CitaRespuestaDto citaDto = citaServicio.findById(id);
+
+        CitaSolicitudDto solicitudDto = new CitaSolicitudDto();
+        solicitudDto.setMotivo(citaDto.getMotivo());
+        solicitudDto.setFechaHora(citaDto.getFechaHora());
+        solicitudDto.setConsulta(citaDto.getConsulta());
+
+        modelo.addAttribute("cita", solicitudDto);
+        modelo.addAttribute("citaDetalle", citaDto);
         modelo.addAttribute("tiposConsulta", TipoConsulta.values());
         return "cita/actualizarCita";
     }

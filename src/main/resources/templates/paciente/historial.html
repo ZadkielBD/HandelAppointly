@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Mi Historial', '/css/paciente/historial.css')}">
+    <meta charset="UTF-8"/>
+    <title>Mi Historial Médico</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+
+<main>
+    <div class="historial-container">
+
+        <div class="historial-header">
+            <h1>Mi Historial Médico</h1>
+            <p class="historial-subtitulo"
+               th:if="${historial != null}"
+               th:text="|Registro desde ${historial.fechaCreacion}|">
+            </p>
+        </div>
+
+        <!-- Sin historial -->
+        <div th:if="${historial == null}" class="sin-resultados">
+            <span class="material-symbols-outlined">medical_information</span>
+            <p>Aún no tienes historial médico registrado</p>
+            <a th:href="@{/citas/crear}" class="btn-agendar">Agendar tu primera cita</a>
+        </div>
+
+        <!-- Sin consultas -->
+        <div th:if="${historial != null and historial.consultas.empty}" class="sin-resultados">
+            <span class="material-symbols-outlined">note_alt</span>
+            <p>No tienes consultas registradas aún</p>
+        </div>
+
+        <!-- Lista de consultas -->
+        <div th:if="${historial != null and !historial.consultas.empty}" class="consultas-lista">
+            <div th:each="consulta : ${historial.consultas}" class="consulta-card">
+
+                <div class="consulta-header">
+                    <div class="consulta-info">
+                        <span class="material-symbols-outlined">stethoscope</span>
+                        <div>
+                            <p class="consulta-doctor"
+                               th:text="|Dr. ${consulta.doctorNombre}|">
+                            </p>
+                            <p class="consulta-fecha"
+                               th:text="${#temporals.format(consulta.fechaRegistro, 'dd/MM/yyyy HH:mm')}">
+                            </p>
+                        </div>
+                    </div>
+                    <span class="consulta-codigo" th:text="${consulta.codigoCita}"></span>
+                </div>
+
+                <div class="consulta-body">
+                    <div class="consulta-dato" th:if="${consulta.sintomas != null}">
+                        <p class="dato-label">Síntomas</p>
+                        <p class="dato-texto" th:text="${consulta.sintomas}"></p>
+                    </div>
+                    <div class="consulta-dato" th:if="${consulta.diagnostico != null}">
+                        <p class="dato-label">Diagnóstico</p>
+                        <p class="dato-texto" th:text="${consulta.diagnostico}"></p>
+                    </div>
+                    <div class="consulta-dato" th:if="${consulta.tratamiento != null}">
+                        <p class="dato-label">Tratamiento</p>
+                        <p class="dato-texto" th:text="${consulta.tratamiento}"></p>
+                    </div>
+                </div>
+
+                <!-- Receta médica -->
+                <div th:if="${consulta.receta != null}" class="receta-card">
+                    <div class="receta-header">
+                        <span class="material-symbols-outlined">medication</span>
+                        <h3>Receta Médica</h3>
+                    </div>
+                    <div class="receta-datos">
+                        <div class="receta-dato">
+                            <p class="dato-label">Medicamento</p>
+                            <p class="dato-texto" th:text="${consulta.receta.medicina}"></p>
+                        </div>
+                        <div class="receta-dato">
+                            <p class="dato-label">Dosis</p>
+                            <p class="dato-texto" th:text="${consulta.receta.dosis}"></p>
+                        </div>
+                        <div class="receta-dato">
+                            <p class="dato-label">Duración</p>
+                            <p class="dato-texto"
+                               th:text="|${consulta.receta.diasDuracion} días|">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

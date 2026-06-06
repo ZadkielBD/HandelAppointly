@@ -18,7 +18,9 @@ public interface CitaMapper {
     Cita aEntidad(CitaSolicitudDto solicitudDto);
 
     @Mapping(target = "paciente", source = "paciente.nombre")
+    @Mapping(target = "pacienteId", source = "paciente.id")
     @Mapping(target = "doctorNombre", source = "doctor.nombre")
+    @Mapping(target = "doctorId", source = "doctor.id")
     @Mapping(target = "precioUSD", ignore = true)
     CitaRespuestaDto aRespuestaDto(Cita cita);
 

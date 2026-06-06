@@ -4,10 +4,7 @@ import com.handel.HandelAppointly.dtos.respuesta.UsuarioSesionDto;
 import com.handel.HandelAppointly.dtos.solicitud.LoginSolicitudDto;
 import com.handel.HandelAppointly.enums.Rol;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
-import com.handel.HandelAppointly.servicios.AdministradorServicio;
-import com.handel.HandelAppointly.servicios.DoctorServicio;
-import com.handel.HandelAppointly.servicios.PacienteServicio;
-import com.handel.HandelAppointly.servicios.UsuarioServicio;
+import com.handel.HandelAppointly.servicios.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +21,7 @@ public class NavegacionControlador {
     private final PacienteServicio pacienteServicio;
     private final DoctorServicio doctorServicio;
     private final AdministradorServicio administradorServicio;
+    private final HistorialMedicoServicio historialMedicoServicio;
 
     @GetMapping("/")
     public String home() {
@@ -54,6 +52,16 @@ public class NavegacionControlador {
     @GetMapping("/crearCuenta")
     public String mostrarCrearCuenta() {
         return "navegacion/crearCuenta";
+    }
+
+    @GetMapping("/historial")
+    public String mostrarHistorial(HttpSession session, Model modelo) {
+        UsuarioSesionDto usuario = (UsuarioSesionDto) session.getAttribute("usuarioLogueado");
+        if (usuario == null) return "redirect:/login";
+
+        modelo.addAttribute("historial",
+                historialMedicoServicio.findByPacienteId(usuario.getId()));
+        return "paciente/historial";
     }
 
     // Muestra el formulario de login
