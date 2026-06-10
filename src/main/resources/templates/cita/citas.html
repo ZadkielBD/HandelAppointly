@@ -13,7 +13,7 @@
     
     <div class="panel-encabezado">
       <h1>Citas</h1>
-      <a th:href="@{/citas/crear}" class="btn-accion primario">
+      <a th:unless="${session.usuarioLogueado.rol.name() == 'DOCTOR'}" th:href="@{/citas/crear}" class="btn-accion primario">
         <span class="material-symbols-outlined">add</span> Nueva Cita
       </a>
     </div>

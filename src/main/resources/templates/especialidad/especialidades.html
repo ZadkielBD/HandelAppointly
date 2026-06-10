@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Especialidades', null)}">
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+<main>
+    <div class="tabla-container">
+        <h1>Especialidades</h1>
+
+        <!-- Formulario crear -->
+        <div class="form-inline">
+            <h3>Nueva Especialidad</h3>
+            <form th:action="@{/especialidades}" method="post" class="form-row">
+                <div class="input-container">
+                    <input type="text" name="nombre" placeholder="Nombre" required/>
+                    <label class="input-label">Nombre</label>
+                </div>
+                <div class="input-container">
+                    <input type="text" name="descripcion" placeholder="Descripción"/>
+                    <label class="input-label">Descripción</label>
+                </div>
+                <button type="submit" class="btn-primario">Agregar</button>
+            </form>
+        </div>
+
+        <table class="tabla">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="esp : ${especialidades}">
+                <td th:text="${esp.id}"></td>
+                <td th:text="${esp.nombre}"></td>
+                <td th:text="${esp.descripcion ?: '-'}"></td>
+                <td class="acciones">
+                    <a th:href="@{/especialidades/editar/{id}(id=${esp.id})}"
+                       class="btn-editar-sm">
+                        <span class="material-symbols-outlined">edit</span>
+                    </a>
+                    <form th:action="@{/especialidades/eliminar/{id}(id=${esp.id})}"
+                          method="post" style="display:inline">
+                        <button type="submit" class="btn-eliminar-sm"
+                                onclick="return confirm('¿Eliminar esta especialidad?')">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

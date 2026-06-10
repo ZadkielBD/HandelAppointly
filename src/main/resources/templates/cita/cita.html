@@ -78,6 +78,18 @@
                 <span class="material-symbols-outlined">edit</span>
                 Editar cita
             </a>
+            <!--
+            <a th:href="@{/pagos/cita/{id}(id=${cita.id})}" class="btn-accion primario">
+                <span class="material-symbols-outlined">payments</span>
+                Pagar
+            </a>
+            -->
+            <a th:if="${session.usuarioLogueado?.rol?.name() == 'DOCTOR' and cita.consultaId != null}"
+               th:href="@{/historial/consulta/{id}(id=${cita.consultaId})}"
+               class="btn-accion primario">
+                <span class="material-symbols-outlined">note_add</span>
+                Llenar Consulta
+            </a>
             <form th:action="@{/citas/eliminar/{id}(id=${cita.id})}" method="post">
                 <button type="submit" class="btn-eliminar"
                         onclick="return confirm('¿Estás seguro de eliminar esta cita?')">

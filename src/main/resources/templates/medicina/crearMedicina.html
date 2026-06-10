@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+    <head th:replace="~{fragmento/base :: head('Crear Medicina', '/css/medicina/crearMedicina.css')}">
+        <meta charset="UTF-8" />
+        <title>Crear Medicina</title>
+    </head>
+
+    <body>
+        <header th:replace="~{fragmento/base::header}"></header>
+
+        <div th:replace="~{fragmento/base::mensaje}"></div>
+
+        <main>
+            <form th:action="@{/medicinas}" method="post" th:object="${medicina}">
+
+            <h1>Registrar Medicina</h1>
+
+            <div class="input-container">
+                <input type="text"
+                    id="nombre"
+                    th:field="*{nombre}"
+                    placeholder="Nombre" required/>
+                <label for="nombre" class="input-label">Nombre</label>
+            </div>
+
+            <div class="input-container">
+                <input type="text"
+                    id="fabricante"
+                    th:field="*{fabricante}"
+                    placeholder="Fabricante" required/>
+                <label for="fabricante" class="input-label">Fabricante</label>
+            </div>
+
+            <div class="input-container">
+                <input type="text"
+                    id="formula"
+                    th:field="*{formula}"
+                    placeholder="Fórmula" required/>
+                <label for="formula" class="input-label">Fórmula</label>
+            </div>
+
+            <div class="input-container">
+                <input type="number"
+                    id="existencias"
+                    th:field="*{existencias}"
+                    placeholder="Existencias" required/>
+                <label for="existencias" class="input-label">Existencias</label>
+            </div>
+
+            <div class="input-container">
+                <input type="number"
+                    id="alertaExistenciaMinima"
+                    th:field="*{alertaExistenciaMinima}"
+                    placeholder="Existencia mínima" required/>
+                <label for="alertaExistenciaMinima"
+                    class="input-label">
+                    Alerta de existencia mínima
+                </label>
+            </div>
+
+            <div class="input-container">
+                <input type="text"
+                    id="unidad"
+                    th:field="*{unidad}"
+                    placeholder="Unidad" required/>
+                <label for="unidad" class="input-label">
+                    Unidad
+                </label>
+            </div>
+
+            <div class="input-container">
+                <input type="date"
+                    id="fechaExpiracion"
+                    th:field="*{fechaExpiracion}" required/>
+                <label for="fechaExpiracion"
+                    class="input-label">
+                    Fecha de expiración
+                </label>
+            </div>
+
+            <div class="buttons-container">
+                <button type="submit">
+                    Guardar Medicina
+                </button>
+            </div>
+
+        </form>
+        </main>
+
+        <footer th:replace="~{fragmento/base::footer}"></footer>
+    </body>
+</html>

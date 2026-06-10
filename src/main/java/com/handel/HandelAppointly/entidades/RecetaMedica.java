@@ -17,7 +17,7 @@ public class RecetaMedica {
     @JoinColumn(name = "cusulta_medica_id", nullable = false, unique = true)
     private ConsultaMedica consultaMedica;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medicina_id")
     private Medicina medicinaId;
 

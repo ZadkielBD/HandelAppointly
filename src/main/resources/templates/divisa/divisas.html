@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Divisas', null)}">
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+<main>
+    <div class="tabla-container">
+        <div class="tabla-header">
+            <h1>Divisas</h1>
+            <form th:action="@{/divisas/actualizar}" method="post">
+                <button type="submit" class="btn-actualizar">
+                    <span class="material-symbols-outlined">sync</span>
+                    Actualizar tipos de cambio
+                </button>
+            </form>
+        </div>
+
+        <table class="tabla">
+            <thead>
+            <tr>
+                <th>Código</th>
+                <th>Símbolo</th>
+                <th>Nombre</th>
+                <th>Tipo de Cambio (USD)</th>
+                <th>Última Actualización</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="divisa : ${divisas}">
+                <td th:text="${divisa.codigo}"></td>
+                <td th:text="${divisa.simbolo}"></td>
+                <td th:text="${divisa.nombre}"></td>
+                <td th:text="${divisa.tipoCambio}"></td>
+                <td th:text="${divisa.ultimaActualizacion != null ?
+                        #temporals.format(divisa.ultimaActualizacion, 'dd/MM/yyyy HH:mm') : 'Sin actualizar'}">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

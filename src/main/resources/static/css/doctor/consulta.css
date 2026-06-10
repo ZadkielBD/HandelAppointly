@@ -1,0 +1,203 @@
+main {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.consulta-container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.consulta-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.consulta-header h1 {
+    font-size: 1.8rem;
+    color: #003366;
+    margin: 0;
+}
+
+.btn-volver {
+    display: flex;
+    align-items: center;
+    color: #003366;
+    text-decoration: none;
+    padding: 6px;
+    border-radius: 8px;
+    transition: 0.15s ease;
+}
+
+.btn-volver:hover {
+    background-color: #e0f2fe;
+}
+
+.consulta-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Sección con borde */
+.seccion-card {
+    border: 2px solid #e0f2fe;
+    border-radius: 12px;
+    padding: 20px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.seccion-card h2 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #acacac;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 12px 0;
+}
+
+/* Textarea — mismo estilo que input en utils.css */
+.input-container {
+    position: relative;
+    margin: 12px 0;
+}
+
+.input-container textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid #acacac;
+    background-color: transparent;
+    color: #003366;
+    transition: 0.15s ease;
+    resize: vertical;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.input-container textarea:focus {
+    outline: none;
+    border-color: #003366;
+}
+
+.input-container textarea::placeholder {
+    color: transparent;
+}
+
+.input-container textarea:focus + .input-label,
+.input-container textarea:not(:placeholder-shown) + .input-label {
+    transform: translate(5px, -22px);
+    background-color: #fff;
+    font-size: 14px;
+    color: #003366;
+}
+
+.input-container .input-label {
+    position: absolute;
+    top: 9px;
+    left: 0;
+    font-size: 16px;
+    padding: 0 10px;
+    color: #acacac;
+    pointer-events: none;
+    transition: 0.15s ease;
+}
+
+.input-container input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid #acacac;
+    background-color: transparent;
+    color: #003366;
+    transition: 0.15s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.input-container input:focus {
+    outline: none;
+    border-color: #003366;
+}
+
+.input-container input::placeholder {
+    color: transparent;
+}
+
+.input-container input:focus + .input-label,
+.input-container input:not(:placeholder-shown) + .input-label {
+    transform: translate(5px, -22px);
+    background-color: #fff;
+    font-size: 14px;
+    color: #003366;
+}
+
+/* Error */
+.error-msg {
+    display: block;
+    color: #d32f2f;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 4px;
+    font-weight: 500;
+}
+
+.input-container:has(.error-msg:not(:empty)) textarea,
+.input-container:has(.error-msg:not(:empty)) input {
+    border-color: #d32f2f;
+}
+
+.input-container:has(.error-msg:not(:empty)) .input-label {
+    color: #d32f2f;
+}
+
+.error-general {
+    display: block;
+    background-color: #fdecea;
+    color: #d32f2f;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px 14px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+/* Botón guardar */
+.consulta-acciones {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-guardar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.btn-guardar:hover {
+    background-color: #0066cc;
+}

@@ -13,6 +13,8 @@ public interface PacienteServicio {
 
     Page<PacienteRespuestaDto> findAll(Pageable paginable);
 
+    Page<PacienteRespuestaDto> findByDoctorId(Long doctorId, Pageable paginable);
+
     PacienteRespuestaDto update(Long id, PacienteSolicitudDto solicitudDto);
 
     void delete(Long id);

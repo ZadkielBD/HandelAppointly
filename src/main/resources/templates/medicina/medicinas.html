@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Medicinas', null)}">
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+<main>
+    <div class="tabla-container">
+        <div class="tabla-header">
+            <h1>Inventario de Medicinas</h1>
+            <a th:href="@{/medicinas/crear}" class="btn-primario">
+                <span class="material-symbols-outlined">add</span>
+                Nueva Medicina
+            </a>
+        </div>
+
+        <table class="tabla">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Fabricante</th>
+                <th>Fórmula</th>
+                <th>Existencias</th>
+                <th>Unidad</th>
+                <th>Vence</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="m : ${medicinas}"
+                th:classappend="${m.existencias <= m.alertaExistenciaMinima ? ' fila-alerta' : ''}">
+                <td th:text="${m.nombre}"></td>
+                <td th:text="${m.fabricante}"></td>
+                <td th:text="${m.formula}"></td>
+                <td>
+                        <span th:text="${m.existencias}"
+                              th:classappend="${m.existencias <= m.alertaExistenciaMinima ? ' texto-alerta' : ''}">
+                        </span>
+                    <span th:if="${m.existencias <= m.alertaExistenciaMinima}"
+                          class="material-symbols-outlined icono-alerta">warning</span>
+                </td>
+                <td th:text="${m.unidad}"></td>
+                <td th:text="${#temporals.format(m.fechaExpiracion, 'dd/MM/yyyy')}"></td>
+                <td class="acciones">
+                    <a th:href="@{/medicinas/actualizar/{id}(id=${m.id})}" class="btn-editar-sm">
+                        <span class="material-symbols-outlined">edit</span>
+                    </a>
+                    <form th:action="@{/medicinas/eliminar/{id}(id=${m.id})}" method="post"
+                          style="display:inline">
+                        <button type="submit" class="btn-eliminar-sm"
+                                onclick="return confirm('¿Eliminar esta medicina?')">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

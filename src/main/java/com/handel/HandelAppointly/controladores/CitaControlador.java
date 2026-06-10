@@ -34,10 +34,10 @@ public class CitaControlador {
         UsuarioSesionDto usuario = (UsuarioSesionDto) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
-        if (usuario.getRol() == com.handel.HandelAppointly.enums.Rol.ADMINISTRADOR) {
-            modelo.addAttribute("citas", citaServicio.findAll(pageable));
-        } else {
-            modelo.addAttribute("citas", citaServicio.findByPacienteId(usuario.getId(), pageable));
+        switch (usuario.getRol()) {
+            case ADMINISTRADOR -> modelo.addAttribute("citas", citaServicio.findAll(pageable));
+            case DOCTOR        -> modelo.addAttribute("citas", citaServicio.findByDoctorId(usuario.getId(), pageable));
+            default            -> modelo.addAttribute("citas", citaServicio.findByPacienteId(usuario.getId(), pageable));
         }
         return "cita/citas";
     }

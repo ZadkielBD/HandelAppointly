@@ -57,10 +57,10 @@ public class AdministradorControlador {
         try {
             administradorServicio.create(solicitudDto);
             redirectAttributes.addFlashAttribute("mensaje", "Administrador guardado exitosamente");
-            return "redirect:/login";
+            return "redirect:/";
         } catch (EmailDuplicadoException e) {
             modelo.addAttribute("error", e.getMessage());
-            return "paciente/crearPaciente";
+            return "administrador/crearAdministrador";
         }
     }
 

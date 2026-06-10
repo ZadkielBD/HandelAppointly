@@ -22,6 +22,7 @@ public interface CitaMapper {
     @Mapping(target = "doctorNombre", source = "doctor.nombre")
     @Mapping(target = "doctorId", source = "doctor.id")
     @Mapping(target = "precioUSD", ignore = true)
+    @Mapping(target = "consultaId", source = "consultaMedica.id")
     CitaRespuestaDto aRespuestaDto(Cita cita);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

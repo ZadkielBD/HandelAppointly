@@ -10,12 +10,19 @@ import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.CitaMapper;
 import com.handel.HandelAppointly.repositorios.CitaRepositorio;
 import com.handel.HandelAppointly.repositorios.DoctorRepositorio;
+import com.handel.HandelAppointly.entidades.ConsultaMedica;
+import com.handel.HandelAppointly.entidades.HistorialMedico;
+import com.handel.HandelAppointly.repositorios.ConsultaMedicaRepositorio;
+import com.handel.HandelAppointly.repositorios.HistorialMedicoRepositorio;
 import com.handel.HandelAppointly.repositorios.PacienteRepositorio;
 import com.handel.HandelAppointly.servicios.CitaServicio;
 import com.handel.HandelAppointly.utils.GeneradorCodigos;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +33,8 @@ public class CitaServicioImpl implements CitaServicio {
     private final PacienteRepositorio pacienteRepositorio;
     private final DoctorRepositorio doctorRepositorio;
     private final CitaMapper citaMapper;
+    private final ConsultaMedicaRepositorio consultaMedicaRepositorio;
+    private final HistorialMedicoRepositorio historialMedicoRepositorio;
 
     @Override
     @Transactional
@@ -42,7 +51,24 @@ public class CitaServicioImpl implements CitaServicio {
         cita.setEstatus(EstatusCita.PENDIENTE);
         cita.setCodigoCita(GeneradorCodigos.generarCodigoCita());
 
-        return citaMapper.aRespuestaDto(citaRepositorio.save(cita));
+        Cita citaGuardada = citaRepositorio.save(cita);
+
+        HistorialMedico historial = historialMedicoRepositorio
+                .findByPacienteId(paciente.getId())
+                .orElseGet(() -> historialMedicoRepositorio.save(
+                        HistorialMedico.builder().paciente(paciente).build()
+                ));
+
+        ConsultaMedica consulta = ConsultaMedica.builder()
+                .cita(citaGuardada)
+                .doctor(doctor)
+                .paciente(paciente)
+                .historialMedico(historial)
+                .build();
+
+        consultaMedicaRepositorio.save(consulta);
+
+        return citaMapper.aRespuestaDto(citaGuardada);
     }
 
     @Override
@@ -63,6 +89,22 @@ public class CitaServicioImpl implements CitaServicio {
     public Page<CitaRespuestaDto> findByPacienteId(Long pacienteId, Pageable paginable) {
         return citaRepositorio.findByPacienteId(pacienteId, paginable)
                 .map(citaMapper::aRespuestaDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<CitaRespuestaDto> findByDoctorId(Long doctorId, Pageable paginable) {
+        return citaRepositorio.findByDoctorId(doctorId, paginable)
+                .map(citaMapper::aRespuestaDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CitaRespuestaDto> findCitasHoyByDoctorId(Long doctorId) {
+        return citaRepositorio.findByDoctorIdAndFecha(doctorId, LocalDate.now())
+                .stream()
+                .map(citaMapper::aRespuestaDto)
+                .collect(Collectors.toList());
     }
 
     @Override

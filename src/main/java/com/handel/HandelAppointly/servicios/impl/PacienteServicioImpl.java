@@ -7,6 +7,9 @@ import com.handel.HandelAppointly.enums.Rol;
 import com.handel.HandelAppointly.excepciones.EmailDuplicadoException;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.PacienteMapper;
+import com.handel.HandelAppointly.entidades.HistorialMedico;
+import com.handel.HandelAppointly.repositorios.CitaRepositorio;
+import com.handel.HandelAppointly.repositorios.HistorialMedicoRepositorio;
 import com.handel.HandelAppointly.repositorios.PacienteRepositorio;
 import com.handel.HandelAppointly.repositorios.UsuarioRepositorio;
 import com.handel.HandelAppointly.servicios.PacienteServicio;
@@ -21,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class PacienteServicioImpl implements PacienteServicio {
     private final PacienteRepositorio pacienteRepositorio;
     private final PacienteMapper pacienteMapper;
+    private final CitaRepositorio citaRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
+    private final HistorialMedicoRepositorio historialMedicoRepositorio;
 
     @Override
     @Transactional
@@ -34,6 +39,7 @@ public class PacienteServicioImpl implements PacienteServicio {
         paciente.setRol(Rol.PACIENTE);
 
         Paciente pacienteCreado = pacienteRepositorio.save(paciente);
+
         return pacienteMapper.aRespuestaDto(pacienteCreado);
     }
 
@@ -50,6 +56,13 @@ public class PacienteServicioImpl implements PacienteServicio {
     public Page<PacienteRespuestaDto> findAll(Pageable paginable) {
         return pacienteRepositorio.findAll(paginable)
                 .map(pacienteMapper::aRespuestaDto); // .map(p -> pacienteMapper.aRespuestaDto(p))
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PacienteRespuestaDto> findByDoctorId(Long doctorId, Pageable paginable) {
+        return citaRepositorio.findPacientesByDoctorId(doctorId, paginable)
+                .map(pacienteMapper::aRespuestaDto);
     }
 
     @Override

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Administradores', null)}">
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+<main>
+    <div class="tabla-container">
+        <div class="tabla-header">
+            <h1>Administradores</h1>
+            <a th:href="@{/administradores/crear}" class="btn-primario">
+                <span class="material-symbols-outlined">add</span>
+                Nuevo Administrador
+            </a>
+        </div>
+
+        <table class="tabla">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Nivel</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="admin : ${administradores.content}">
+                <td th:text="${admin.nombre}"></td>
+                <td th:text="${admin.apellido}"></td>
+                <td th:text="${admin.email}"></td>
+                <td th:text="${admin.numeroTelefono}"></td>
+                <td th:text="${admin.nivelAcceso}"></td>
+                <td class="acciones">
+                    <a th:href="@{/administradores/actualizar/{id}(id=${admin.id})}"
+                       class="btn-editar-sm">
+                        <span class="material-symbols-outlined">edit</span>
+                    </a>
+                    <form th:action="@{/administradores/eliminar/{id}(id=${admin.id})}"
+                          method="post" style="display:inline">
+                        <button type="submit" class="btn-eliminar-sm"
+                                onclick="return confirm('¿Eliminar este administrador?')">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="paginacion" th:if="${administradores.totalPages > 1}">
+            <a th:if="${administradores.hasPrevious()}"
+               th:href="@{/administradores(page=${administradores.number - 1})}"
+               class="btn-pagina">Anterior</a>
+            <span th:text="|${administradores.number + 1} de ${administradores.totalPages}|"></span>
+            <a th:if="${administradores.hasNext()}"
+               th:href="@{/administradores(page=${administradores.number + 1})}"
+               class="btn-pagina">Siguiente</a>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

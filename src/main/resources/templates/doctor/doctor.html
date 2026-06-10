@@ -19,19 +19,19 @@
             <div class="perfil-info">
                 <h1 th:text="|Dr. ${doctor.nombre} ${doctor.apellido}|"></h1>
                 <div class="especialidades-tags">
-                            <span th:each="esp : ${doctor.especialidades}"
-                                  class="especialidad-tag"
-                                  th:text="${esp}">
-                            </span>
+                    <span th:each="esp : ${doctor.especialidades}"
+                        class="especialidad-tag"
+                            th:text="${esp}">
+                    </span>
                 </div>
             </div>
 
-            <!-- Acciones según rol -->
+                <!-- Acciones según rol -->
             <div class="perfil-acciones">
                 <!-- Sin sesión o Paciente -->
                 <a th:if="${session.usuarioLogueado == null or session.usuarioLogueado.rol.name() == 'PACIENTE'}"
-                   th:href="@{/citas/crear(doctorId=${doctor.id})}"
-                   class="btn-agendar">
+                    th:href="@{/citas/crear(doctorId=${doctor.id})}"
+                    class="btn-agendar">
                     <span class="material-symbols-outlined">calendar_add_on</span>
                     Agendar cita
                 </a>
@@ -49,11 +49,10 @@
                     </form>
                 </th:block>
                 <!-- Doctor viendo su propio perfil -->
-                <a th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol.name() == 'DOCTOR' and session.usuarioLogueado.id == doctor.id}"
-                   th:href="@{/doctores/actualizar/{id}(id=${doctor.id})}"
-                   class="btn-editar">
-                    <span class="material-symbols-outlined">edit</span>
-                    Editar mi perfil
+                <a th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol.name() == 'DOCTOR' and session.usuarioLogueado.id == doctor.id}"                   th:href="@{/doctores/actualizar/{id}(id=${doctor.id})}"
+                    class="btn-editar">
+                        <span class="material-symbols-outlined">edit</span>
+                        Editar mi perfil
                 </a>
             </div>
         </div>

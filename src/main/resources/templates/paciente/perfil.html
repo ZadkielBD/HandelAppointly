@@ -8,19 +8,37 @@
         <header th:replace="~{fragmento/base::header}"></header>
 
         <main>
-            <div class="perfil-card">
-                <h2 th:text="${paciente.nombre}"></h2>
-                <p><strong>Apellido:</strong> <span th:text="${paciente.apellido}"></span></p>
-                <p><strong>Email:</strong> <span th:text="${paciente.email}"></span></p>
-                <p><strong>Teléfono:</strong> <span th:text="${paciente.numeroTelefono}"></span></p>
-                <p><strong>Fecha de Nacimiento:</strong> <span th:text="${paciente.fechaNacimiento}"></span></p>
-                <th:block th:if="${paciente.emergencyContactName != null && !paciente.emergencyContactName.isEmpty()}">
-                    <p><strong>Contacto de Emergencia:</strong> <span th:text="${paciente.emergencyContactName}"></span></p>
-                </th:block>
-                <th:block th:if="${paciente.emergencyContactPhoneNumber != null && !paciente.emergencyContactPhoneNumber.isEmpty()}">
-                    <p><strong>Teléfono de Emergencia:</strong> <span th:text="${paciente.emergencyContactPhoneNumber}"></span></p>
-                </th:block>
+            <div class="profile-card">
+
+            <div class="profile-header">
+                <span class="material-symbols-outlined">person</span>
+
+                <div>
+                    <h2 th:text="${paciente.nombre + ' ' + paciente.apellido}"></h2>
+                    <p>Paciente</p>
+                </div>
             </div>
+
+            <div class="profile-body">
+
+                <div class="profile-item">
+                    <label>Email</label>
+                    <p th:text="${paciente.email}"></p>
+                </div>
+
+                <div class="profile-item">
+                    <label>Teléfono</label>
+                    <p th:text="${paciente.numeroTelefono}"></p>
+                </div>
+
+                <div class="profile-item">
+                    <label>Fecha de nacimiento</label>
+                    <p th:text="${paciente.fechaNacimiento}"></p>
+                </div>
+
+            </div>
+
+        </div>
         </main>
 
         <footer th:replace="~{fragmento/base::footer}"></footer>

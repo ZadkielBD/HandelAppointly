@@ -19,5 +19,6 @@ public class CitaRespuestaDto {
     private EstatusCita estatus;
     private TipoConsulta consulta;
     private String motivo;
+    private Long consultaId;
     private BigDecimal precioUSD;
 }
