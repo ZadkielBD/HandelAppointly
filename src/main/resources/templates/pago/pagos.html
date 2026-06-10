@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Mis Pagos', '/css/pago/pago.css')}">
+    <meta charset="UTF-8"/>
+    <title>Mis Pagos</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+
+<main>
+    <div class="panel-contenedor">
+
+        <div class="panel-encabezado">
+            <h1>Mis Pagos</h1>
+        </div>
+
+        <div th:if="${pagos.empty}" class="estado-vacio">
+            <span class="material-symbols-outlined">payments</span>
+            <p>No tienes pagos registrados aún.</p>
+            <a th:href="@{/citas}" class="btn-accion primario">Ver mis citas</a>
+        </div>
+
+        <div th:if="${!pagos.empty}" class="tabla-wrapper">
+            <table class="tabla-datos">
+                <thead>
+                <tr>
+                    <th>Código Cita</th>
+                    <th>Monto</th>
+                    <th>Método</th>
+                    <th>Estado</th>
+                    <th>Fecha de Pago</th>
+                    <th>Comprobante</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pago : ${pagos.content}">
+                    <td th:text="${pago.codigoCita}"></td>
+                    <td th:text="|${pago.monto} ${pago.divisa}|"></td>
+                    <td th:text="${pago.metodoPago.nombre}"></td>
+                    <td>
+                        <span class="badge-estatus"
+                              th:text="${pago.estadoPago}"
+                              th:classappend="${pago.estadoPago.name() == 'COMPLETADO' ? ' confirmada' :
+                                               pago.estadoPago.name() == 'PENDIENTE'  ? ' pendiente'  :
+                                               pago.estadoPago.name() == 'FALLIDO'    ? ' cancelada'  : ''}">
+                        </span>
+                    </td>
+                    <td th:text="${#temporals.format(pago.fechaPago, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td>
+                        <a th:href="@{/pagos/cita/{citaId}(citaId=${pago.citaId})}" class="btn-icono info" title="Ver comprobante">
+                            <span class="material-symbols-outlined">receipt</span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${!pagos.empty}" class="paginacion">
+            <a th:if="${pagos.hasPrevious()}"
+               th:href="@{/pagos(page=${pagos.number - 1})}" class="btn-accion">Anterior</a>
+            <span th:text="|Página ${pagos.number + 1} de ${pagos.totalPages}|" class="info-pagina"></span>
+            <a th:if="${pagos.hasNext()}"
+               th:href="@{/pagos(page=${pagos.number + 1})}" class="btn-accion">Siguiente</a>
+        </div>
+
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

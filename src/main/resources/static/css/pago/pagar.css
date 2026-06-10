@@ -1,0 +1,121 @@
+.pago-container {
+    max-width: 640px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.pago-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pago-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #003366;
+}
+
+.resumen-card {
+    background: white;
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.resumen-card h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #003366;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-bottom: 1rem;
+}
+
+.resumen-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.dato-label {
+    font-size: .75rem;
+    color: black;
+    margin-bottom: .2rem;
+}
+
+.dato-valor {
+    font-weight: 600;
+    color: #003366;
+}
+
+.pago-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pago-acciones {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: .5rem;
+}
+
+.btn-pagar {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    background: #003366;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: .75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.btn-pagar:hover { background:#003366; }
+
+.comprobante-icono {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.check-icon {
+    font-size: 4rem;
+    color: #22c55e;
+}
+
+.comprobante-icono h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #003366;
+    margin-top: .5rem;
+}
+
+.btn-volver-citas {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    background: #003366;
+    color: white;
+    border-radius: 8px;
+    padding: .75rem 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s;
+}
+
+.btn-volver-citas:hover { background: #003366; }
+
+.btn-volver {
+    display: flex;
+    align-items: center;
+    color: #003366;
+    text-decoration: none;
+}

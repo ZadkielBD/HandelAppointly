@@ -1,0 +1,13 @@
+main form {
+    max-width: 700px;
+}
+
+.textarea-container textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 120px;
+}
+
+.btn-secondary {
+    text-decoration: none;
+}

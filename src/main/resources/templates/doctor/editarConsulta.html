@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Editar Consulta', '/css/pago/pago.css')}">
+    <meta charset="UTF-8"/>
+    <title>Editar Consulta</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+
+<main>
+    <div class="pago-container">
+
+        <div class="pago-header">
+            <a href="javascript:history.back()" class="btn-volver">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h1>Editar Consulta</h1>
+        </div>
+
+        <form th:action="@{/historial/consulta/editar/{id}(id=${consultaId})}" method="post"
+              th:object="${consulta}" class="pago-form">
+
+            <p th:if="${error}" th:text="${error}" class="error-general"></p>
+
+            <div class="input-container">
+                <textarea id="sintomas" th:field="*{sintomas}"
+                          placeholder="Síntomas del paciente" rows="3"></textarea>
+                <label for="sintomas" class="input-label">Síntomas</label>
+                <span th:errors="*{sintomas}" class="error-msg"></span>
+            </div>
+
+            <div class="input-container">
+                <textarea id="diagnostico" th:field="*{diagnostico}"
+                          placeholder="Diagnóstico médico" rows="3"></textarea>
+                <label for="diagnostico" class="input-label">Diagnóstico</label>
+                <span th:errors="*{diagnostico}" class="error-msg"></span>
+            </div>
+
+            <div class="input-container">
+                <textarea id="tratamiento" th:field="*{tratamiento}"
+                          placeholder="Tratamiento indicado" rows="3"></textarea>
+                <label for="tratamiento" class="input-label">Tratamiento</label>
+                <span th:errors="*{tratamiento}" class="error-msg"></span>
+            </div>
+
+            <div class="resumen-card">
+                <h2>Receta Médica (opcional)</h2>
+
+                <div class="ss-wrap" id="medicinaWrap">
+                    <span class="ss-label">Medicina</span>
+                    <div id="medicinaData" style="display:none">
+                        <div th:each="med : ${medicinas}"
+                             th:data-id="${med.id}"
+                             th:data-nombre="${med.nombre}"></div>
+                    </div>
+                    <div class="ss-input-row" id="medicinaInputRow">
+                        <input class="ss-bare-input" id="medicinaInput" autocomplete="off" type="text"/>
+                    </div>
+                    <div class="ss-dropdown" id="medicinaDropdown"></div>
+                    <div id="medicinaHiddenFields"></div>
+                </div>
+
+                <div class="input-container">
+                    <input type="text" id="dosis" th:field="*{dosis}" placeholder="Ej: 1 tableta cada 8 horas"/>
+                    <label for="dosis" class="input-label">Dosis</label>
+                </div>
+
+                <div class="input-container">
+                    <input type="number" id="diasDuracion" th:field="*{diasDuracion}"
+                           placeholder="Días de tratamiento" min="1"/>
+                    <label for="diasDuracion" class="input-label">Días de duración</label>
+                </div>
+            </div>
+
+            <div class="pago-acciones">
+                <button type="submit" class="btn-pagar">
+                    <span class="material-symbols-outlined">save</span>
+                    Actualizar Consulta
+                </button>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+<script th:src="@{/js/utils/dropdown.js}"></script>
+<script th:src="@{/js/doctor/crearConsulta.js}"></script>
+</body>
+</html>

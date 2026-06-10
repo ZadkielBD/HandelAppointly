@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Mis Pacientes', '/css/cita/citas.css')}">
+    <meta charset="UTF-8"/>
+    <title>Mis Pacientes</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+
+<main>
+    <div class="panel-contenedor">
+
+        <div class="panel-encabezado">
+            <h1>Mis Pacientes</h1>
+        </div>
+
+        <div th:if="${pacientes.empty}" class="estado-vacio">
+            <span class="material-symbols-outlined">group</span>
+            <p>Aún no tienes pacientes registrados.</p>
+        </div>
+
+        <div th:if="${!pacientes.empty}" class="tabla-wrapper">
+            <table class="tabla-datos">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="paciente : ${pacientes.content}">
+                    <td th:text="|${paciente.nombre} ${paciente.apellido}|"></td>
+                    <td th:text="${paciente.email}"></td>
+                    <td th:text="${paciente.numeroTelefono}"></td>
+                    <td>
+                        <div class="acciones-fila">
+                            <a th:href="@{/historial/paciente/{id}(id=${paciente.id})}"
+                               class="btn-icono info" title="Ver historial">
+                                <span class="material-symbols-outlined">medical_information</span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${!pacientes.empty}" class="paginacion">
+            <a th:if="${pacientes.hasPrevious()}"
+               th:href="@{/historial/pacientes(page=${pacientes.number - 1})}" class="btn-accion">Anterior</a>
+            <span th:text="|Página ${pacientes.number + 1} de ${pacientes.totalPages}|" class="info-pagina"></span>
+            <a th:if="${pacientes.hasNext()}"
+               th:href="@{/historial/pacientes(page=${pacientes.number + 1})}" class="btn-accion">Siguiente</a>
+        </div>
+
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>

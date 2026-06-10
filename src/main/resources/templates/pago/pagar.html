@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Pagar Cita', '/css/pago/pago.css')}">
+    <meta charset="UTF-8"/>
+    <title>Pagar Cita</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+
+<main>
+    <div class="pago-container">
+
+        <div class="pago-header">
+            <a th:href="@{/citas/{id}(id=${cita.id})}" class="btn-volver">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h1>Pagar Cita</h1>
+        </div>
+
+        <!-- Resumen de la cita -->
+        <div class="resumen-card">
+            <h2>Resumen</h2>
+            <div class="resumen-grid">
+                <div class="resumen-dato">
+                    <p class="dato-label">Código</p>
+                    <p class="dato-valor" th:text="${cita.codigoCita}"></p>
+                </div>
+                <div class="resumen-dato">
+                    <p class="dato-label">Doctor</p>
+                    <p class="dato-valor" th:text="|Dr. ${cita.doctorNombre}|"></p>
+                </div>
+                <div class="resumen-dato">
+                    <p class="dato-label">Fecha</p>
+                    <p class="dato-valor"
+                       th:text="${#temporals.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></p>
+                </div>
+                <div class="resumen-dato">
+                    <p class="dato-label">Tipo</p>
+                    <p class="dato-valor" th:text="${cita.consulta}"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de pago -->
+        <form th:action="@{/pagos}" method="post" th:object="${pago}" class="pago-form">
+            <input type="hidden" th:field="*{citaId}"/>
+
+            <p th:if="${error}" th:text="${error}" class="error-general"></p>
+
+            <div class="ss-wrap" id="divisaWrap">
+                <span class="ss-label">Divisa</span>
+                <div id="divisaData" style="display:none">
+                    <div th:each="divisa : ${divisas}"
+                         th:data-id="${divisa.codigo}"
+                         th:data-nombre="${divisa.nombre}">
+                    </div>
+                </div>
+                <div class="ss-input-row" id="divisaInputRow">
+                    <input class="ss-bare-input" id="divisaInput" autocomplete="off" type="text"/>
+                </div>
+                <div class="ss-dropdown" id="divisaDropdown"></div>
+                <div id="divisaHiddenFields"></div>
+                <span th:errors="*{codigoDivisa}" class="error-msg"></span>
+            </div>
+
+            <div class="ss-wrap" id="metodoPagoWrap">
+                <span class="ss-label">Método de Pago</span>
+                <div id="metodoPagoData" style="display:none">
+                    <div th:each="metodo : ${metodosPago}"
+                         th:data-id="${metodo.name()}"
+                         th:data-nombre="${metodo.nombre}">
+                    </div>
+                </div>
+                <div class="ss-input-row" id="metodoPagoInputRow">
+                    <input class="ss-bare-input" id="metodoPagoInput" autocomplete="off" type="text"/>
+                </div>
+                <div class="ss-dropdown" id="metodoPagoDropdown"></div>
+                <div id="metodoPagoHiddenFields"></div>
+                <span th:errors="*{metodoPago}" class="error-msg"></span>
+            </div>
+
+            <div class="pago-acciones">
+                <button type="submit" class="btn-pagar">
+                    <span class="material-symbols-outlined">payments</span>
+                    Confirmar Pago
+                </button>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+<script th:src="@{/js/utils/dropdown.js}"></script>
+<script th:src="@{/js/pago/pagar.js}"></script>
+</body>
+</html>

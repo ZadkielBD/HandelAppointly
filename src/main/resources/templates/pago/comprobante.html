@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="~{fragmento/base :: head('Comprobante de Pago', '/css/pago/pago.css')}">
+    <meta charset="UTF-8"/>
+    <title>Comprobante</title>
+</head>
+<body>
+<header th:replace="~{fragmento/base::header}"></header>
+<div th:replace="~{fragmento/base::mensaje}"></div>
+
+<main>
+    <div class="pago-container">
+
+        <div class="comprobante-icono">
+            <span class="material-symbols-outlined check-icon">check_circle</span>
+            <h1>Pago Completado</h1>
+            <p th:text="${pago.codigoCita}"></p>
+        </div>
+
+        <div class="resumen-card">
+            <h2>Comprobante</h2>
+            <div class="resumen-grid">
+                <div class="resumen-dato">
+                    <p class="dato-label">Doctor</p>
+                    <p class="dato-valor" th:text="|Dr. ${cita.doctorNombre}|"></p>
+                </div>
+                <div class="resumen-dato">
+                    <p class="dato-label">Fecha de Cita</p>
+                    <p class="dato-valor"
+                       th:text="${#temporals.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></p>
+                </div>
+                <div class="resumen-dato">
+                    <p class="dato-label">Monto</p>
+                    <p class="dato-valor" th:text="|${pago.monto} ${pago.divisa}|"></p>
+                </div>
+                <div class="resumen-dato">
+                    <p class="dato-label">Método de Pago</p>
+                    <p class="dato-valor" th:text="${pago.metodoPago.nombre}"></p>
+                </div>
+                <div class="resumen-dato">
+                    <p class="dato-label">Fecha de Pago</p>
+                    <p class="dato-valor"
+                       th:text="${#temporals.format(pago.fechaPago, 'dd/MM/yyyy HH:mm')}"></p>
+                </div>
+                <div class="resumen-dato">
+                    <p class="dato-label">Estado</p>
+                    <p class="dato-valor badge-estatus completada" th:text="${pago.estadoPago}"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pago-acciones">
+            <a th:href="@{/citas}" class="btn-volver-citas">
+                <span class="material-symbols-outlined">list</span>
+                Ver mis citas
+            </a>
+        </div>
+
+    </div>
+</main>
+
+<footer th:replace="~{fragmento/base::footer}"></footer>
+</body>
+</html>
