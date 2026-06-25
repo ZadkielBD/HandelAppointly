@@ -59,7 +59,7 @@ public class DoctorControlador {
     }
 
     @PostMapping
-    public String procesarCrear(@Valid @ModelAttribute("doctor") DoctorSolicitudDto doctorSolicitudDto,
+    public String procesarCrear(@Valid @ModelAttribute("doctor") DoctorSolicitudDto doctor,
                         BindingResult result,
                         RedirectAttributes redirectAttributes,
                         Model modelo) {
@@ -69,7 +69,7 @@ public class DoctorControlador {
             return "doctor/crearDoctor";
         }
         try {
-            doctorServicio.create(doctorSolicitudDto);
+            doctorServicio.create(doctor);
             redirectAttributes.addFlashAttribute("mensaje", "Doctor guardado exitosamente");
             return "redirect:/login";
         } catch (EmailDuplicadoException e) {
@@ -79,9 +79,8 @@ public class DoctorControlador {
     }
 
     @GetMapping("/actualizar/{id}")
-    public String mostrasActualizar(@PathVariable Long id, Model modelo) {
-        DoctorRespuestaDto doctor = doctorServicio.findById(id);
-        modelo.addAttribute("doctor", doctor);
+    public String mostrarActualizar(@PathVariable Long id, Model modelo) {
+        modelo.addAttribute("doctor", doctorServicio.findById(id));
         modelo.addAttribute("especialidades", especialidadServicio.findAll());
         modelo.addAttribute("divisas", divisaServicio.findAll());
         return "doctor/actualizarDoctor";
@@ -89,7 +88,7 @@ public class DoctorControlador {
 
     @PostMapping("actualizar/{id}")
     public String procesarActualizar(@PathVariable Long id,
-                         @Valid @ModelAttribute("doctor") DoctorSolicitudDto solicitudDto,
+                         @Valid @ModelAttribute("doctor") DoctorSolicitudDto doctor,
                          BindingResult result,
                          Model modelo,
                          RedirectAttributes redirectAttributes) {
@@ -100,7 +99,7 @@ public class DoctorControlador {
             return "doctor/actualizarDoctor";
         }
 
-         doctorServicio.update(id, solicitudDto);
+         doctorServicio.update(id, doctor);
          redirectAttributes.addFlashAttribute("mensaje", "Doctor actualizado");
          return "redirect:/doctores/" + id;
     }

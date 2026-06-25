@@ -1,8 +1,12 @@
 package com.handel.HandelAppointly.controladores;
 
+import com.handel.HandelAppointly.dtos.respuesta.MedicinaRespuestaDto;
+import com.handel.HandelAppointly.dtos.solicitud.MedicinaSolicitudDto;
 import com.handel.HandelAppointly.entidades.Medicina;
 import com.handel.HandelAppointly.servicios.MedicinaServicio;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +19,21 @@ public class MedicinaControlador {
     private final MedicinaServicio medicinaServicio;
 
     @GetMapping
-    public String mostrarTodas(Model modelo) {
-        modelo.addAttribute("medicinas", medicinaServicio.findAll());
+    public String mostrarTodas(Model modelo,
+                               @PageableDefault(size = 12, sort = "apellido") Pageable pageable) {
+        modelo.addAttribute("medicinas", medicinaServicio.findAll(pageable));
         modelo.addAttribute("nueva", new Medicina());
         return "medicina/medicinas";
     }
 
     @GetMapping("/crear")
     public String mostrarCrear(Model modelo) {
-        modelo.addAttribute("medicina", new Medicina());
+        modelo.addAttribute("medicina", new MedicinaSolicitudDto());
         return "medicina/crearMedicina";
     }
 
     @PostMapping
-    public String crear(@ModelAttribute Medicina medicina,
+    public String procesarCrear(@ModelAttribute MedicinaSolicitudDto medicina,
                         RedirectAttributes redirectAttributes) {
         medicinaServicio.create(medicina);
         redirectAttributes.addFlashAttribute("mensaje", "Medicina creada exitosamente");
@@ -42,8 +47,8 @@ public class MedicinaControlador {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable Long id,
-                             @ModelAttribute Medicina medicina,
+    public String procesarActualizar(@PathVariable Long id,
+                             @ModelAttribute MedicinaSolicitudDto medicina,
                              RedirectAttributes redirectAttributes) {
         medicinaServicio.update(id, medicina);
         redirectAttributes.addFlashAttribute("mensaje", "Medicina actualizada");

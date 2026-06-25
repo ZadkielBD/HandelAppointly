@@ -34,8 +34,8 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         administrador.setRol(Rol.ADMINISTRADOR);
 
-        Administrador administradorCreado = administradorRepositorio.save(administrador);
-        return administradorMapper.aRespuestaDto(administradorCreado);
+        administradorRepositorio.save(administrador);
+        return administradorMapper.aRespuestaDto(administrador);
     }
 
     @Override
@@ -60,9 +60,8 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         administradorMapper.actualizarDoctorDesdeDto(solicitudDto, administrador);
 
-        Administrador AdministradorActualizado = administradorRepositorio.save(administrador);
-
-        return administradorMapper.aRespuestaDto(AdministradorActualizado);
+        administradorRepositorio.save(administrador);
+        return administradorMapper.aRespuestaDto(administrador);
     }
 
     @Override

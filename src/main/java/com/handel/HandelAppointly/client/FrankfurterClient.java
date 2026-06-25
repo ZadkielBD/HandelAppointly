@@ -8,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @RequiredArgsConstructor
 public class FrankfurterClient implements CurrencyApiClient {
-
     private final RestTemplate restTemplate;
 
     private static final String URL = "https://api.frankfurter.app/latest?base=%s";

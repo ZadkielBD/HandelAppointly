@@ -22,8 +22,6 @@ public class HistorialMedicoServicioImpl implements HistorialMedicoServicio {
 
     private final HistorialMedicoRepositorio historialMedicoRepositorio;
     private final ConsultaMedicaRepositorio consultaMedicaRepositorio;
-    private final CitaRepositorio citaRepositorio;
-    private final DoctorRepositorio doctorRepositorio;
     private final MedicinaRepositorio medicinaRepositorio;
     private final HistorialMedicoMapper historialMedicoMapper;
     private final ConsultaMedicaMapper consultaMedicaMapper;
@@ -34,6 +32,7 @@ public class HistorialMedicoServicioImpl implements HistorialMedicoServicio {
         HistorialMedico historial = historialMedicoRepositorio.findByPacienteId(pacienteId)
                 .orElse(null);
         if (historial == null) return null;
+
         return historialMedicoMapper.aRespuestaDto(historial);
     }
 
@@ -66,7 +65,8 @@ public class HistorialMedicoServicioImpl implements HistorialMedicoServicio {
             }
         }
 
-        return consultaMedicaMapper.aRespuestaDto(consultaMedicaRepositorio.save(consulta));
+        consultaMedicaRepositorio.save(consulta);
+        return consultaMedicaMapper.aRespuestaDto(consulta);
     }
 
     @Override
@@ -98,6 +98,7 @@ public class HistorialMedicoServicioImpl implements HistorialMedicoServicio {
             }
         }
 
-        return consultaMedicaMapper.aRespuestaDto(consultaMedicaRepositorio.save(consulta));
+        consultaMedicaRepositorio.save(consulta);
+        return consultaMedicaMapper.aRespuestaDto(consulta);
     }
 }

@@ -1,6 +1,7 @@
 package com.handel.HandelAppointly.repositorios;
 
 import com.handel.HandelAppointly.entidades.Cita;
+import com.handel.HandelAppointly.entidades.Paciente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,5 @@ public interface CitaRepositorio extends JpaRepository<Cita, Long> {
     List<Cita> findByDoctorIdAndFecha(@Param("doctorId") Long doctorId, @Param("fecha") LocalDate fecha);
 
     @Query("SELECT DISTINCT c.paciente FROM Cita c WHERE c.doctor.id = :doctorId")
-    Page<com.handel.HandelAppointly.entidades.Paciente> findPacientesByDoctorId(@Param("doctorId") Long doctorId, Pageable pageable);
+    Page<Paciente> findPacientesByDoctorId(@Param("doctorId") Long doctorId, Pageable pageable);
 }

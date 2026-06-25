@@ -126,7 +126,8 @@ public class CitaServicioImpl implements CitaServicio {
 
         citaMapper.actualizarEntidadDesdeDto(solicitudDto, cita);
 
-        return citaMapper.aRespuestaDto(citaRepositorio.save(cita));
+        citaRepositorio.save(cita);
+        return citaMapper.aRespuestaDto(cita);
     }
 
     @Override

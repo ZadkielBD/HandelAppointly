@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface DivisaServicio {
-
     DivisaRespuestaDto create(DivisaSolicitudDto solicitudDto);
 
     DivisaRespuestaDto findByCodigo(String codigo);

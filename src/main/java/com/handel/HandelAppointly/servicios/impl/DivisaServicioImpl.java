@@ -34,15 +34,15 @@ public class DivisaServicioImpl implements DivisaServicio {
     public DivisaRespuestaDto create(DivisaSolicitudDto solicitudDto) {
         Divisa divisa = divisaMapper.aEntidad(solicitudDto);
 
-        Divisa createdDivisa = divisaRepositorio.save(divisa);
-
-        return divisaMapper.aRespuesta(createdDivisa);
+        divisaRepositorio.save(divisa);
+        return divisaMapper.aRespuesta(divisa);
     }
 
     @Override
     @Transactional(readOnly = true)
     public DivisaRespuestaDto findByCodigo(String codigo) {
         Divisa divisa = findCurrencyById(codigo);
+
         return divisaMapper.aRespuesta(divisa);
     }
 
@@ -53,7 +53,6 @@ public class DivisaServicioImpl implements DivisaServicio {
                 .stream()
                 .map(divisaMapper::aRespuesta) // .map(d -> divisaMapper.aRespuesta(d))
                 .toList();
-
     }
 
     @Override
@@ -89,7 +88,6 @@ public class DivisaServicioImpl implements DivisaServicio {
             divisaRepositorio.saveAll(divisasActualizadas);
 
             log.info("Las divisas se han actualizado correctamente a las {}", LocalDateTime.now());
-
         } catch (Exception e) {
             log.error("Error al actualizar los tipos de cambio ", e);
         }

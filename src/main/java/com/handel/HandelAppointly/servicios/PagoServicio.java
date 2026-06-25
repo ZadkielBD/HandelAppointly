@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PagoServicio {
-
     PagoRespuestaDto pagar(PagoSolicitudDto solicitudDto);
 
     PagoRespuestaDto findByCitaId(Long citaId);

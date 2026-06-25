@@ -28,9 +28,9 @@ public class UsuarioControlador {
     @GetMapping
     public String getAll(
             @RequestParam(required = false) Rol rol,
-            @PageableDefault(size = 15, sort = "lastName") Pageable pageable,
+            @PageableDefault(size = 15, sort = "apellido") Pageable pageable,
             Model modelo) {
-        Page<UsuarioRespuestaDto> usuarios = usuarioServicio.getAll(rol, pageable);
+        Page<UsuarioRespuestaDto> usuarios = usuarioServicio.findAll(rol, pageable);
         modelo.addAttribute("usuarios", usuarios);
 
         return "usuarios";

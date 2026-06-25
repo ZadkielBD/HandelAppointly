@@ -43,7 +43,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<UsuarioRespuestaDto> getAll(Rol rol, Pageable paginable) {
+    public Page<UsuarioRespuestaDto> findAll(Rol rol, Pageable paginable) {
         Page<Usuario> users;
 
         if (rol != null) {
@@ -52,7 +52,6 @@ public class UsuarioServicioImpl implements UsuarioServicio {
             users = usuarioRepositorio.findAll(paginable);
         }
 
-//        return users.map(user -> modelMapper.map(user, UsuarioRespuestaDto.class));
         return users.map(usuarioMapper::aRespuestaDto);
     }
 

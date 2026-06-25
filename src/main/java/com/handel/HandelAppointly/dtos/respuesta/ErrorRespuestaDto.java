@@ -1,7 +1,5 @@
 package com.handel.HandelAppointly.dtos.respuesta;
 
-import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.Map;
 

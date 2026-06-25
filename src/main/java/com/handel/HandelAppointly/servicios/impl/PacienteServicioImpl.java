@@ -38,9 +38,8 @@ public class PacienteServicioImpl implements PacienteServicio {
         Paciente paciente = pacienteMapper.aEntidad(solicitudDto);
         paciente.setRol(Rol.PACIENTE);
 
-        Paciente pacienteCreado = pacienteRepositorio.save(paciente);
-
-        return pacienteMapper.aRespuestaDto(pacienteCreado);
+        pacienteRepositorio.save(paciente);
+        return pacienteMapper.aRespuestaDto(paciente);
     }
 
     @Override
@@ -72,9 +71,8 @@ public class PacienteServicioImpl implements PacienteServicio {
 
         pacienteMapper.actualizarEntidadDesdeDto(solicitudDto, paciente);
 
-        Paciente pacienteActualizado = pacienteRepositorio.save(paciente);
-
-        return pacienteMapper.aRespuestaDto(pacienteActualizado);
+        pacienteRepositorio.save(paciente);
+        return pacienteMapper.aRespuestaDto(paciente);
     }
 
     @Override

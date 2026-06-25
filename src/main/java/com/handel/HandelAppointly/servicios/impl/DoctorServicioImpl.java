@@ -43,14 +43,14 @@ public class DoctorServicioImpl implements DoctorServicio {
         var divisa = divisaRepositorio.findById(solicitudDto.getCodigoDivisa())
                 .orElseThrow(() -> new ResourcesNotFoundException("Divisa no encontrada"));
 
-        Doctor doctor =  doctorMapper.aEntidad(solicitudDto);
+        Doctor doctor = doctorMapper.aEntidad(solicitudDto);
 
         doctor.setEspecialidades(new HashSet<>(especialidades));
         doctor.setDivisa(divisa);
         doctor.setRol(Rol.DOCTOR);
 
-        Doctor doctorCreado = doctorRepositorio.save(doctor);
-        return doctorMapper.aRespuestaDto(doctorCreado);
+        doctorRepositorio.save(doctor);
+        return doctorMapper.aRespuestaDto(doctor);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class DoctorServicioImpl implements DoctorServicio {
     @Override
     @Transactional(readOnly = true)
     public List<Horario> findHorarios(Long id) {
-        findDoctorById(id); // valida que existe
+        findDoctorById(id);
         return horarioRepositorio.findByDoctorIdOrderByDiaDeSemanaAscHoraInicioAsc(id);
     }
 
@@ -87,7 +87,7 @@ public class DoctorServicioImpl implements DoctorServicio {
     public DoctorRespuestaDto update(Long id, DoctorSolicitudDto solicitudDto) {
         Doctor doctor = findDoctorById(id);
 
-        doctorMapper.actualizarDoctorDesdeDto(solicitudDto, doctor);
+        doctorMapper.actualizarDoctor(solicitudDto, doctor);
 
         if (solicitudDto.getEspecialidadesIds() != null) {
             List<Especialidad> especialidades = especialidadRepositorio.findAllById(solicitudDto.getEspecialidadesIds());
@@ -100,9 +100,8 @@ public class DoctorServicioImpl implements DoctorServicio {
             doctor.setDivisa(divisa);
         }
 
-        Doctor updatedDoctor = doctorRepositorio.save(doctor);
-
-        return doctorMapper.aRespuestaDto(updatedDoctor);
+        doctorRepositorio.save(doctor);
+        return doctorMapper.aRespuestaDto(doctor);
     }
 
     @Override
