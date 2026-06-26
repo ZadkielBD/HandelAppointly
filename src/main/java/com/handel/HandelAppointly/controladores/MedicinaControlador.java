@@ -4,6 +4,7 @@ import com.handel.HandelAppointly.dtos.respuesta.MedicinaRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.MedicinaSolicitudDto;
 import com.handel.HandelAppointly.entidades.Medicina;
 import com.handel.HandelAppointly.servicios.MedicinaServicio;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -33,7 +34,7 @@ public class MedicinaControlador {
     }
 
     @PostMapping
-    public String procesarCrear(@ModelAttribute MedicinaSolicitudDto medicina,
+    public String procesarCrear(@Valid @ModelAttribute("medicina") MedicinaSolicitudDto medicina,
                         RedirectAttributes redirectAttributes) {
         medicinaServicio.create(medicina);
         redirectAttributes.addFlashAttribute("mensaje", "Medicina creada exitosamente");
@@ -48,7 +49,7 @@ public class MedicinaControlador {
 
     @PostMapping("/actualizar/{id}")
     public String procesarActualizar(@PathVariable Long id,
-                             @ModelAttribute MedicinaSolicitudDto medicina,
+                             @Valid @ModelAttribute("medicina") MedicinaSolicitudDto medicina,
                              RedirectAttributes redirectAttributes) {
         medicinaServicio.update(id, medicina);
         redirectAttributes.addFlashAttribute("mensaje", "Medicina actualizada");

@@ -583,3 +583,40 @@ form h2 {
     background-color: #003366;
     color: white;
 }
+
+/* paginas de errores */
+
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 12px;
+    text-align: center;
+    padding: 40px;
+}
+
+.error-icono {
+    font-size: 4rem;
+    color: #acacac;
+}
+
+.error-container h1 {
+    font-size: 5rem;
+    color: #003366;
+    margin: 0;
+    line-height: 1;
+}
+
+.error-container p {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+}
+
+.error-detalle {
+    font-size: 0.9rem !important;
+    color: #acacac !important;
+    font-style: italic;
+}

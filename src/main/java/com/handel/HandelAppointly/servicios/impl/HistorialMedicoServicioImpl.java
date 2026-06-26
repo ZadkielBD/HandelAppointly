@@ -3,10 +3,7 @@ package com.handel.HandelAppointly.servicios.impl;
 import com.handel.HandelAppointly.dtos.respuesta.ConsultaMedicaRespuestaDto;
 import com.handel.HandelAppointly.dtos.respuesta.HistorialMedicoRespuestaDto;
 import com.handel.HandelAppointly.dtos.solicitud.ConsultaMedicaSolicitudDto;
-import com.handel.HandelAppointly.entidades.ConsultaMedica;
-import com.handel.HandelAppointly.entidades.HistorialMedico;
-import com.handel.HandelAppointly.entidades.Medicina;
-import com.handel.HandelAppointly.entidades.RecetaMedica;
+import com.handel.HandelAppointly.entidades.*;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.ConsultaMedicaMapper;
 import com.handel.HandelAppointly.mappers.HistorialMedicoMapper;
@@ -100,5 +97,24 @@ public class HistorialMedicoServicioImpl implements HistorialMedicoServicio {
 
         consultaMedicaRepositorio.save(consulta);
         return consultaMedicaMapper.aRespuestaDto(consulta);
+    }
+
+    @Override
+    @Transactional
+    public void inicializarConsultaParaCita(Cita cita, Paciente paciente, Doctor doctor) {
+        HistorialMedico historial = historialMedicoRepositorio
+                .findByPacienteId(paciente.getId())
+                .orElseGet(() -> historialMedicoRepositorio.save(
+                        HistorialMedico.builder().paciente(paciente).build()
+                ));
+
+        ConsultaMedica consulta = ConsultaMedica.builder()
+                .cita(cita)
+                .doctor(doctor)
+                .paciente(paciente)
+                .historialMedico(historial)
+                .build();
+
+        consultaMedicaRepositorio.save(consulta);
     }
 }

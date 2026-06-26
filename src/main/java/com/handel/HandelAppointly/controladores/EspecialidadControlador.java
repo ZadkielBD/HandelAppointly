@@ -15,7 +15,7 @@ public class EspecialidadControlador {
     private final EspecialidadServicio especialidadServicio;
 
     @GetMapping
-    public String mostrarTodas(Model modelo) {
+    public String findAll(Model modelo) {
         modelo.addAttribute("especialidades", especialidadServicio.findAll());
         modelo.addAttribute("nueva", new EspecialidadRespuestaDto(null, "", ""));
         return "especialidad/especialidades";

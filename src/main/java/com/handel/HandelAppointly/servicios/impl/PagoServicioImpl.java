@@ -24,7 +24,6 @@ import java.math.RoundingMode;
 @Service
 @RequiredArgsConstructor
 public class PagoServicioImpl implements PagoServicio {
-
     private final PagoRepositorio pagoRepositorio;
     private final CitaRepositorio citaRepositorio;
     private final DivisaRepositorio divisaRepositorio;
@@ -47,7 +46,7 @@ public class PagoServicioImpl implements PagoServicio {
         // precioLocal está en la divisa propia del doctor; convertimos a USD primero,
         // luego al target. Si la divisa del doctor es la misma que la elegida, es directo.
         BigDecimal precioLocal = cita.getDoctor().getPrecioLocal();
-        BigDecimal tipoCambioDoctor = cita.getDoctor().getDivisa().getTipoCambio(); // divisa del doctor vs USD
+        BigDecimal tipoCambioDoctor = cita.getDoctor().getDivisa().getTipoCambio();
         BigDecimal precioEnUSD = precioLocal.divide(tipoCambioDoctor, 10, RoundingMode.HALF_UP);
         BigDecimal monto = precioEnUSD.multiply(divisa.getTipoCambio())
                 .setScale(2, RoundingMode.HALF_UP);
@@ -72,6 +71,7 @@ public class PagoServicioImpl implements PagoServicio {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean existePagoPorCita(Long citaId) {
         return pagoRepositorio.existsByCitaId(citaId);
     }

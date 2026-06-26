@@ -10,10 +10,6 @@ import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.CitaMapper;
 import com.handel.HandelAppointly.repositorios.CitaRepositorio;
 import com.handel.HandelAppointly.repositorios.DoctorRepositorio;
-import com.handel.HandelAppointly.entidades.ConsultaMedica;
-import com.handel.HandelAppointly.entidades.HistorialMedico;
-import com.handel.HandelAppointly.repositorios.ConsultaMedicaRepositorio;
-import com.handel.HandelAppointly.repositorios.HistorialMedicoRepositorio;
 import com.handel.HandelAppointly.repositorios.PacienteRepositorio;
 import com.handel.HandelAppointly.servicios.CitaServicio;
 import com.handel.HandelAppointly.utils.GeneradorCodigos;
@@ -33,8 +29,7 @@ public class CitaServicioImpl implements CitaServicio {
     private final PacienteRepositorio pacienteRepositorio;
     private final DoctorRepositorio doctorRepositorio;
     private final CitaMapper citaMapper;
-    private final ConsultaMedicaRepositorio consultaMedicaRepositorio;
-    private final HistorialMedicoRepositorio historialMedicoRepositorio;
+    private final HistorialMedicoServicioImpl historialMedicoServicio;
 
     @Override
     @Transactional
@@ -53,20 +48,7 @@ public class CitaServicioImpl implements CitaServicio {
 
         Cita citaGuardada = citaRepositorio.save(cita);
 
-        HistorialMedico historial = historialMedicoRepositorio
-                .findByPacienteId(paciente.getId())
-                .orElseGet(() -> historialMedicoRepositorio.save(
-                        HistorialMedico.builder().paciente(paciente).build()
-                ));
-
-        ConsultaMedica consulta = ConsultaMedica.builder()
-                .cita(citaGuardada)
-                .doctor(doctor)
-                .paciente(paciente)
-                .historialMedico(historial)
-                .build();
-
-        consultaMedicaRepositorio.save(consulta);
+        historialMedicoServicio.inicializarConsultaParaCita(citaGuardada, paciente, doctor);
 
         return citaMapper.aRespuestaDto(citaGuardada);
     }

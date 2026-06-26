@@ -26,7 +26,7 @@ public class UsuarioControlador {
     }
 
     @GetMapping
-    public String getAll(
+    public String findAll(
             @RequestParam(required = false) Rol rol,
             @PageableDefault(size = 15, sort = "apellido") Pageable pageable,
             Model modelo) {
@@ -36,7 +36,7 @@ public class UsuarioControlador {
         return "usuarios";
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/{id}")
     public void delete(@PathVariable Long id) {
         usuarioServicio.delete(id);
     }

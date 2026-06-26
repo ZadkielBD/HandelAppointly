@@ -71,7 +71,7 @@ public class DoctorControlador {
         try {
             doctorServicio.create(doctor);
             redirectAttributes.addFlashAttribute("mensaje", "Doctor guardado exitosamente");
-            return "redirect:/login";
+            return "redirect:/";
         } catch (EmailDuplicadoException e) {
             modelo.addAttribute("error", e.getMessage());
             return "paciente/crearPaciente";

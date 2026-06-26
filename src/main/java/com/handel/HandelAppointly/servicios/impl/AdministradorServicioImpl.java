@@ -58,7 +58,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     public AdministradorRespuestaDto update(Long id, AdministradorSolicitudDto solicitudDto) {
         Administrador administrador = findAdministradorById(id);
 
-        administradorMapper.actualizarDoctorDesdeDto(solicitudDto, administrador);
+        administradorMapper.actualizarAdministrador(solicitudDto, administrador);
 
         administradorRepositorio.save(administrador);
         return administradorMapper.aRespuestaDto(administrador);

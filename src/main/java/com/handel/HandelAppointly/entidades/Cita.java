@@ -28,7 +28,7 @@ public class Cita {
     @JoinColumn(name = "doctor_id",  nullable = false)
     private Doctor doctor;
 
-    @OneToOne(mappedBy = "cita", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @OneToOne(mappedBy = "cita", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ConsultaMedica consultaMedica;
 
     private String motivo;

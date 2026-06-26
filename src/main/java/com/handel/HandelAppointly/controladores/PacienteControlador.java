@@ -39,8 +39,6 @@ public class PacienteControlador {
         return "paciente/pacientes";
     }
 
-
-    // Crear Cuenta
     @GetMapping("/crear")
     public String mostrarCrear(Model modelo) {
         modelo.addAttribute("paciente", new PacienteSolicitudDto());
@@ -59,7 +57,7 @@ public class PacienteControlador {
         try {
             pacienteServicio.create(pacienteSolicitudDto);
             redirectAttributes.addFlashAttribute("mensaje", "Paciente guardado correctamente");
-            return "redirect:/login";
+            return "redirect:/";
         } catch (EmailDuplicadoException e) {
             modelo.addAttribute("error", e.getMessage());
             return "paciente/crearPaciente";
@@ -87,7 +85,7 @@ public class PacienteControlador {
 
         pacienteServicio.update(id, requestDto);
         redirectAttributes.addFlashAttribute("mensaje", "Paciente actualizado");
-        return "redirect:/paciente/" + id;
+        return "redirect:/pacientes/" + id;
     }
 
     // Eliminar Paciente

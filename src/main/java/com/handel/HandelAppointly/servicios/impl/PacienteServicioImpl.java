@@ -7,9 +7,7 @@ import com.handel.HandelAppointly.enums.Rol;
 import com.handel.HandelAppointly.excepciones.EmailDuplicadoException;
 import com.handel.HandelAppointly.excepciones.ResourcesNotFoundException;
 import com.handel.HandelAppointly.mappers.PacienteMapper;
-import com.handel.HandelAppointly.entidades.HistorialMedico;
 import com.handel.HandelAppointly.repositorios.CitaRepositorio;
-import com.handel.HandelAppointly.repositorios.HistorialMedicoRepositorio;
 import com.handel.HandelAppointly.repositorios.PacienteRepositorio;
 import com.handel.HandelAppointly.repositorios.UsuarioRepositorio;
 import com.handel.HandelAppointly.servicios.PacienteServicio;
@@ -26,7 +24,6 @@ public class PacienteServicioImpl implements PacienteServicio {
     private final PacienteMapper pacienteMapper;
     private final CitaRepositorio citaRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
-    private final HistorialMedicoRepositorio historialMedicoRepositorio;
 
     @Override
     @Transactional
