@@ -64,7 +64,7 @@ public class HistorialControlador {
 
         modelo.addAttribute("consulta", new ConsultaMedicaSolicitudDto());
         modelo.addAttribute("consultaId", consultaId);
-        modelo.addAttribute("medicinas", medicinaServicio.findAll());
+        modelo.addAttribute("medicinas", medicinaServicio.findAll(null));
         return "doctor/llenarConsulta";
     }
 
@@ -79,7 +79,7 @@ public class HistorialControlador {
         if (usuario == null) return "redirect:/login";
 
         if (result.hasErrors()) {
-            modelo.addAttribute("medicinas", medicinaServicio.findAll());
+            modelo.addAttribute("medicinas", medicinaServicio.findAll(null));
             return "doctor/llenarConsulta";
         }
 
