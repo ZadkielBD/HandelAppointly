@@ -21,7 +21,7 @@ public class MedicinaControlador {
 
     @GetMapping
     public String mostrarTodas(Model modelo,
-                               @PageableDefault(size = 12, sort = "apellido") Pageable pageable) {
+                               @PageableDefault(size = 12, sort = "nombre") Pageable pageable) {
         modelo.addAttribute("medicinas", medicinaServicio.findAll(pageable));
         modelo.addAttribute("nueva", new Medicina());
         return "medicina/medicinas";

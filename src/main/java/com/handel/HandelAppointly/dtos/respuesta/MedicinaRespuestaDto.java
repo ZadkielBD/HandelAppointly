@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class MedicinaRespuestaDto {
+    private Long id;
     private String nombre;
     private String fabricante;
     private String formula;
